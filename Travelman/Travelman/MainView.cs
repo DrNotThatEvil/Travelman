@@ -2,12 +2,11 @@
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
-using System.IO;
-
 namespace Travelman
 {
     public partial class MainView : UserControl
     {
+        private const bool SIDEBAR_SHOWN = true;
         private ChromiumWebBrowser _browser;
 
         public MainView()
@@ -16,6 +15,7 @@ namespace Travelman
             InitializeComponent();
             InitializeBrowser();
             Disposed += MainView_Disposed;
+            scSidebar.Panel1Collapsed = SIDEBAR_SHOWN;
         }
 
         private void MainView_Disposed(object sender, EventArgs e)
@@ -28,9 +28,6 @@ namespace Travelman
             CefSettings cefSettings = new CefSettings();
             Cef.Initialize(cefSettings);
             string url = string.Format(@"{0}\html\index.html", Application.StartupPath);
-
-            if (!File.Exists(url)) { MessageBox.Show("Error"); }
-
             _browser = new ChromiumWebBrowser(url);
             scSidebar.Panel2.Controls.Add(_browser);
             _browser.Dock = DockStyle.Fill;
