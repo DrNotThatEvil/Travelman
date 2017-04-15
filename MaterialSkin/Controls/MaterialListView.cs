@@ -61,7 +61,10 @@ namespace MaterialSkin.Controls
 
         protected override void OnDrawColumnHeader(DrawListViewColumnHeaderEventArgs e)
         {
-            e.Graphics.FillRectangle(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), new Rectangle(e.Bounds.X, e.Bounds.Y, Width, e.Bounds.Height));
+            using (SolidBrush sb = new SolidBrush(SkinManager.GetApplicationBackgroundColor()))
+            {
+                e.Graphics.FillRectangle(sb, new Rectangle(e.Bounds.X, e.Bounds.Y, Width, e.Bounds.Height));
+            }
             e.Graphics.DrawString(e.Header.Text,
                 SkinManager.ROBOTO_MEDIUM_10,
                 SkinManager.GetSecondaryTextBrush(),
@@ -77,7 +80,10 @@ namespace MaterialSkin.Controls
             var g = Graphics.FromImage(b);
 
             //always draw default background
-            g.FillRectangle(new SolidBrush(SkinManager.GetApplicationBackgroundColor()), new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));
+            using (SolidBrush sb = new SolidBrush(SkinManager.GetApplicationBackgroundColor()))
+            {
+                g.FillRectangle(sb, new Rectangle(new Point(e.Bounds.X, 0), e.Bounds.Size));
+            }
 
             if (e.State.HasFlag(ListViewItemStates.Selected))
             {
@@ -92,17 +98,20 @@ namespace MaterialSkin.Controls
 
 
             //Draw separator
-            g.DrawLine(new Pen(SkinManager.GetDividersColor()), e.Bounds.Left, 0, e.Bounds.Right, 0);
+            using (Pen p = new Pen(SkinManager.GetDividersColor()))
+            {
+                g.DrawLine(p, e.Bounds.Left, 0, e.Bounds.Right, 0);
+            }
 
             foreach (ListViewItem.ListViewSubItem subItem in e.Item.SubItems)
             {
                 //Draw text
-                g.DrawString(subItem.Text, SkinManager.ROBOTO_MEDIUM_10, SkinManager.GetPrimaryTextBrush(),
-                                 new Rectangle(subItem.Bounds.X + ITEM_PADDING, ITEM_PADDING, subItem.Bounds.Width - 2 * ITEM_PADDING, subItem.Bounds.Height - 2 * ITEM_PADDING),
-                                 getStringFormat());
+                g.DrawString(subItem.Text, SkinManager.ROBOTO_MEDIUM_10, SkinManager.GetPrimaryTextBrush(),                
+                    new Rectangle(subItem.Bounds.X + ITEM_PADDING, ITEM_PADDING, subItem.Bounds.Width - 2 * ITEM_PADDING, subItem.Bounds.Height - 2 * ITEM_PADDING),
+                                     getStringFormat());
             }
 
-            e.Graphics.DrawImage((Image)b.Clone(), new Point(0, e.Item.Bounds.Location.Y));
+            e.Graphics.DrawImage(b, new Point(0, e.Item.Bounds.Location.Y));
             g.Dispose();
             b.Dispose();
         }

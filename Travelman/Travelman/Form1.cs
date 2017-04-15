@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing.Text;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace Travelman
 {
@@ -8,7 +10,7 @@ namespace Travelman
         {
             InitializeComponent();
             Controls.Add(new Button());
-            Controls.Add(new LocationSelection("Destination"));
-        } 
+            Controls.Add(new LocationSelection("Destination", FontAwesomeFont.fa.flag_o, 2));
+        }
     }
 }
