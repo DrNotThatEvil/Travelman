@@ -8,9 +8,13 @@ namespace Travelman
     {
         private const bool SIDEBAR_SHOWN = true;
         private ChromiumWebBrowser _browser;
+        private string _start, _destination;
 
-        public MainView()
+        public MainView(string start, string destination)
         {
+            _start = start;
+            _destination = destination;
+
             Dock = DockStyle.Fill;
             InitializeComponent();
             InitializeBrowser();
@@ -31,7 +35,6 @@ namespace Travelman
             _browser = new ChromiumWebBrowser(url);
             scSidebar.Panel2.Controls.Add(_browser);
             _browser.Dock = DockStyle.Fill;
-
             // Allow local files
             _browser.BrowserSettings = new BrowserSettings()
             {

@@ -43,7 +43,10 @@ namespace Travelman
 
         private void btnPlanTrip_Click(object sender, EventArgs e)
         {
-            _parent.PlanTrip(_start.GetInput(), _destination.GetInput());
+            if(!_parent.PlanTrip(_start.GetInput(), _destination.GetInput()))
+            {
+                lblInvalidLocation.Visible = true;
+            }
         }
     }
 }

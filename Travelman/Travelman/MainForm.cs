@@ -7,6 +7,7 @@ namespace Travelman
     public partial class MainForm : MaterialForm
     {
         private StartView _startView;
+        private MainView _mainView;
 
         public MainForm()
         {
@@ -21,20 +22,19 @@ namespace Travelman
             formContent.Controls.Add(_startView);
         }
 
-        public void PlanTrip(string start, string destination)
+        public bool PlanTrip(string start, string destination)
         {
             GoogleHTTP google = GoogleHTTP.Instance();
             if (google.locationIsValid(start) && google.locationIsValid(destination))
             {
                 formContent.Controls.Remove(_startView);
                 _startView.Dispose();
-            }
-            else
-            {
-                // TODO: Show error message
 
+                _mainView = new MainView(start, destination);
+                formContent.Controls.Add(_mainView);
+                return true;
             }
-            
+            return false;
         }
     }
 }

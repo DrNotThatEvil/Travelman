@@ -30,6 +30,7 @@
         {
             this.LocationPanel = new System.Windows.Forms.Panel();
             this.btnPlanTrip = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.lblInvalidLocation = new MaterialSkin.Controls.MaterialLabel();
             this.LocationPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -37,6 +38,7 @@
             // 
             this.LocationPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.LocationPanel.BackColor = System.Drawing.Color.White;
+            this.LocationPanel.Controls.Add(this.lblInvalidLocation);
             this.LocationPanel.Controls.Add(this.btnPlanTrip);
             this.LocationPanel.Location = new System.Drawing.Point(28, 117);
             this.LocationPanel.Name = "LocationPanel";
@@ -60,6 +62,20 @@
             this.btnPlanTrip.UseVisualStyleBackColor = true;
             this.btnPlanTrip.Click += new System.EventHandler(this.btnPlanTrip_Click);
             // 
+            // lblInvalidLocation
+            // 
+            this.lblInvalidLocation.AutoSize = true;
+            this.lblInvalidLocation.Depth = 0;
+            this.lblInvalidLocation.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblInvalidLocation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblInvalidLocation.Location = new System.Drawing.Point(92, 149);
+            this.lblInvalidLocation.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblInvalidLocation.Name = "lblInvalidLocation";
+            this.lblInvalidLocation.Size = new System.Drawing.Size(111, 19);
+            this.lblInvalidLocation.TabIndex = 2;
+            this.lblInvalidLocation.Text = "Invalid location";
+            this.lblInvalidLocation.Visible = false;
+            // 
             // StartView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -78,5 +94,6 @@
 
         private System.Windows.Forms.Panel LocationPanel;
         private MaterialSkin.Controls.MaterialRaisedButton btnPlanTrip;
+        private MaterialSkin.Controls.MaterialLabel lblInvalidLocation;
     }
 }
