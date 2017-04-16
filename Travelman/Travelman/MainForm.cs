@@ -1,13 +1,13 @@
 ﻿using MaterialSkin;
 using MaterialSkin.Controls;
-using System.Drawing.Text;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace Travelman
 {
     public partial class MainForm : MaterialForm
     {
+        private StartView _startView;
+
         public MainForm()
         {
             // Initialize MaterialSkinManager
@@ -17,44 +17,24 @@ namespace Travelman
             m.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
             InitializeComponent();
-            StartView sv = new StartView() { Dock = DockStyle.Fill };
-            formContent.Controls.Add(sv);
-            //Controls.Add(new LocationSelection("Destination", FontAwesome.Sharp.IconChar.FlagO, 2));
+            _startView = new StartView(this) { Dock = DockStyle.Fill };
+            formContent.Controls.Add(_startView);
         }
 
-        private void dummyPanel_MouseClick(object sender, MouseEventArgs e)
+        public void PlanTrip(string start, string destination)
         {
-            this.OnMouseClick(e);
-        }
+            GoogleHTTP google = GoogleHTTP.Instance();
+            if (google.locationIsValid(start) && google.locationIsValid(destination))
+            {
+                formContent.Controls.Remove(_startView);
+                _startView.Dispose();
+            }
+            else
+            {
+                // TODO: Show error message
 
-        private void dummyPanel_MouseUp(object sender, MouseEventArgs e)
-        {
-            OnMouseUp(e);
-        }
-
-        private void dummyPanel_MouseDown(object sender, MouseEventArgs e)
-        {
-            base.OnMouseDown(e);
-        }
-
-        private void formContent_MouseMove(object sender, MouseEventArgs e)
-        {
-            OnMouseMove(e);
-        }
-
-        private void formContent_MouseLeave(object sender, System.EventArgs e)
-        {
-            OnMouseLeave(e);
-        }
-
-        private void formContent_MouseHover(object sender, System.EventArgs e)
-        {
-            OnMouseHover(e);
-        }
-
-        private void formContent_MouseEnter(object sender, System.EventArgs e)
-        {
-            OnMouseEnter(e);
+            }
+            
         }
     }
 }

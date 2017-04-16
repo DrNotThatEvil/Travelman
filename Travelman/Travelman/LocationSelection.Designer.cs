@@ -29,21 +29,20 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelInput = new System.Windows.Forms.Panel();
             this.tbInput = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.timerAutocompleteRequest = new System.Windows.Forms.Timer(this.components);
-            this.materialListView1 = new MaterialSkin.Controls.MaterialListView();
-            this.panel1.SuspendLayout();
+            this.panelInput.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // panelInput
             // 
-            this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.tbInput);
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(288, 48);
-            this.panel1.TabIndex = 0;
+            this.panelInput.BackColor = System.Drawing.Color.White;
+            this.panelInput.Controls.Add(this.tbInput);
+            this.panelInput.Location = new System.Drawing.Point(3, 3);
+            this.panelInput.Name = "panelInput";
+            this.panelInput.Size = new System.Drawing.Size(288, 48);
+            this.panelInput.TabIndex = 0;
             // 
             // tbInput
             // 
@@ -72,47 +71,24 @@
             this.timerAutocompleteRequest.Interval = 1000;
             this.timerAutocompleteRequest.Tick += new System.EventHandler(this.timerAutocompleteRequestFinished);
             // 
-            // materialListView1
-            // 
-            this.materialListView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.materialListView1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.materialListView1.Depth = 0;
-            this.materialListView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
-            this.materialListView1.FullRowSelect = true;
-            this.materialListView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.materialListView1.Location = new System.Drawing.Point(3, 51);
-            this.materialListView1.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.materialListView1.MouseState = MaterialSkin.MouseState.OUT;
-            this.materialListView1.MultiSelect = false;
-            this.materialListView1.Name = "materialListView1";
-            this.materialListView1.OwnerDraw = true;
-            this.materialListView1.ShowGroups = false;
-            this.materialListView1.Size = new System.Drawing.Size(288, 0);
-            this.materialListView1.TabIndex = 0;
-            this.materialListView1.UseCompatibleStateImageBehavior = false;
-            this.materialListView1.View = System.Windows.Forms.View.Details;
-            this.materialListView1.SelectedIndexChanged += new System.EventHandler(this.autocompleteList_SelectedIndexChanged);
-            // 
             // LocationSelection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.materialListView1);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panelInput);
             this.Name = "LocationSelection";
             this.Size = new System.Drawing.Size(294, 555);
-            this.panel1.ResumeLayout(false);
+            this.panelInput.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panelInput;
         private System.Windows.Forms.Timer timerAutocompleteRequest;
-        private MaterialSkin.Controls.MaterialListView materialListView1;
         private MaterialSkin.Controls.MaterialSingleLineTextField tbInput;
     }
 }

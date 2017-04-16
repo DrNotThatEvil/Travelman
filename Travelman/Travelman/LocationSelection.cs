@@ -3,21 +3,39 @@ using MaterialSkin.Controls;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Travelman
 {
     public partial class LocationSelection : UserControl
     {
+        /// <summary>
+        /// Height in pixels of an autocomplete suggestion.
+        /// </summary>
         private const int ITEM_HEIGHT = 41;
-        private readonly string _placeholder;
-        private bool _isDirty;
-        private int _maxHeight;
-        private Control _parent;
-        private MaterialListView _autocompleteList;
 
-        
+        /// <summary>
+        /// The default text of the text field.
+        /// </summary>
+        private readonly string _placeholder;
+
+        /// <summary>
+        /// Is false when the user has edited the text field.
+        /// </summary>
+        private bool _isDirty;
+
+        /// <summary>
+        /// Maximum height of the autcomplete suggestion list.
+        /// </summary>
+        private int _maxHeight;
+
+        /// <summary>
+        /// The control to which the autocomplete list is added. We add to the 
+        /// parent instead of this usercontrol to avoid the list getting covered by other controls.
+        /// </summary>
+        private Control _parent;
+
+        private MaterialListView _autocompleteList;
 
         public LocationSelection(Control parent, Point location, string placeholder, IconChar icon, int maxAutcompleteItemsDisplayed)
         {
@@ -34,9 +52,8 @@ namespace Travelman
             InitializeComponent();
 
             // Create list view at parent
-            Point listViewLocation = new Point(3, 51);
+            Point listViewLocation = new Point(panelInput.Location.X, panelInput.Location.Y + panelInput.Size.Height);
             listViewLocation.Offset(Location);
-            //listViewLocation.Offset(new Point(28, 109));
             _autocompleteList = new MaterialListView()
             {
                 Cursor = Cursors.Hand,
@@ -59,7 +76,7 @@ namespace Travelman
             _autocompleteList.Columns.Add(colh);
 
             // Create flag icon
-            panel1.Controls.Add(new IconPictureBox()
+            panelInput.Controls.Add(new IconPictureBox()
             {
                 Location = new Point(8, 8),
                 Size = new Size(32, 32),
@@ -74,6 +91,11 @@ namespace Travelman
             tbInput.LostFocus += AddPlaceholder;
         }
 
+        public bool IsFilled()
+        {
+            return tbInput.Text != string.Empty && tbInput.Text != _placeholder;
+        }
+
         public void ClearInput(object sender, EventArgs e)
         {
             tbInput.Text = "";
@@ -86,6 +108,11 @@ namespace Travelman
             {
                 tbInput.Text = _placeholder;
             }
+        }
+
+        public string GetInput()
+        {
+            return tbInput.Text;
         }
 
         private bool shouldAutocomplete()
@@ -125,18 +152,22 @@ namespace Travelman
             _autocompleteList.BringToFront();
         }
 
+        private void HideAutocompletionSuggestions()
+        {
+            timerAutocompleteRequest.Stop();
+            _autocompleteList.Height = 0;
+        }
+
         private void autocompleteList_SelectedIndexChanged(object sender, EventArgs e)
         {
             tbInput.Text = _autocompleteList.SelectedItems[0].Text;
             _isDirty = false;
-            timerAutocompleteRequest.Stop();
-
-            _autocompleteList.Height = 0;
+            HideAutocompletionSuggestions();
         }
 
         private void tbInput_Leave(object sender, EventArgs e)
         {
-            _autocompleteList.Height = 0;
+            HideAutocompletionSuggestions();
         }
     }
 }

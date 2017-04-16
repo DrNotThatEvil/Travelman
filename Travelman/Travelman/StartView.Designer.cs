@@ -48,6 +48,7 @@
             this.btnPlanTrip.AutoSize = true;
             this.btnPlanTrip.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnPlanTrip.Depth = 0;
+            this.btnPlanTrip.Enabled = false;
             this.btnPlanTrip.Icon = null;
             this.btnPlanTrip.Location = new System.Drawing.Point(103, 106);
             this.btnPlanTrip.MouseState = MaterialSkin.MouseState.HOVER;
@@ -57,6 +58,7 @@
             this.btnPlanTrip.TabIndex = 1;
             this.btnPlanTrip.Text = "Plan trip";
             this.btnPlanTrip.UseVisualStyleBackColor = true;
+            this.btnPlanTrip.Click += new System.EventHandler(this.btnPlanTrip_Click);
             // 
             // StartView
             // 
@@ -66,7 +68,6 @@
             this.Controls.Add(this.LocationPanel);
             this.Name = "StartView";
             this.Size = new System.Drawing.Size(351, 386);
-            this.Click += new System.EventHandler(this.StartView_Click);
             this.LocationPanel.ResumeLayout(false);
             this.LocationPanel.PerformLayout();
             this.ResumeLayout(false);

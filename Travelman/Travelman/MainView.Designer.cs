@@ -48,7 +48,7 @@
             // scMenubar.Panel2
             // 
             this.scMenubar.Panel2.Controls.Add(this.scSidebar);
-            this.scMenubar.Size = new System.Drawing.Size(1428, 785);
+            this.scMenubar.Size = new System.Drawing.Size(784, 528);
             this.scMenubar.SplitterDistance = 64;
             this.scMenubar.TabIndex = 0;
             // 
@@ -58,7 +58,7 @@
             this.scSidebar.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.scSidebar.Location = new System.Drawing.Point(0, 0);
             this.scSidebar.Name = "scSidebar";
-            this.scSidebar.Size = new System.Drawing.Size(1428, 717);
+            this.scSidebar.Size = new System.Drawing.Size(784, 460);
             this.scSidebar.SplitterDistance = 246;
             this.scSidebar.TabIndex = 0;
             // 
@@ -68,7 +68,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.scMenubar);
             this.Name = "MainView";
-            this.Size = new System.Drawing.Size(1428, 785);
+            this.Size = new System.Drawing.Size(784, 528);
             this.scMenubar.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scMenubar)).EndInit();
             this.scMenubar.ResumeLayout(false);

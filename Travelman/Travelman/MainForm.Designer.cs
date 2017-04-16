@@ -36,18 +36,11 @@
             this.formContent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.formContent.BackColor = System.Drawing.SystemColors.Control;
+            this.formContent.BackColor = System.Drawing.Color.White;
             this.formContent.Location = new System.Drawing.Point(8, 64);
             this.formContent.Name = "formContent";
             this.formContent.Size = new System.Drawing.Size(784, 528);
             this.formContent.TabIndex = 1;
-            this.formContent.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dummyPanel_MouseClick);
-            this.formContent.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dummyPanel_MouseDown);
-            this.formContent.MouseEnter += new System.EventHandler(this.formContent_MouseEnter);
-            this.formContent.MouseLeave += new System.EventHandler(this.formContent_MouseLeave);
-            this.formContent.MouseHover += new System.EventHandler(this.formContent_MouseHover);
-            this.formContent.MouseMove += new System.Windows.Forms.MouseEventHandler(this.formContent_MouseMove);
-            this.formContent.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dummyPanel_MouseUp);
             // 
             // MainForm
             // 

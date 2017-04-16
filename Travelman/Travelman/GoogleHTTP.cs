@@ -64,13 +64,29 @@ namespace Travelman
         }
 
         /// <summary>
+        /// Synchronous API call where we geocode the query and check if the status is OK.
+        /// If not then it means google cannot find the specified location.
+        /// </summary>
+        /// <param name="query">Location to check</param>
+        /// <returns>Location is valid</returns>
+        public bool locationIsValid(string query)
+        {
+            string requestUri = "place/autocomplete/json?" + BuildUri(query);
+
+            string response_body = _client.GetStringAsync(requestUri).Result;
+            JObject json = JObject.Parse(response_body);
+            JToken token = json.SelectToken("$.status");
+            return token.ToString() == "OK";
+        }
+
+        /// <summary>
         /// Builds a valid and safe URI.
         /// Parameters that are required to use the Google API are automatically added.
         /// </summary>
         /// <param name="query">Input for an API call</param>
         /// <param name="customParameters">Optional custom parameters</param>
         /// <returns>A valid and safe URI</returns>
-        private string BuildUri(string query, Dictionary<string, string> customParameters = null)
+        private static string BuildUri(string query, Dictionary<string, string> customParameters = null)
         {
             if (customParameters == null)
             {
