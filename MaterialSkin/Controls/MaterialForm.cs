@@ -290,27 +290,27 @@ namespace MaterialSkin.Controls
                 //True if the mouse is hovering over a child control
                 var isChildUnderMouse = GetChildAtPoint(e.Location) != null;
 
-                if (e.Location.X < BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse && !_maximized)
+                if (e.Location.X < BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH && !_maximized)
                 {
                     _resizeDir = ResizeDirection.BottomLeft;
                     Cursor = Cursors.SizeNESW;
                 }
-                else if (e.Location.X < BORDER_WIDTH && !isChildUnderMouse && !_maximized)
+                else if (e.Location.X < BORDER_WIDTH && !_maximized)
                 {
                     _resizeDir = ResizeDirection.Left;
                     Cursor = Cursors.SizeWE;
                 }
-                else if (e.Location.X > Width - BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse && !_maximized)
+                else if (e.Location.X > Width - BORDER_WIDTH && e.Location.Y > Height - BORDER_WIDTH && !_maximized)
                 {
                     _resizeDir = ResizeDirection.BottomRight;
                     Cursor = Cursors.SizeNWSE;
                 }
-                else if (e.Location.X > Width - BORDER_WIDTH && !isChildUnderMouse && !_maximized)
+                else if (e.Location.X > Width - BORDER_WIDTH && !_maximized)
                 {
                     _resizeDir = ResizeDirection.Right;
                     Cursor = Cursors.SizeWE;
                 }
-                else if (e.Location.Y > Height - BORDER_WIDTH && !isChildUnderMouse && !_maximized)
+                else if (e.Location.Y > Height - BORDER_WIDTH && !_maximized)
                 {
                     _resizeDir = ResizeDirection.Bottom;
                     Cursor = Cursors.SizeNS;

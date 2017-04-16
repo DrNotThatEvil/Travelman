@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tbInput = new MaterialSkin.Controls.MaterialSingleLineTextField();
-            this.lblIcon = new System.Windows.Forms.Label();
             this.timerAutocompleteRequest = new System.Windows.Forms.Timer(this.components);
             this.materialListView1 = new MaterialSkin.Controls.MaterialListView();
             this.panel1.SuspendLayout();
@@ -41,7 +40,6 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.tbInput);
-            this.panel1.Controls.Add(this.lblIcon);
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(288, 48);
@@ -49,10 +47,11 @@
             // 
             // tbInput
             // 
+            this.tbInput.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.tbInput.Depth = 0;
             this.tbInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbInput.Hint = "";
-            this.tbInput.Location = new System.Drawing.Point(56, 17);
+            this.tbInput.Location = new System.Drawing.Point(56, 14);
             this.tbInput.Margin = new System.Windows.Forms.Padding(8);
             this.tbInput.MaxLength = 32767;
             this.tbInput.MouseState = MaterialSkin.MouseState.HOVER;
@@ -65,17 +64,8 @@
             this.tbInput.TabIndex = 2;
             this.tbInput.TabStop = false;
             this.tbInput.UseSystemPasswordChar = false;
+            this.tbInput.Leave += new System.EventHandler(this.tbInput_Leave);
             this.tbInput.TextChanged += new System.EventHandler(this.tbInput_TextChanged);
-            // 
-            // lblIcon
-            // 
-            this.lblIcon.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIcon.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblIcon.Location = new System.Drawing.Point(8, 8);
-            this.lblIcon.Margin = new System.Windows.Forms.Padding(8);
-            this.lblIcon.Name = "lblIcon";
-            this.lblIcon.Size = new System.Drawing.Size(32, 32);
-            this.lblIcon.TabIndex = 1;
             // 
             // timerAutocompleteRequest
             // 
@@ -101,7 +91,7 @@
             this.materialListView1.TabIndex = 0;
             this.materialListView1.UseCompatibleStateImageBehavior = false;
             this.materialListView1.View = System.Windows.Forms.View.Details;
-            this.materialListView1.SelectedIndexChanged += new System.EventHandler(this.materialListView1_SelectedIndexChanged);
+            this.materialListView1.SelectedIndexChanged += new System.EventHandler(this.autocompleteList_SelectedIndexChanged);
             // 
             // LocationSelection
             // 
@@ -111,9 +101,8 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.materialListView1);
             this.Controls.Add(this.panel1);
-            this.Location = new System.Drawing.Point(80, 0);
             this.Name = "LocationSelection";
-            this.Size = new System.Drawing.Size(294, 208);
+            this.Size = new System.Drawing.Size(294, 555);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -124,7 +113,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Timer timerAutocompleteRequest;
         private MaterialSkin.Controls.MaterialListView materialListView1;
-        private System.Windows.Forms.Label lblIcon;
         private MaterialSkin.Controls.MaterialSingleLineTextField tbInput;
     }
 }
