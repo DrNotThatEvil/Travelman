@@ -2,12 +2,15 @@
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
+using System.Drawing;
+
 namespace Travelman
 {
     public partial class MainView : UserControl
     {
         private const bool SIDEBAR_SHOWN = true;
         private ChromiumWebBrowser _browser;
+        private LocationSelection _startSelection, _destinationSelection;
         private string _start, _destination;
 
         public MainView(string start, string destination)
@@ -19,7 +22,14 @@ namespace Travelman
             InitializeComponent();
             InitializeBrowser();
             Disposed += MainView_Disposed;
-            scSidebar.Panel1Collapsed = SIDEBAR_SHOWN;
+
+            _destinationSelection = new LocationSelection(scSidebar.Panel1, new Point(0, 48), "Kies een bestemming...", FontAwesome.Sharp.IconChar.FlagCheckered, 2);
+            scSidebar.Panel1.Controls.Add(_destinationSelection);
+
+            _startSelection = new LocationSelection(scSidebar.Panel1, new Point(0, 0), "Kies een vertrekpunt...", FontAwesome.Sharp.IconChar.FlagO, 2);
+            scSidebar.Panel1.Controls.Add(_startSelection);
+
+            scSidebar.Panel1Collapsed = !SIDEBAR_SHOWN;
         }
 
         private void MainView_Disposed(object sender, EventArgs e)
@@ -41,6 +51,18 @@ namespace Travelman
                 FileAccessFromFileUrls = CefState.Enabled,
                 UniversalAccessFromFileUrls = CefState.Enabled
             };
+            _browser.FrameLoadEnd += _browser_FrameLoadEnd;
+            _browser.SendToBack();
+            //_browser.ExecuteScriptAsync("showRoute", _start, _destination);
+            //ExecuteScript(String.Format("functionName('{0}','{1}','{2}');", input0, input1, input2));
+        }
+
+        private void _browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
+        {
+            if (e.Frame.IsMain)
+            {
+                _browser.ExecuteScriptAsync("showRoute", _start, _destination);
+            }
         }
     }
 }

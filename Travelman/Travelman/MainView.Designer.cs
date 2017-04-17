@@ -56,10 +56,12 @@
             // 
             this.scSidebar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scSidebar.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.scSidebar.IsSplitterFixed = true;
             this.scSidebar.Location = new System.Drawing.Point(0, 0);
             this.scSidebar.Name = "scSidebar";
+            this.scSidebar.Panel1MinSize = 288;
             this.scSidebar.Size = new System.Drawing.Size(784, 460);
-            this.scSidebar.SplitterDistance = 246;
+            this.scSidebar.SplitterDistance = 288;
             this.scSidebar.TabIndex = 0;
             // 
             // MainView

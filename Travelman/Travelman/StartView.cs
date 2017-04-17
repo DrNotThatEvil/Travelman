@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Travelman
@@ -22,13 +16,13 @@ namespace Travelman
             _parent = parent;
             InitializeComponent();
 
-            _start = new LocationSelection(LocationPanel, new Point(0, 48), "Kies een bestemming...", FontAwesome.Sharp.IconChar.FlagCheckered, 2);
-            _start.Validated += ValidateTextFields;
-            LocationPanel.Controls.Add(_start);
-
-            _destination = new LocationSelection(LocationPanel, new Point(0, 0), "Kies een vertrekpunt...", FontAwesome.Sharp.IconChar.FlagO, 2);
+            _destination = new LocationSelection(LocationPanel, new Point(0, 48), "Kies een bestemming...", FontAwesome.Sharp.IconChar.FlagCheckered, 2);
             _destination.Validated += ValidateTextFields;
             LocationPanel.Controls.Add(_destination);
+
+            _start = new LocationSelection(LocationPanel, new Point(0, 0), "Kies een vertrekpunt...", FontAwesome.Sharp.IconChar.FlagO, 2);
+            _start.Validated += ValidateTextFields;
+            LocationPanel.Controls.Add(_start);
         }
 
         /// <summary>
