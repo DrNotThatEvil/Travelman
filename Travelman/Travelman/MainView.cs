@@ -10,24 +10,25 @@ namespace Travelman
     {
         private const bool SIDEBAR_SHOWN = true;
         private ChromiumWebBrowser _browser;
-        private LocationSelection _startSelection, _destinationSelection;
-        private string _start, _destination;
+        private LocationSelection _start, _destination;
 
-        public MainView(string start, string destination)
+        public MainView(MainForm parent, string start, string destination)
         {
-            _start = start;
-            _destination = destination;
-
             Dock = DockStyle.Fill;
             InitializeComponent();
             InitializeBrowser();
             Disposed += MainView_Disposed;
+            parent.KeyDown += HandleKeys;
 
-            _destinationSelection = new LocationSelection(scSidebar.Panel1, new Point(0, 48), "Kies een bestemming...", FontAwesome.Sharp.IconChar.FlagCheckered, 2);
-            scSidebar.Panel1.Controls.Add(_destinationSelection);
+            _destination = new LocationSelection(scSidebar.Panel1, new Point(0, 48), "", FontAwesome.Sharp.IconChar.FlagCheckered, 5);
+            _destination.SetInput(destination);
+            _destination.AutocompleteOptionSelected += AutocompleteOptionSelected;
+            scSidebar.Panel1.Controls.Add(_destination);
 
-            _startSelection = new LocationSelection(scSidebar.Panel1, new Point(0, 0), "Kies een vertrekpunt...", FontAwesome.Sharp.IconChar.FlagO, 2);
-            scSidebar.Panel1.Controls.Add(_startSelection);
+            _start = new LocationSelection(scSidebar.Panel1, new Point(0, 0), "", FontAwesome.Sharp.IconChar.FlagO, 5);
+            _start.SetInput(start);
+            _start.AutocompleteOptionSelected += AutocompleteOptionSelected;
+            scSidebar.Panel1.Controls.Add(_start);
 
             scSidebar.Panel1Collapsed = !SIDEBAR_SHOWN;
         }
@@ -35,6 +36,32 @@ namespace Travelman
         private void MainView_Disposed(object sender, EventArgs e)
         {
             Cef.Shutdown();
+        }
+
+        private void AutocompleteOptionSelected(object sender, EventArgs e)
+        {
+            if (_start.IsFilled() && _destination.IsFilled())
+            {
+                HideAutocompletionSuggestions();
+                ShowRoute();
+            }
+        }
+
+        private void HandleKeys(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Escape:
+                    HideAutocompletionSuggestions();
+                    break;
+                case Keys.Enter:
+                    if (_start.IsFilled() && _destination.IsFilled())
+                    {
+                        HideAutocompletionSuggestions();
+                        ShowRoute();
+                    }
+                    break;
+            }
         }
 
         private void InitializeBrowser()
@@ -45,6 +72,7 @@ namespace Travelman
             _browser = new ChromiumWebBrowser(url);
             scSidebar.Panel2.Controls.Add(_browser);
             _browser.Dock = DockStyle.Fill;
+            
             // Allow local files
             _browser.BrowserSettings = new BrowserSettings()
             {
@@ -59,8 +87,22 @@ namespace Travelman
         {
             if (e.Frame.IsMain)
             {
-                _browser.ExecuteScriptAsync("showRoute", _start, _destination);
+                ShowRoute();
             }
         }
+
+        private void ShowRoute()
+        {
+            if (_browser.IsBrowserInitialized)
+            {
+                _browser.ExecuteScriptAsync("showRoute", _start.GetInput(), _destination.GetInput());
+            }
+        }
+
+        private void HideAutocompletionSuggestions()
+        {
+            _start.HideAutocompletionSuggestions();
+            _destination.HideAutocompletionSuggestions();
+        }       
     }
 }

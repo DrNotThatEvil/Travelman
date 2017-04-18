@@ -49,6 +49,8 @@ namespace Travelman
             remove { tbInput.TextChanged -= value; }
         }
 
+        public event EventHandler AutocompleteOptionSelected;
+
         public LocationSelection(Control parent, Point location, string placeholder, IconChar icon, int maxAutcompleteItemsDisplayed)
         {
             if (maxAutcompleteItemsDisplayed <= 0)
@@ -129,6 +131,14 @@ namespace Travelman
             return tbInput.Text;
         }
 
+        public void SetInput(string input)
+        {
+            tbInput.Text = input;
+
+            // Avoid autocomplete popup
+            HideAutocompletionSuggestions();
+        }
+
         private bool ShouldAutocomplete()
         {
             if (tbInput.Text != _placeholder) { _isDirty = true; }
@@ -182,6 +192,7 @@ namespace Travelman
             tbInput.Text = _autocompleteList.SelectedItems[0].Text;
             _isDirty = false;
             HideAutocompletionSuggestions();
+            AutocompleteOptionSelected?.Invoke(sender, e);
         }
     }
 }

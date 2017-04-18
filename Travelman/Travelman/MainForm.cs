@@ -36,7 +36,7 @@ namespace Travelman
                 _startView.Dispose();
 
                 // Show mainview
-                _mainView = new MainView(start, destination);
+                _mainView = new MainView(this, start, destination);
                 formContent.Controls.Add(_mainView);
                 return true;
             }
