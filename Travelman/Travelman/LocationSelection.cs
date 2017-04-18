@@ -35,7 +35,19 @@ namespace Travelman
         /// </summary>
         private Control _parent;
 
+        /// <summary>
+        /// A MaterialSkin-style ListView control used for showing autocompletion options to the user.
+        /// </summary>
         private MaterialListView _autocompleteList;
+
+        /// <summary>
+        /// Event raised by this user control when tbInput text has been changed by the program or the user.
+        /// </summary>
+        public event EventHandler InputChanged
+        {
+            add { tbInput.TextChanged += value; }
+            remove { tbInput.TextChanged -= value; }
+        }
 
         public LocationSelection(Control parent, Point location, string placeholder, IconChar icon, int maxAutcompleteItemsDisplayed)
         {
@@ -62,7 +74,7 @@ namespace Travelman
                 HeaderStyle = ColumnHeaderStyle.None,
                 OwnerDraw = true,
                 ShowGroups = false,
-                TabIndex = 0,
+                TabStop = false,
                 View = View.Details,
                 Location = listViewLocation,
                 Size = new Size(288, 0)
@@ -98,8 +110,10 @@ namespace Travelman
 
         public void ClearInput(object sender, EventArgs e)
         {
-            tbInput.Text = "";
-            tbInput.GotFocus -= ClearInput;
+            if (tbInput.Text == _placeholder)
+            {
+                tbInput.Text = "";
+            }
         }
 
         public void AddPlaceholder(object sender, EventArgs e)
@@ -115,7 +129,7 @@ namespace Travelman
             return tbInput.Text;
         }
 
-        private bool shouldAutocomplete()
+        private bool ShouldAutocomplete()
         {
             if (tbInput.Text != _placeholder) { _isDirty = true; }
 
@@ -126,10 +140,15 @@ namespace Travelman
 
         private void tbInput_TextChanged(object sender, EventArgs e)
         {
-            if (shouldAutocomplete())
+            if (ShouldAutocomplete())
             {
                 timerAutocompleteRequest.Start();
             }
+        }
+
+        private void tbInput_Leave(object sender, EventArgs e)
+        {
+            HideAutocompletionSuggestions();
         }
 
         private void timerAutocompleteRequestFinished(object sender, EventArgs e)
@@ -140,7 +159,7 @@ namespace Travelman
 
         private async void ShowAutocompletionSuggestions(string query)
         {
-            List<string> suggestions = await GoogleHTTP.Instance().getAutocompleteList(query);
+            List<string> suggestions = await GoogleHTTP.Instance().GetAutocompleteList(query);
 
             _autocompleteList.Items.Clear();
             foreach (string suggestion in suggestions)
@@ -152,7 +171,7 @@ namespace Travelman
             _autocompleteList.BringToFront();
         }
 
-        private void HideAutocompletionSuggestions()
+        public void HideAutocompletionSuggestions()
         {
             timerAutocompleteRequest.Stop();
             _autocompleteList.Height = 0;
@@ -162,11 +181,6 @@ namespace Travelman
         {
             tbInput.Text = _autocompleteList.SelectedItems[0].Text;
             _isDirty = false;
-            HideAutocompletionSuggestions();
-        }
-
-        private void tbInput_Leave(object sender, EventArgs e)
-        {
             HideAutocompletionSuggestions();
         }
     }

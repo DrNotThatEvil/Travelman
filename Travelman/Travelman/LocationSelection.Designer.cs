@@ -60,8 +60,7 @@
             this.tbInput.SelectionLength = 0;
             this.tbInput.SelectionStart = 0;
             this.tbInput.Size = new System.Drawing.Size(224, 23);
-            this.tbInput.TabIndex = 2;
-            this.tbInput.TabStop = false;
+            this.tbInput.TabIndex = 1;
             this.tbInput.UseSystemPasswordChar = false;
             this.tbInput.Leave += new System.EventHandler(this.tbInput_Leave);
             this.tbInput.TextChanged += new System.EventHandler(this.tbInput_TextChanged);

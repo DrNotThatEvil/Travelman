@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GoogleHTTP.cs" />
+    <Compile Include="ILocationProvider.cs" />
     <Compile Include="LocationSelection.cs">
       <SubType>UserControl</SubType>
     </Compile>

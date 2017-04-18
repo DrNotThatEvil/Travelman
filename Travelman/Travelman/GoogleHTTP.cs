@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Travelman
 {
-    class GoogleHTTP
+    class GoogleHTTP : ILocationProvider
     {
         private const string APIKEY = "AIzaSyBUnZVJgEMRfpppPPPkMAtQ9CyqYbITX_s";
         private const string BASE_ADDRESS = "https://maps.googleapis.com/maps/api/";
@@ -52,7 +52,7 @@ namespace Travelman
         /// </summary>
         /// <param name="query">Search terms</param>
         /// <returns>Asynchronous list of place names</returns>
-        public async Task<List<string>> getAutocompleteList(string query)
+        public async Task<List<string>> GetAutocompleteList(string query)
         {
             string requestUri = "place/autocomplete/json?" + BuildUri(query);
 
@@ -69,7 +69,7 @@ namespace Travelman
         /// </summary>
         /// <param name="query">Location to check</param>
         /// <returns>Location is valid</returns>
-        public bool locationIsValid(string query)
+        public bool LocationIsValid(string query)
         {
             string requestUri = "place/autocomplete/json?" + BuildUri(query);
 

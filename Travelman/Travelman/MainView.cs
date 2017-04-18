@@ -53,8 +53,6 @@ namespace Travelman
             };
             _browser.FrameLoadEnd += _browser_FrameLoadEnd;
             _browser.SendToBack();
-            //_browser.ExecuteScriptAsync("showRoute", _start, _destination);
-            //ExecuteScript(String.Format("functionName('{0}','{1}','{2}');", input0, input1, input2));
         }
 
         private void _browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)

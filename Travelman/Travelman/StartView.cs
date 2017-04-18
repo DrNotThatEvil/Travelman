@@ -8,20 +8,20 @@ namespace Travelman
     {
         private MainForm _parent;
         private LocationSelection _start, _destination;
-        public bool StartFilled { get; set; }
-        public bool DestinationFilled { get; set; }
+        private bool _canPlanTrip;
 
         public StartView(MainForm parent)
         {
             _parent = parent;
+            _parent.KeyDown += HandleKeys;
             InitializeComponent();
 
-            _destination = new LocationSelection(LocationPanel, new Point(0, 48), "Kies een bestemming...", FontAwesome.Sharp.IconChar.FlagCheckered, 2);
-            _destination.Validated += ValidateTextFields;
+            _destination = new LocationSelection(LocationPanel, new Point(0, 48), "Kies een bestemming...", FontAwesome.Sharp.IconChar.FlagCheckered, 3);
+            _destination.InputChanged += InputsChanged;
             LocationPanel.Controls.Add(_destination);
 
-            _start = new LocationSelection(LocationPanel, new Point(0, 0), "Kies een vertrekpunt...", FontAwesome.Sharp.IconChar.FlagO, 2);
-            _start.Validated += ValidateTextFields;
+            _start = new LocationSelection(LocationPanel, new Point(0, 0), "Kies een vertrekpunt...", FontAwesome.Sharp.IconChar.FlagO, 3);
+            _start.InputChanged += InputsChanged;
             LocationPanel.Controls.Add(_start);
         }
 
@@ -30,15 +30,45 @@ namespace Travelman
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ValidateTextFields(object sender, EventArgs e)
+        private void InputsChanged(object sender, EventArgs e)
         {
-            btnPlanTrip.Enabled = _start.IsFilled() && _destination.IsFilled();
+            btnPlanTrip.Enabled = _canPlanTrip = _start.IsFilled() && _destination.IsFilled();
+        }
+
+        private void HandleKeys(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Escape:
+                    HideAutocompletionSuggestions();
+                    break;
+                case Keys.Enter:
+                    if (_canPlanTrip) { PlanTrip(); }
+                    break;
+            }
+        }
+
+        private void StartView_Click(object sender, EventArgs e)
+        {
+            HideAutocompletionSuggestions();
+        }
+
+        private void HideAutocompletionSuggestions()
+        {
+            _start.HideAutocompletionSuggestions();
+            _destination.HideAutocompletionSuggestions();
         }
 
         private void btnPlanTrip_Click(object sender, EventArgs e)
         {
-            if(!_parent.PlanTrip(_start.GetInput(), _destination.GetInput()))
+            PlanTrip();
+        }
+
+        private void PlanTrip()
+        {
+            if (!_parent.PlanTrip(_start.GetInput(), _destination.GetInput()))
             {
+                // Invalid input
                 lblInvalidLocation.Visible = true;
             }
         }

@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.LocationPanel = new System.Windows.Forms.Panel();
-            this.btnPlanTrip = new MaterialSkin.Controls.MaterialRaisedButton();
             this.lblInvalidLocation = new MaterialSkin.Controls.MaterialLabel();
+            this.btnPlanTrip = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.DefaultFocusLabel = new System.Windows.Forms.Label();
             this.LocationPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -38,29 +39,14 @@
             // 
             this.LocationPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.LocationPanel.BackColor = System.Drawing.Color.White;
+            this.LocationPanel.Controls.Add(this.DefaultFocusLabel);
             this.LocationPanel.Controls.Add(this.lblInvalidLocation);
             this.LocationPanel.Controls.Add(this.btnPlanTrip);
             this.LocationPanel.Location = new System.Drawing.Point(28, 117);
             this.LocationPanel.Name = "LocationPanel";
             this.LocationPanel.Size = new System.Drawing.Size(294, 252);
             this.LocationPanel.TabIndex = 0;
-            // 
-            // btnPlanTrip
-            // 
-            this.btnPlanTrip.AutoSize = true;
-            this.btnPlanTrip.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnPlanTrip.Depth = 0;
-            this.btnPlanTrip.Enabled = false;
-            this.btnPlanTrip.Icon = null;
-            this.btnPlanTrip.Location = new System.Drawing.Point(103, 106);
-            this.btnPlanTrip.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnPlanTrip.Name = "btnPlanTrip";
-            this.btnPlanTrip.Primary = true;
-            this.btnPlanTrip.Size = new System.Drawing.Size(89, 36);
-            this.btnPlanTrip.TabIndex = 1;
-            this.btnPlanTrip.Text = "Plan trip";
-            this.btnPlanTrip.UseVisualStyleBackColor = true;
-            this.btnPlanTrip.Click += new System.EventHandler(this.btnPlanTrip_Click);
+            this.LocationPanel.Click += new System.EventHandler(this.StartView_Click);
             // 
             // lblInvalidLocation
             // 
@@ -76,6 +62,31 @@
             this.lblInvalidLocation.Text = "Invalid location";
             this.lblInvalidLocation.Visible = false;
             // 
+            // btnPlanTrip
+            // 
+            this.btnPlanTrip.AutoSize = true;
+            this.btnPlanTrip.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnPlanTrip.Depth = 0;
+            this.btnPlanTrip.Enabled = false;
+            this.btnPlanTrip.Icon = null;
+            this.btnPlanTrip.Location = new System.Drawing.Point(103, 106);
+            this.btnPlanTrip.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnPlanTrip.Name = "btnPlanTrip";
+            this.btnPlanTrip.Primary = true;
+            this.btnPlanTrip.Size = new System.Drawing.Size(89, 36);
+            this.btnPlanTrip.TabIndex = 3;
+            this.btnPlanTrip.Text = "Plan trip";
+            this.btnPlanTrip.UseVisualStyleBackColor = true;
+            this.btnPlanTrip.Click += new System.EventHandler(this.btnPlanTrip_Click);
+            // 
+            // DefaultFocusLabel
+            // 
+            this.DefaultFocusLabel.AutoSize = true;
+            this.DefaultFocusLabel.Location = new System.Drawing.Point(15, 15);
+            this.DefaultFocusLabel.Name = "DefaultFocusLabel";
+            this.DefaultFocusLabel.Size = new System.Drawing.Size(0, 13);
+            this.DefaultFocusLabel.TabIndex = 1;
+            // 
             // StartView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -84,6 +95,7 @@
             this.Controls.Add(this.LocationPanel);
             this.Name = "StartView";
             this.Size = new System.Drawing.Size(351, 386);
+            this.Click += new System.EventHandler(this.StartView_Click);
             this.LocationPanel.ResumeLayout(false);
             this.LocationPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -95,5 +107,6 @@
         private System.Windows.Forms.Panel LocationPanel;
         private MaterialSkin.Controls.MaterialRaisedButton btnPlanTrip;
         private MaterialSkin.Controls.MaterialLabel lblInvalidLocation;
+        private System.Windows.Forms.Label DefaultFocusLabel;
     }
 }

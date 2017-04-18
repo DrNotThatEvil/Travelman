@@ -41,9 +41,11 @@
             // 
             this.scMenubar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scMenubar.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.scMenubar.IsSplitterFixed = true;
             this.scMenubar.Location = new System.Drawing.Point(0, 0);
             this.scMenubar.Name = "scMenubar";
             this.scMenubar.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.scMenubar.Panel1MinSize = 64;
             // 
             // scMenubar.Panel2
             // 

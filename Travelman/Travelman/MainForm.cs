@@ -18,18 +18,24 @@ namespace Travelman
             m.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
 
             InitializeComponent();
+
+            // Show startview
             _startView = new StartView(this) { Dock = DockStyle.Fill };
             formContent.Controls.Add(_startView);
         }
 
         public bool PlanTrip(string start, string destination)
         {
-            GoogleHTTP google = GoogleHTTP.Instance();
-            if (google.locationIsValid(start) && google.locationIsValid(destination))
+            ILocationProvider locationProvider = GoogleHTTP.Instance();
+            // TODO: Handle start == destination
+            // TODO: Trip too long / destination unreachable
+            // TODO: Anti-spam
+            if (locationProvider.LocationIsValid(start) && locationProvider.LocationIsValid(destination))
             {
                 formContent.Controls.Remove(_startView);
                 _startView.Dispose();
 
+                // Show mainview
                 _mainView = new MainView(start, destination);
                 formContent.Controls.Add(_mainView);
                 return true;
