@@ -68,7 +68,7 @@
             // timerAutocompleteRequest
             // 
             this.timerAutocompleteRequest.Interval = 1000;
-            this.timerAutocompleteRequest.Tick += new System.EventHandler(this.timerAutocompleteRequestFinished);
+            this.timerAutocompleteRequest.Tick += new System.EventHandler(this.TimerAutocompleteRequestFinished);
             // 
             // LocationSelection
             // 

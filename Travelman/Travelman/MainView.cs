@@ -8,13 +8,12 @@ namespace Travelman
 {
     public partial class MainView : UserControl
     {
-        private const bool SIDEBAR_SHOWN = true;
+        private const bool SidebarShown = true;
         private ChromiumWebBrowser _browser;
-        private LocationSelection _start, _destination;
+        private readonly LocationSelection _start, _destination;
 
-        public MainView(MainForm parent, string start, string destination)
+        public MainView(Control parent, string start, string destination)
         {
-            Dock = DockStyle.Fill;
             InitializeComponent();
             InitializeBrowser();
             Disposed += MainView_Disposed;
@@ -30,21 +29,19 @@ namespace Travelman
             _start.AutocompleteOptionSelected += AutocompleteOptionSelected;
             scSidebar.Panel1.Controls.Add(_start);
 
-            scSidebar.Panel1Collapsed = !SIDEBAR_SHOWN;
+            scSidebar.Panel1Collapsed = !SidebarShown;
         }
 
-        private void MainView_Disposed(object sender, EventArgs e)
+        private static void MainView_Disposed(object sender, EventArgs e)
         {
             Cef.Shutdown();
         }
 
         private void AutocompleteOptionSelected(object sender, EventArgs e)
         {
-            if (_start.IsFilled() && _destination.IsFilled())
-            {
-                HideAutocompletionSuggestions();
-                ShowRoute();
-            }
+            if (!_start.IsFilled() || !_destination.IsFilled()) return;
+            HideAutocompletionSuggestions();
+            ShowRoute();
         }
 
         private void HandleKeys(object sender, KeyEventArgs e)
@@ -66,9 +63,9 @@ namespace Travelman
 
         private void InitializeBrowser()
         {
-            CefSettings cefSettings = new CefSettings();
+            var cefSettings = new CefSettings();
             Cef.Initialize(cefSettings);
-            string url = string.Format(@"{0}\html\index.html", Application.StartupPath);
+            string url = $@"{Application.StartupPath}\html\index.html";
             _browser = new ChromiumWebBrowser(url);
             scSidebar.Panel2.Controls.Add(_browser);
             _browser.Dock = DockStyle.Fill;

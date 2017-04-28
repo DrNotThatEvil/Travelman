@@ -6,41 +6,39 @@ using Newtonsoft.Json.Linq;
 
 namespace Travelman
 {
-    class GoogleHTTP : ILocationProvider
+    class GoogleHttp : ILocationProvider
     {
-        private const string APIKEY = "AIzaSyBUnZVJgEMRfpppPPPkMAtQ9CyqYbITX_s";
-        private const string BASE_ADDRESS = "https://maps.googleapis.com/maps/api/";
-        private const string LANGUAGE = "nl";
+        private const string Apikey = "AIzaSyBUnZVJgEMRfpppPPPkMAtQ9CyqYbITX_s";
+        private const string BaseAddress = "https://maps.googleapis.com/maps/api/";
+        private const string Language = "nl";
 
         /// <summary>
         /// Used for communicating with an external HTTP service.
         /// </summary>
-        private HttpClient _client;
+        private readonly HttpClient _client;
 
         /// <summary>
         /// Stores a single instance of this class, used by the singleton pattern.
         /// </summary>
-        private static GoogleHTTP _instance;
+        private static GoogleHttp _instance;
 
         /// <summary>
         /// Private constructor only used by the Instance() method.
         /// </summary>
-        private GoogleHTTP()
+        private GoogleHttp()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri(BASE_ADDRESS);
+            _client = new HttpClient { BaseAddress = new Uri(BaseAddress) };
         }
 
         /// <summary>
-        /// Gives the instance of GoogleHTTP, while also ensuring
-        /// that there can only be one single instance of GoogleHTTP.
+        /// Gives the instance of GoogleHttp, while also ensuring
+        /// that there can only be one single instance of GoogleHttp.
         /// This is part of the singleton pattern.
         /// </summary>
         /// <returns></returns>
-        public static GoogleHTTP Instance()
+        public static GoogleHttp Instance()
         {
-            if (_instance == null) { _instance = new GoogleHTTP(); }
-            return _instance;
+            return _instance ?? (_instance = new GoogleHttp());
         }
 
         /// <summary>
@@ -56,8 +54,8 @@ namespace Travelman
         {
             string requestUri = "place/autocomplete/json?" + BuildUri(query);
 
-            string response_body = await _client.GetStringAsync(requestUri);
-            JObject json = JObject.Parse(response_body);
+            string responseBody = await _client.GetStringAsync(requestUri);
+            JObject json = JObject.Parse(responseBody);
             IEnumerable<JToken> tokens = json.SelectTokens("$.predictions[*].description");
 
             return new List<string>(tokens.Values<string>());
@@ -73,8 +71,8 @@ namespace Travelman
         {
             string requestUri = "place/autocomplete/json?" + BuildUri(query);
 
-            string response_body = _client.GetStringAsync(requestUri).Result;
-            JObject json = JObject.Parse(response_body);
+            string responseBody = _client.GetStringAsync(requestUri).Result;
+            JObject json = JObject.Parse(responseBody);
             JToken token = json.SelectToken("$.status");
             return token.ToString() == "OK";
         }
@@ -92,13 +90,15 @@ namespace Travelman
             {
                 customParameters = new Dictionary<string, string>();
             }
-            Dictionary<string, string> parameters = new Dictionary<string, string>(customParameters);
+            var parameters =
+                new Dictionary<string, string>(customParameters)
+                {
+                    {"key", Apikey},
+                    {"language", Language},
+                    {"input", query}
+                };
 
-            parameters.Add("key", APIKEY);
-            parameters.Add("language", LANGUAGE);
-            parameters.Add("input", query);
-
-            FormUrlEncodedContent f = new FormUrlEncodedContent(parameters);
+            var f = new FormUrlEncodedContent(parameters);
             string uri = f.ReadAsStringAsync().Result;
             return uri;
         }

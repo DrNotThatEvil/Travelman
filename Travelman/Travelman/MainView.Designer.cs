@@ -1,6 +1,6 @@
 ﻿namespace Travelman
 {
-    partial class MainView
+    sealed partial class MainView
     {
         /// <summary> 
         /// Required designer variable.

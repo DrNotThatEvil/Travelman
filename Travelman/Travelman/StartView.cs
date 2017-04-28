@@ -6,8 +6,8 @@ namespace Travelman
 {
     public partial class StartView : UserControl
     {
-        private MainForm _parent;
-        private LocationSelection _start, _destination;
+        private readonly MainForm _parent;
+        private readonly LocationSelection _start, _destination;
         private bool _canPlanTrip;
 
         public StartView(MainForm parent)

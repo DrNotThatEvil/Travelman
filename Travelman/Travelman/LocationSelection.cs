@@ -12,7 +12,7 @@ namespace Travelman
         /// <summary>
         /// Height in pixels of an autocomplete suggestion.
         /// </summary>
-        private const int ITEM_HEIGHT = 41;
+        private const int ItemHeight = 41;
 
         /// <summary>
         /// The default text of the text field.
@@ -27,26 +27,20 @@ namespace Travelman
         /// <summary>
         /// Maximum height of the autcomplete suggestion list.
         /// </summary>
-        private int _maxHeight;
-
-        /// <summary>
-        /// The control to which the autocomplete list is added. We add to the 
-        /// parent instead of this usercontrol to avoid the list getting covered by other controls.
-        /// </summary>
-        private Control _parent;
+        private readonly int _maxHeight;
 
         /// <summary>
         /// A MaterialSkin-style ListView control used for showing autocompletion options to the user.
         /// </summary>
-        private MaterialListView _autocompleteList;
+        private readonly MaterialListView _autocompleteList;
 
         /// <summary>
         /// Event raised by this user control when tbInput text has been changed by the program or the user.
         /// </summary>
         public event EventHandler InputChanged
         {
-            add { tbInput.TextChanged += value; }
-            remove { tbInput.TextChanged -= value; }
+            add => tbInput.TextChanged += value;
+            remove => tbInput.TextChanged -= value;
         }
 
         public event EventHandler AutocompleteOptionSelected;
@@ -58,8 +52,7 @@ namespace Travelman
                 throw new ArgumentOutOfRangeException();
             }
 
-            _maxHeight = maxAutcompleteItemsDisplayed * ITEM_HEIGHT;
-            _parent = parent;
+            _maxHeight = maxAutcompleteItemsDisplayed * ItemHeight;
             _placeholder = placeholder;
             Location = location;
 
@@ -82,11 +75,13 @@ namespace Travelman
                 Size = new Size(288, 0)
             };
             _autocompleteList.SelectedIndexChanged += autocompleteList_SelectedIndexChanged;
-            _parent.Controls.Add(_autocompleteList);
+            parent.Controls.Add(_autocompleteList);
 
             // Avoid horizontal scroll bar
-            ColumnHeader colh = new ColumnHeader();
-            colh.Width = _autocompleteList.ClientSize.Width - SystemInformation.VerticalScrollBarWidth;
+            ColumnHeader colh = new ColumnHeader
+            {
+                Width = _autocompleteList.ClientSize.Width - SystemInformation.VerticalScrollBarWidth
+            };
             _autocompleteList.Columns.Add(colh);
 
             // Create flag icon
@@ -161,7 +156,7 @@ namespace Travelman
             HideAutocompletionSuggestions();
         }
 
-        private void timerAutocompleteRequestFinished(object sender, EventArgs e)
+        private void TimerAutocompleteRequestFinished(object sender, EventArgs e)
         {
             timerAutocompleteRequest.Stop();
             ShowAutocompletionSuggestions(tbInput.Text);
@@ -169,7 +164,7 @@ namespace Travelman
 
         private async void ShowAutocompletionSuggestions(string query)
         {
-            List<string> suggestions = await GoogleHTTP.Instance().GetAutocompleteList(query);
+            List<string> suggestions = await GoogleHttp.Instance().GetAutocompleteList(query);
 
             _autocompleteList.Items.Clear();
             foreach (string suggestion in suggestions)
@@ -177,7 +172,7 @@ namespace Travelman
                 _autocompleteList.Items.Add(suggestion);
             }
 
-            _autocompleteList.Height = Math.Min(suggestions.Count * ITEM_HEIGHT, _maxHeight);
+            _autocompleteList.Height = Math.Min(suggestions.Count * ItemHeight, _maxHeight);
             _autocompleteList.BringToFront();
         }
 
