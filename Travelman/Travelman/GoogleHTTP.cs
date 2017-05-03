@@ -53,12 +53,18 @@ namespace Travelman
         public async Task<List<string>> GetAutocompleteList(string query)
         {
             string requestUri = "place/autocomplete/json?" + BuildUri(query);
+            try
+            {
+                string responseBody = await _client.GetStringAsync(requestUri);
+                JObject json = JObject.Parse(responseBody);
+                IEnumerable<JToken> tokens = json.SelectTokens("$.predictions[*].description");
 
-            string responseBody = await _client.GetStringAsync(requestUri);
-            JObject json = JObject.Parse(responseBody);
-            IEnumerable<JToken> tokens = json.SelectTokens("$.predictions[*].description");
-
-            return new List<string>(tokens.Values<string>());
+                return new List<string>(tokens.Values<string>());
+            }
+            catch (Exception)
+            {
+                return new List<string>(); // Connectivity issue or API related problem
+            }
         }
 
         /// <summary>
@@ -70,11 +76,17 @@ namespace Travelman
         public bool LocationIsValid(string query)
         {
             string requestUri = "place/autocomplete/json?" + BuildUri(query);
-
-            string responseBody = _client.GetStringAsync(requestUri).Result;
-            JObject json = JObject.Parse(responseBody);
-            JToken token = json.SelectToken("$.status");
-            return token.ToString() == "OK";
+            try
+            {
+                string responseBody = _client.GetStringAsync(requestUri).Result;
+                JObject json = JObject.Parse(responseBody);
+                JToken token = json.SelectToken("$.status");
+                return token.ToString() == "OK";
+            }
+            catch (Exception)
+            {
+                return false; // Connectivity issue or API related problem
+            }
         }
 
         /// <summary>

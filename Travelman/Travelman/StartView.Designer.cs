@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.LocationPanel = new System.Windows.Forms.Panel();
+            this.DefaultFocusLabel = new System.Windows.Forms.Label();
             this.lblInvalidLocation = new MaterialSkin.Controls.MaterialLabel();
             this.btnPlanTrip = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.DefaultFocusLabel = new System.Windows.Forms.Label();
             this.LocationPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,6 +47,14 @@
             this.LocationPanel.Size = new System.Drawing.Size(294, 252);
             this.LocationPanel.TabIndex = 0;
             this.LocationPanel.Click += new System.EventHandler(this.StartView_Click);
+            // 
+            // DefaultFocusLabel
+            // 
+            this.DefaultFocusLabel.AutoSize = true;
+            this.DefaultFocusLabel.Location = new System.Drawing.Point(15, 15);
+            this.DefaultFocusLabel.Name = "DefaultFocusLabel";
+            this.DefaultFocusLabel.Size = new System.Drawing.Size(0, 13);
+            this.DefaultFocusLabel.TabIndex = 1;
             // 
             // lblInvalidLocation
             // 
@@ -67,25 +75,16 @@
             this.btnPlanTrip.AutoSize = true;
             this.btnPlanTrip.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnPlanTrip.Depth = 0;
-            this.btnPlanTrip.Enabled = false;
             this.btnPlanTrip.Icon = null;
             this.btnPlanTrip.Location = new System.Drawing.Point(103, 106);
             this.btnPlanTrip.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnPlanTrip.Name = "btnPlanTrip";
             this.btnPlanTrip.Primary = true;
             this.btnPlanTrip.Size = new System.Drawing.Size(89, 36);
-            this.btnPlanTrip.TabIndex = 3;
+            this.btnPlanTrip.TabIndex = 0;
             this.btnPlanTrip.Text = "Plan trip";
             this.btnPlanTrip.UseVisualStyleBackColor = true;
             this.btnPlanTrip.Click += new System.EventHandler(this.btnPlanTrip_Click);
-            // 
-            // DefaultFocusLabel
-            // 
-            this.DefaultFocusLabel.AutoSize = true;
-            this.DefaultFocusLabel.Location = new System.Drawing.Point(15, 15);
-            this.DefaultFocusLabel.Name = "DefaultFocusLabel";
-            this.DefaultFocusLabel.Size = new System.Drawing.Size(0, 13);
-            this.DefaultFocusLabel.TabIndex = 1;
             // 
             // StartView
             // 

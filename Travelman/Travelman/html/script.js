@@ -5,9 +5,9 @@ function initialize() {
     directionsDisplay = new google.maps.DirectionsRenderer();
     var nl = new google.maps.LatLng(52.3745913, 4.828575); 
     var mapOptions = {
-        zoom:7,
+        zoom: 7,
         center: nl
-    }
+    };
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
     directionsDisplay.setMap(map);
 }
@@ -19,7 +19,7 @@ function showRoute(start, end) {
         travelMode: 'DRIVING'
     };
     directionsService.route(request, function(result, status) {
-        if (status == 'OK') {
+        if (status === 'OK') {
             directionsDisplay.setDirections(result);
         }
     });

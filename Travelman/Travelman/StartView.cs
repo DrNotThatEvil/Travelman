@@ -23,6 +23,8 @@ namespace Travelman
             _start = new LocationSelection(LocationPanel, new Point(0, 0), "Kies een vertrekpunt...", FontAwesome.Sharp.IconChar.FlagO, 3);
             _start.InputChanged += InputsChanged;
             LocationPanel.Controls.Add(_start);
+
+            btnPlanTrip.Select();
         }
 
         /// <summary>
@@ -39,8 +41,9 @@ namespace Travelman
         {
             switch (e.KeyCode)
             {
+                case Keys.Tab:
                 case Keys.Escape:
-                    HideAutocompletionSuggestions();
+                    HideAutocompletion();
                     break;
                 case Keys.Enter:
                     if (_canPlanTrip) { PlanTrip(); }
@@ -50,18 +53,21 @@ namespace Travelman
 
         private void StartView_Click(object sender, EventArgs e)
         {
-            HideAutocompletionSuggestions();
+            HideAutocompletion();
         }
 
-        private void HideAutocompletionSuggestions()
+        private void HideAutocompletion()
         {
-            _start.HideAutocompletionSuggestions();
-            _destination.HideAutocompletionSuggestions();
+            _start.HideAutocompletion();
+            _destination.HideAutocompletion();
         }
 
         private void btnPlanTrip_Click(object sender, EventArgs e)
         {
-            PlanTrip();
+            if (_canPlanTrip)
+            {
+                PlanTrip();
+            }
         }
 
         private void PlanTrip()

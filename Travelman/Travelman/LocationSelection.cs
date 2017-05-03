@@ -131,7 +131,7 @@ namespace Travelman
             tbInput.Text = input;
 
             // Avoid autocomplete popup
-            HideAutocompletionSuggestions();
+            HideAutocompletion();
         }
 
         private bool ShouldAutocomplete()
@@ -153,16 +153,16 @@ namespace Travelman
 
         private void tbInput_Leave(object sender, EventArgs e)
         {
-            HideAutocompletionSuggestions();
+            HideAutocompletion();
         }
 
         private void TimerAutocompleteRequestFinished(object sender, EventArgs e)
         {
             timerAutocompleteRequest.Stop();
-            ShowAutocompletionSuggestions(tbInput.Text);
+            ShowAutocompletion(tbInput.Text);
         }
 
-        private async void ShowAutocompletionSuggestions(string query)
+        private async void ShowAutocompletion(string query)
         {
             List<string> suggestions = await GoogleHttp.Instance().GetAutocompleteList(query);
 
@@ -176,7 +176,7 @@ namespace Travelman
             _autocompleteList.BringToFront();
         }
 
-        public void HideAutocompletionSuggestions()
+        public void HideAutocompletion()
         {
             timerAutocompleteRequest.Stop();
             _autocompleteList.Height = 0;
@@ -186,7 +186,7 @@ namespace Travelman
         {
             tbInput.Text = _autocompleteList.SelectedItems[0].Text;
             _isDirty = false;
-            HideAutocompletionSuggestions();
+            HideAutocompletion();
             AutocompleteOptionSelected?.Invoke(sender, e);
         }
     }

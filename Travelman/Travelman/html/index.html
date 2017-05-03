@@ -5,12 +5,9 @@
     <meta charset="utf-8">
     <title>Travelman Google Maps viewport</title>
     <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
+      #map, #error {
         height: 100%;
       }
-      /* Optional: Makes the sample page fill the window. */
       html, body {
         height: 100%;
         margin: 0;
@@ -20,6 +17,7 @@
   </head>
   <body>
     <div id="map"></div>
+    <div id="error">Unable to connect to the internet. Please check your internet connection.</div>
     <script src="script.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUnZVJgEMRfpppPPPkMAtQ9CyqYbITX_s&callback=initialize"></script>
   </body>

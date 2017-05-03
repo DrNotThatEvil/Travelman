@@ -40,7 +40,7 @@ namespace Travelman
         private void AutocompleteOptionSelected(object sender, EventArgs e)
         {
             if (!_start.IsFilled() || !_destination.IsFilled()) return;
-            HideAutocompletionSuggestions();
+            HideAutocompletion();
             ShowRoute();
         }
 
@@ -49,12 +49,12 @@ namespace Travelman
             switch (e.KeyCode)
             {
                 case Keys.Escape:
-                    HideAutocompletionSuggestions();
+                    HideAutocompletion();
                     break;
                 case Keys.Enter:
                     if (_start.IsFilled() && _destination.IsFilled())
                     {
-                        HideAutocompletionSuggestions();
+                        HideAutocompletion();
                         ShowRoute();
                     }
                     break;
@@ -76,11 +76,11 @@ namespace Travelman
                 FileAccessFromFileUrls = CefState.Enabled,
                 UniversalAccessFromFileUrls = CefState.Enabled
             };
-            _browser.FrameLoadEnd += _browser_FrameLoadEnd;
+            _browser.FrameLoadEnd += BrowserFrameLoadEnd;
             _browser.SendToBack();
         }
 
-        private void _browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
+        private void BrowserFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
             if (e.Frame.IsMain)
             {
@@ -96,10 +96,10 @@ namespace Travelman
             }
         }
 
-        private void HideAutocompletionSuggestions()
+        private void HideAutocompletion()
         {
-            _start.HideAutocompletionSuggestions();
-            _destination.HideAutocompletionSuggestions();
+            _start.HideAutocompletion();
+            _destination.HideAutocompletion();
         }       
     }
 }
