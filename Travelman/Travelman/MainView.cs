@@ -20,12 +20,12 @@ namespace Travelman
             parent.KeyDown += HandleKeys;
 
             _destination = new LocationSelection(scSidebar.Panel1, new Point(0, 48), "", FontAwesome.Sharp.IconChar.FlagCheckered, 5);
-            _destination.SetInput(destination);
+            _destination.Input = destination;
             _destination.AutocompleteOptionSelected += AutocompleteOptionSelected;
             scSidebar.Panel1.Controls.Add(_destination);
 
             _start = new LocationSelection(scSidebar.Panel1, new Point(0, 0), "", FontAwesome.Sharp.IconChar.FlagO, 5);
-            _start.SetInput(start);
+            _start.Input = start;
             _start.AutocompleteOptionSelected += AutocompleteOptionSelected;
             scSidebar.Panel1.Controls.Add(_start);
 
@@ -48,6 +48,7 @@ namespace Travelman
         {
             switch (e.KeyCode)
             {
+                case Keys.Tab:
                 case Keys.Escape:
                     HideAutocompletion();
                     break;
@@ -92,7 +93,7 @@ namespace Travelman
         {
             if (_browser.IsBrowserInitialized)
             {
-                _browser.ExecuteScriptAsync("showRoute", _start.GetInput(), _destination.GetInput());
+                _browser.ExecuteScriptAsync("showRoute", _start.Input, _destination.Input);
             }
         }
 

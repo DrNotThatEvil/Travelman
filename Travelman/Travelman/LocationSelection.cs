@@ -45,6 +45,17 @@ namespace Travelman
 
         public event EventHandler AutocompleteOptionSelected;
 
+        public string Input
+        {
+            get => tbInput.Text;
+            set
+            {
+                tbInput.Text = value;
+                // Avoid autocomplete popup
+                HideAutocompletion();
+            }
+        }
+
         public LocationSelection(Control parent, Point location, string placeholder, IconChar icon, int maxAutcompleteItemsDisplayed)
         {
             if (maxAutcompleteItemsDisplayed <= 0)
@@ -100,6 +111,10 @@ namespace Travelman
             tbInput.LostFocus += AddPlaceholder;
         }
 
+        /// <summary>
+        /// Returns true if the textbox has been altered by the user to be a non-default value.
+        /// </summary>
+        /// <returns></returns>
         public bool IsFilled()
         {
             return tbInput.Text != string.Empty && tbInput.Text != _placeholder;
@@ -119,19 +134,6 @@ namespace Travelman
             {
                 tbInput.Text = _placeholder;
             }
-        }
-
-        public string GetInput()
-        {
-            return tbInput.Text;
-        }
-
-        public void SetInput(string input)
-        {
-            tbInput.Text = input;
-
-            // Avoid autocomplete popup
-            HideAutocompletion();
         }
 
         private bool ShouldAutocomplete()
@@ -165,6 +167,8 @@ namespace Travelman
         private async void ShowAutocompletion(string query)
         {
             List<string> suggestions = await GoogleHttp.Instance().GetAutocompleteList(query);
+
+            if (!ContainsFocus) return; // Handle edge case where user unfocuses control before getting response
 
             _autocompleteList.Items.Clear();
             foreach (string suggestion in suggestions)

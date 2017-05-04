@@ -1,4 +1,5 @@
-﻿using MaterialSkin;
+﻿using System;
+using MaterialSkin;
 using MaterialSkin.Controls;
 using System.Windows.Forms;
 
@@ -8,6 +9,7 @@ namespace Travelman
     {
         private readonly StartView _startView;
         private MainView _mainView;
+        private const int MaxDelay = 3600000;
 
         public MainForm()
         {
@@ -24,22 +26,35 @@ namespace Travelman
             formContent.Controls.Add(_startView);
         }
 
+        
+
         public bool PlanTrip(string start, string destination)
         {
+            if (start.Equals(destination) || delayBetweenRequests.Enabled) return false; // Avoid spam
+
             ILocationProvider locationProvider = GoogleHttp.Instance();
-            // TODO: Handle start == destination
-            // TODO: Trip too long / destination unreachable
-            // TODO: Anti-spam
-            if (!locationProvider.LocationIsValid(start) ||
-                !locationProvider.LocationIsValid(destination)) return false;
 
-            formContent.Controls.Remove(_startView);
-            _startView.Dispose();
+            if (locationProvider.RouteIsPossible(start, destination))
+            {
+                formContent.Controls.Remove(_startView);
+                _startView.Dispose();
 
-            // Show mainview
-            _mainView = new MainView(this, start, destination) { Dock = DockStyle.Fill };
-            formContent.Controls.Add(_mainView);
-            return true;
+                // Show mainview
+                _mainView = new MainView(this, start, destination) {Dock = DockStyle.Fill};
+                formContent.Controls.Add(_mainView);
+                return true;
+            }
+            
+            // Exponential backoff to avoid spamming
+            delayBetweenRequests.Interval = Math.Min(delayBetweenRequests.Interval * 2, MaxDelay);
+
+            delayBetweenRequests.Start();
+            return false;
+        }
+
+        private void delayBetweenRequests_Tick(object sender, System.EventArgs e)
+        {
+            delayBetweenRequests.Enabled = false;
         }
     }
 }

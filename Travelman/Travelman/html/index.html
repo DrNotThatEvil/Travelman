@@ -1,24 +1,15 @@
 ﻿<!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Travelman Google Maps viewport</title>
-    <style>
-      #map, #error {
-        height: 100%;
-      }
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="map"></div>
-    <div id="error">Unable to connect to the internet. Please check your internet connection.</div>
-    <script src="script.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUnZVJgEMRfpppPPPkMAtQ9CyqYbITX_s&callback=initialize"></script>
-  </body>
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <title>Travelman Google Maps viewport</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div id="map"></div>
+        <div id="error"><p>Unable to connect to the internet. Please check your internet connection.</p></div>
+        <script src="script.js"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUnZVJgEMRfpppPPPkMAtQ9CyqYbITX_s&callback=initialize"></script>
+    </body>
 </html>

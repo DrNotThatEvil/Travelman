@@ -1,6 +1,9 @@
 var directionsDisplay, directionsService, map;
 
 function initialize() {
+    // Due to callback being succesful we do not need to check global variable availability
+    document.getElementById("error").style.display = "none";
+    document.getElementById("map").style.display = "block";
     directionsService = new google.maps.DirectionsService();
     directionsDisplay = new google.maps.DirectionsRenderer();
     var nl = new google.maps.LatLng(52.3745913, 4.828575); 

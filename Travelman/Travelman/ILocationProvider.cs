@@ -14,10 +14,12 @@ namespace Travelman
         Task<List<string>> GetAutocompleteList(string query);
 
         /// <summary>
-        /// Validates the current location query string.
+        /// Validates the current locations by checking if they exist and that there is a 
+        /// possible route between them.
         /// </summary>
-        /// <param name="query">The query to be validated</param>
+        /// <param name="start">Starting location query</param>
+        /// <param name="destination">Destination query</param>
         /// <returns>Validity of location query</returns>
-        bool LocationIsValid(string query);
+        bool RouteIsPossible(string start, string destination);
     }
 }

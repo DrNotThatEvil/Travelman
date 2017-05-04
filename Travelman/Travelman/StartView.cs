@@ -72,7 +72,7 @@ namespace Travelman
 
         private void PlanTrip()
         {
-            if (!_parent.PlanTrip(_start.GetInput(), _destination.GetInput()))
+            if (!_parent.PlanTrip(_start.Input, _destination.Input))
             {
                 // Invalid input
                 lblInvalidLocation.Visible = true;

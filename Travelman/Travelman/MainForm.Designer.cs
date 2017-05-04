@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.formContent = new System.Windows.Forms.Panel();
+            this.delayBetweenRequests = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // formContent
@@ -41,6 +43,10 @@
             this.formContent.Name = "formContent";
             this.formContent.Size = new System.Drawing.Size(784, 528);
             this.formContent.TabIndex = 1;
+            // 
+            // delayBetweenRequests
+            // 
+            this.delayBetweenRequests.Tick += new System.EventHandler(this.delayBetweenRequests_Tick);
             // 
             // MainForm
             // 
@@ -58,6 +64,7 @@
 
         #endregion
         private System.Windows.Forms.Panel formContent;
+        private System.Windows.Forms.Timer delayBetweenRequests;
     }
 }
 

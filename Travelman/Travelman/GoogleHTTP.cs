@@ -52,7 +52,8 @@ namespace Travelman
         /// <returns>Asynchronous list of place names</returns>
         public async Task<List<string>> GetAutocompleteList(string query)
         {
-            string requestUri = "place/autocomplete/json?" + BuildUri(query);
+            var parameters = new Dictionary<string, string> {{"input", query}};
+            string requestUri = "place/autocomplete/json?" + BuildUri(parameters);
             try
             {
                 string responseBody = await _client.GetStringAsync(requestUri);
@@ -68,14 +69,20 @@ namespace Travelman
         }
 
         /// <summary>
-        /// Synchronous API call where we geocode the query and check if the status is OK.
-        /// If not then it means google cannot find the specified location.
+        /// Synchronous API call where we check if both locations exist, and if google knows
+        /// a route between the two points.
         /// </summary>
-        /// <param name="query">Location to check</param>
-        /// <returns>Location is valid</returns>
-        public bool LocationIsValid(string query)
+        /// <param name="start">Starting location query</param>
+        /// <param name="destination">Destination query</param>
+        /// <returns>Route is possible</returns>
+        public bool RouteIsPossible(string start, string destination)
         {
-            string requestUri = "place/autocomplete/json?" + BuildUri(query);
+            var parameters = new Dictionary<string, string>
+            {
+                { "origin", start },
+                { "destination", destination }
+            };
+            string requestUri = "directions/json?" + BuildUri(parameters);
             try
             {
                 string responseBody = _client.GetStringAsync(requestUri).Result;
@@ -92,27 +99,17 @@ namespace Travelman
         /// <summary>
         /// Builds a valid and safe URI.
         /// Parameters that are required to use the Google API are automatically added.
+        /// This is used to specify extra parameters.
         /// </summary>
-        /// <param name="query">Input for an API call</param>
-        /// <param name="customParameters">Optional custom parameters</param>
+        /// <param name="parameters">Parameters to add</param>
         /// <returns>A valid and safe URI</returns>
-        private static string BuildUri(string query, Dictionary<string, string> customParameters = null)
+        private static string BuildUri(IDictionary<string, string> parameters)
         {
-            if (customParameters == null)
-            {
-                customParameters = new Dictionary<string, string>();
-            }
-            var parameters =
-                new Dictionary<string, string>(customParameters)
-                {
-                    {"key", Apikey},
-                    {"language", Language},
-                    {"input", query}
-                };
+            parameters.Add("key", Apikey);
+            parameters.Add("language", Language);
 
             var f = new FormUrlEncodedContent(parameters);
-            string uri = f.ReadAsStringAsync().Result;
-            return uri;
+            return f.ReadAsStringAsync().Result;
         }
     }
 }
