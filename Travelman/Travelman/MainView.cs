@@ -22,12 +22,12 @@ namespace Travelman
             _destination = new LocationSelection(scSidebar.Panel1, new Point(0, 48), "", FontAwesome.Sharp.IconChar.FlagCheckered, 5);
             _destination.Input = destination;
             _destination.AutocompleteOptionSelected += AutocompleteOptionSelected;
-            scSidebar.Panel1.Controls.Add(_destination);
+            scSidebarHorizontal.Panel1.Controls.Add(_destination);
 
             _start = new LocationSelection(scSidebar.Panel1, new Point(0, 0), "", FontAwesome.Sharp.IconChar.FlagO, 5);
             _start.Input = start;
             _start.AutocompleteOptionSelected += AutocompleteOptionSelected;
-            scSidebar.Panel1.Controls.Add(_start);
+            scSidebarHorizontal.Panel1.Controls.Add(_start);
 
             scSidebar.Panel1Collapsed = !SidebarShown;
         }

@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Travelman
 {
-    class GoogleHttp : ILocationProvider
+    class GoogleHttp : ILocationProvider, IPlacesProvider
     {
         private const string Apikey = "AIzaSyBUnZVJgEMRfpppPPPkMAtQ9CyqYbITX_s";
         private const string BaseAddress = "https://maps.googleapis.com/maps/api/";
@@ -69,6 +69,30 @@ namespace Travelman
         }
 
         /// <summary>
+        /// Get the latitude and longitude of the specified address.
+        /// Returns 0 and 0 if it cannot find the place.
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns>Latitude, longitude</returns>
+        public Tuple<float, float> Geocode(string address)
+        {
+            var parameters = new Dictionary<string, string> { { "address", address } };
+            string requestUri = "geocode/json?" + BuildUri(parameters);
+            try
+            {
+                string responseBody = _client.GetStringAsync(requestUri).Result;
+                JObject json = JObject.Parse(responseBody);
+                float lat = json.SelectToken("$.results[0].geometry.location.lat").Value<float>();
+                float lng = json.SelectToken("$.results[0].geometry.location.lng").Value<float>();
+                return new Tuple<float, float>(lat, lng);
+            }
+            catch (Exception)
+            {
+                return new Tuple<float, float>(0.0f, 0.0f); // Connectivity issue, API related problem or unknown address
+            }
+        }
+
+        /// <summary>
         /// Synchronous API call where we check if both locations exist, and if google knows
         /// a route between the two points.
         /// </summary>
@@ -110,6 +134,11 @@ namespace Travelman
 
             var f = new FormUrlEncodedContent(parameters);
             return f.ReadAsStringAsync().Result;
+        }
+
+        public ICollection<Place> GetNearbyPlaces(string address)
+        {
+            throw new NotImplementedException();
         }
     }
 }
