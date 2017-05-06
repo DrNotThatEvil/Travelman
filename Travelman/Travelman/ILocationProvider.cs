@@ -29,6 +29,6 @@ namespace Travelman
         /// </summary>
         /// <param name="address"></param>
         /// <returns>Latitude, longitude</returns>
-        Tuple<float, float> Geocode(string address);
+        GeoCode Geocode(string address);
     }
 }

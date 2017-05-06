@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
@@ -86,6 +88,7 @@ namespace Travelman
             if (e.Frame.IsMain)
             {
                 ShowRoute();
+                GetNearbyPlaces();
             }
         }
 
@@ -95,6 +98,11 @@ namespace Travelman
             {
                 _browser.ExecuteScriptAsync("showRoute", _start.Input, _destination.Input);
             }
+        }
+
+        private async void GetNearbyPlaces()
+        {
+            ICollection<Place> places = await GoogleHttp.Instance().GetNearbyPlaces(_start.Input);
         }
 
         private void HideAutocompletion()

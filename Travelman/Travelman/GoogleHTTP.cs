@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Documents;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Travelman
@@ -11,6 +14,12 @@ namespace Travelman
         private const string Apikey = "AIzaSyBUnZVJgEMRfpppPPPkMAtQ9CyqYbITX_s";
         private const string BaseAddress = "https://maps.googleapis.com/maps/api/";
         private const string Language = "nl";
+
+        /// <summary>
+        /// Include nearby places within x meters of location.
+        /// API does not support a radius bigger than 50 kilometers.
+        /// </summary>
+        private const int MaximumNearbyRadius = 50000;
 
         /// <summary>
         /// Used for communicating with an external HTTP service.
@@ -74,7 +83,7 @@ namespace Travelman
         /// </summary>
         /// <param name="address"></param>
         /// <returns>Latitude, longitude</returns>
-        public Tuple<float, float> Geocode(string address)
+        public GeoCode Geocode(string address)
         {
             var parameters = new Dictionary<string, string> { { "address", address } };
             string requestUri = "geocode/json?" + BuildUri(parameters);
@@ -82,13 +91,13 @@ namespace Travelman
             {
                 string responseBody = _client.GetStringAsync(requestUri).Result;
                 JObject json = JObject.Parse(responseBody);
-                float lat = json.SelectToken("$.results[0].geometry.location.lat").Value<float>();
-                float lng = json.SelectToken("$.results[0].geometry.location.lng").Value<float>();
-                return new Tuple<float, float>(lat, lng);
+                JToken token = json.SelectToken("$.results[0].geometry.location");
+                GeoCode code = token.ToObject<GeoCode>();
+                return code;
             }
             catch (Exception)
             {
-                return new Tuple<float, float>(0.0f, 0.0f); // Connectivity issue, API related problem or unknown address
+                return new GeoCode(); // Connectivity issue, API related problem or unknown address
             }
         }
 
@@ -136,9 +145,40 @@ namespace Travelman
             return f.ReadAsStringAsync().Result;
         }
 
-        public ICollection<Place> GetNearbyPlaces(string address)
+        /// <summary>
+        /// Get places nearby the specified address and within the radius. Prominent places outside the radius
+        /// may also be shown. Radius may not exceed the MaximumNearbyRadius. The API returns 20 results by default.
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        public async Task<ICollection<Place>> GetNearbyPlaces(string address, int radius = MaximumNearbyRadius)
         {
-            throw new NotImplementedException();
+            if (radius > MaximumNearbyRadius) throw new ArgumentOutOfRangeException();
+
+            // Get geocode (latitude, longitude) of address
+            GeoCode location = Geocode(address);
+
+            // Invalid address
+            if (location.Equals(new GeoCode())) return new List<Place>(); 
+
+            var parameters = new Dictionary<string, string>
+            {
+                { "location", location.ToString() },
+                { "radius", MaximumNearbyRadius.ToString() }
+            };
+            string requestUri = "place/nearbysearch/json?" + BuildUri(parameters);
+            try
+            {
+                string responseBody = await _client.GetStringAsync(requestUri);
+                JObject json = JObject.Parse(responseBody);
+                IEnumerable<JToken> tokens = json.SelectTokens("$.results[*]");
+                return tokens.Select(token => token.ToObject<Place>()).ToList();
+            }
+            catch (Exception)
+            {
+                return new List<Place>(); // Connectivity issue or API related problem
+            }
         }
     }
 }
