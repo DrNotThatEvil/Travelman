@@ -18,6 +18,7 @@ namespace Travelman
             lblName.Text = place.Name;
             lblAddress.Text = place.Vicinity;
             pbLocationIcon.ImageLocation = place.IconUrl;
+            Width -= SystemInformation.VerticalScrollBarWidth;
         }
     }
 }

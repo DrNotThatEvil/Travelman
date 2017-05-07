@@ -115,7 +115,7 @@ namespace Travelman
                 Invoke((MethodInvoker)delegate {
                     scSidebarHorizontal.Panel2.Controls.Add(item); // Add control on UI thread
                 });
-                location.Y += 96;
+                location.Y += 98;
             }
         }
 

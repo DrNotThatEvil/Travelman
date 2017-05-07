@@ -84,7 +84,7 @@
             // 
             // pbLocationPicture
             // 
-            this.pbLocationPicture.Location = new System.Drawing.Point(195, 3);
+            this.pbLocationPicture.Location = new System.Drawing.Point(192, 3);
             this.pbLocationPicture.Name = "pbLocationPicture";
             this.pbLocationPicture.Size = new System.Drawing.Size(90, 90);
             this.pbLocationPicture.TabIndex = 3;
@@ -98,7 +98,7 @@
             this.lblNumOfReviews.Location = new System.Drawing.Point(133, 69);
             this.lblNumOfReviews.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblNumOfReviews.Name = "lblNumOfReviews";
-            this.lblNumOfReviews.Size = new System.Drawing.Size(56, 24);
+            this.lblNumOfReviews.Size = new System.Drawing.Size(53, 24);
             this.lblNumOfReviews.TabIndex = 4;
             this.lblNumOfReviews.Text = "(999+)";
             this.lblNumOfReviews.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -147,6 +147,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.pictureBox5);
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.pictureBox3);

@@ -84,6 +84,7 @@
             // scSidebarHorizontal.Panel2
             // 
             this.scSidebarHorizontal.Panel2.AutoScroll = true;
+            this.scSidebarHorizontal.Panel2.BackColor = System.Drawing.SystemColors.Control;
             this.scSidebarHorizontal.Size = new System.Drawing.Size(288, 460);
             this.scSidebarHorizontal.SplitterDistance = 96;
             this.scSidebarHorizontal.TabIndex = 0;
