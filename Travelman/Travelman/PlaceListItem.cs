@@ -12,9 +12,12 @@ namespace Travelman
 {
     public partial class PlaceListItem : UserControl
     {
-        public PlaceListItem()
+        public PlaceListItem(Place place)
         {
             InitializeComponent();
+            lblName.Text = place.Name;
+            lblAddress.Text = place.Vicinity;
+            pbLocationIcon.ImageLocation = place.IconUrl;
         }
     }
 }

@@ -80,6 +80,10 @@
             this.scSidebarHorizontal.Location = new System.Drawing.Point(0, 0);
             this.scSidebarHorizontal.Name = "scSidebarHorizontal";
             this.scSidebarHorizontal.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // scSidebarHorizontal.Panel2
+            // 
+            this.scSidebarHorizontal.Panel2.AutoScroll = true;
             this.scSidebarHorizontal.Size = new System.Drawing.Size(288, 460);
             this.scSidebarHorizontal.SplitterDistance = 96;
             this.scSidebarHorizontal.TabIndex = 0;

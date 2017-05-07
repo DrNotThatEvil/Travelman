@@ -3,7 +3,7 @@
 namespace Travelman
 {
     [JsonConverter(typeof(GeoCodeConverter))]
-    class GeoCode
+    public class GeoCode
     {
         public float Latitude { get; set; }
         public float Longitude { get; set; }

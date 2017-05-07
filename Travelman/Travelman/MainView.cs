@@ -102,7 +102,21 @@ namespace Travelman
 
         private async void GetNearbyPlaces()
         {
+            // Clear nearby places list
+            Invoke((MethodInvoker)delegate {
+                scSidebarHorizontal.Panel2.Controls.Clear(); // Invoke to call method on UI thread
+            });
+
             ICollection<Place> places = await GoogleHttp.Instance().GetNearbyPlaces(_start.Input);
+            Point location = new Point();
+            foreach (Place place in places)
+            {
+                PlaceListItem item = new PlaceListItem(place) { Location = location };
+                Invoke((MethodInvoker)delegate {
+                    scSidebarHorizontal.Panel2.Controls.Add(item); // Add control on UI thread
+                });
+                location.Y += 96;
+            }
         }
 
         private void HideAutocompletion()

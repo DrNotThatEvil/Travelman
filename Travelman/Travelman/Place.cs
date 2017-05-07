@@ -3,7 +3,7 @@
 namespace Travelman
 {
     [JsonConverter(typeof(PlaceConverter))]
-    class Place
+    public class Place
     {
         public string Name { get; set; }
         public string Type { get; set; }
