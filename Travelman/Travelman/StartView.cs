@@ -16,11 +16,13 @@ namespace Travelman
             _parent.KeyDown += HandleKeys;
             InitializeComponent();
 
-            _destination = new LocationSelection(LocationPanel, new Point(0, 48), "Kies een bestemming...", FontAwesome.Sharp.IconChar.FlagCheckered, 3);
+            _destination = new LocationSelection(LocationPanel, new Point(0, 48), "Kies een bestemming...",
+                FontAwesome.Sharp.IconChar.FlagCheckered, 3);
             _destination.InputChanged += InputsChanged;
             LocationPanel.Controls.Add(_destination);
 
-            _start = new LocationSelection(LocationPanel, new Point(0, 0), "Kies een vertrekpunt...", FontAwesome.Sharp.IconChar.FlagO, 3);
+            _start = new LocationSelection(LocationPanel, new Point(0, 0), "Kies een vertrekpunt...",
+                FontAwesome.Sharp.IconChar.FlagO, 3);
             _start.InputChanged += InputsChanged;
             LocationPanel.Controls.Add(_start);
 
@@ -46,7 +48,10 @@ namespace Travelman
                     HideAutocompletion();
                     break;
                 case Keys.Enter:
-                    if (_canPlanTrip) { PlanTrip(); }
+                    if (_canPlanTrip)
+                    {
+                        PlanTrip();
+                    }
                     break;
             }
         }

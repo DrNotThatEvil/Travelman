@@ -35,6 +35,11 @@ namespace Travelman
         private readonly MaterialListView _autocompleteList;
 
         /// <summary>
+        /// Used in gathering autocompletion suggestions.
+        /// </summary>
+        private readonly ILocationProvider _locationProvider;
+
+        /// <summary>
         /// Event raised by this user control when tbInput text has been changed by the program or the user.
         /// </summary>
         public event EventHandler InputChanged
@@ -56,7 +61,8 @@ namespace Travelman
             }
         }
 
-        public LocationSelection(Control parent, Point location, string placeholder, IconChar icon, int maxAutcompleteItemsDisplayed)
+        public LocationSelection(Control parent, Point location, string placeholder, IconChar icon,
+            int maxAutcompleteItemsDisplayed)
         {
             if (maxAutcompleteItemsDisplayed <= 0)
             {
@@ -68,6 +74,8 @@ namespace Travelman
             Location = location;
 
             InitializeComponent();
+
+            _locationProvider = GoogleHttp.Instance();
 
             // Create list view at parent
             Point listViewLocation = new Point(panelInput.Location.X, panelInput.Location.Y + panelInput.Size.Height);
@@ -138,7 +146,10 @@ namespace Travelman
 
         private bool ShouldAutocomplete()
         {
-            if (tbInput.Text != _placeholder) { _isDirty = true; }
+            if (tbInput.Text != _placeholder)
+            {
+                _isDirty = true;
+            }
 
             bool isEmpty = tbInput.Text == string.Empty;
 
@@ -166,7 +177,7 @@ namespace Travelman
 
         private async void ShowAutocompletion(string query)
         {
-            List<string> suggestions = await GoogleHttp.Instance().GetAutocompleteList(query);
+            List<string> suggestions = await _locationProvider.GetAutocompleteList(query);
 
             if (!ContainsFocus) return; // Handle edge case where user unfocuses control before getting response
 

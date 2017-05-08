@@ -14,7 +14,8 @@ namespace Travelman
         public float Rating { get; set; } // A rating of -1 is used for places where ratings are not applicable
         public GeoCode GeoCode { get; set; }
 
-        public Place(string name, string type, string iconUrl, string photoReference, string vicinity, float rating, GeoCode geoCode)
+        public Place(string name, string type, string iconUrl, string photoReference, string vicinity, float rating,
+            GeoCode geoCode)
         {
             Name = name;
             Type = type;

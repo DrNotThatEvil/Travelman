@@ -15,7 +15,8 @@ namespace Travelman
             return objectType == typeof(Place);
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer)
         {
             JObject obj = JObject.Load(reader);
 

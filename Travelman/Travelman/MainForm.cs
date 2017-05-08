@@ -9,6 +9,12 @@ namespace Travelman
     {
         private readonly StartView _startView;
         private MainView _mainView;
+        private readonly ILocationProvider _locationProvider;
+
+        /// <summary>
+        /// The maximum amount of time in milliseconds between API requests, used by the exponential fallback technique.
+        /// 3600000 ms = 1 hour
+        /// </summary>
         private const int MaxDelay = 3600000;
 
         public MainForm()
@@ -17,24 +23,24 @@ namespace Travelman
             MaterialSkinManager m = MaterialSkinManager.Instance;
             m.AddFormToManage(this);
             m.Theme = MaterialSkinManager.Themes.LIGHT;
-            m.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+            m.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500,
+                Accent.LightBlue200, TextShade.WHITE);
 
             InitializeComponent();
 
+            _locationProvider = GoogleHttp.Instance();
+
             // Show startview
-            _startView = new StartView(this) { Dock = DockStyle.Fill };
+            _startView = new StartView(this) {Dock = DockStyle.Fill};
             formContent.Controls.Add(_startView);
         }
 
-        
 
         public bool PlanTrip(string start, string destination)
         {
             if (start.Equals(destination) || delayBetweenRequests.Enabled) return false; // Avoid spam
 
-            ILocationProvider locationProvider = GoogleHttp.Instance();
-
-            if (locationProvider.RouteIsPossible(start, destination))
+            if (_locationProvider.RouteIsPossible(start, destination))
             {
                 formContent.Controls.Remove(_startView);
                 _startView.Dispose();
@@ -44,7 +50,7 @@ namespace Travelman
                 formContent.Controls.Add(_mainView);
                 return true;
             }
-            
+
             // Exponential backoff to avoid spamming
             delayBetweenRequests.Interval = Math.Min(delayBetweenRequests.Interval * 2, MaxDelay);
 
@@ -52,7 +58,7 @@ namespace Travelman
             return false;
         }
 
-        private void delayBetweenRequests_Tick(object sender, System.EventArgs e)
+        private void delayBetweenRequests_Tick(object sender, EventArgs e)
         {
             delayBetweenRequests.Enabled = false;
         }

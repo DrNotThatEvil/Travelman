@@ -15,13 +15,14 @@ namespace Travelman
             return objectType == typeof(Place);
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer)
         {
             JObject obj = JObject.Load(reader);
 
             float latitude = obj["lat"].Value<float>();
             float longitude = obj["lng"].Value<float>();
-            
+
             return new GeoCode(latitude, longitude);
         }
 

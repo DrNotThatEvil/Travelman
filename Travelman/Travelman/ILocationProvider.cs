@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Travelman
 {
-    interface ILocationProvider
+    internal interface ILocationProvider
     {
         /// <summary>
         /// Get a list of autocompletion suggestions from the specified query string.

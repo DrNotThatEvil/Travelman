@@ -1,13 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Documents;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Travelman
@@ -45,7 +40,7 @@ namespace Travelman
         /// </summary>
         private GoogleHttp()
         {
-            _client = new HttpClient { BaseAddress = new Uri(BaseAddress) };
+            _client = new HttpClient {BaseAddress = new Uri(BaseAddress)};
         }
 
         /// <summary>
@@ -94,7 +89,7 @@ namespace Travelman
         /// <returns>Latitude, longitude</returns>
         public GeoCode Geocode(string address)
         {
-            var parameters = new Dictionary<string, string> { { "address", address } };
+            var parameters = new Dictionary<string, string> {{"address", address}};
             string requestUri = "geocode/json?" + BuildUri(parameters);
             try
             {
@@ -121,8 +116,8 @@ namespace Travelman
         {
             var parameters = new Dictionary<string, string>
             {
-                { "origin", start },
-                { "destination", destination }
+                {"origin", start},
+                {"destination", destination}
             };
             string requestUri = "directions/json?" + BuildUri(parameters);
             try
@@ -170,12 +165,12 @@ namespace Travelman
             GeoCode location = Geocode(address);
 
             // Invalid address
-            if (location.Equals(new GeoCode())) return new List<Place>(); 
+            if (location.Equals(new GeoCode())) return new List<Place>();
 
             var parameters = new Dictionary<string, string>
             {
-                { "location", location.ToString() },
-                { "radius", radius.ToString() }
+                {"location", location.ToString()},
+                {"radius", radius.ToString()}
             };
             string requestUri = "place/nearbysearch/json?" + BuildUri(parameters);
             try
@@ -212,9 +207,9 @@ namespace Travelman
                 if (string.IsNullOrEmpty(place.PhotoReference)) continue;
                 var parameters = new Dictionary<string, string>
                 {
-                    { "photoreference", place.PhotoReference },
-                    { "maxheight", maxHeight.ToString() },
-                    { "maxwidth", maxWidth.ToString() }
+                    {"photoreference", place.PhotoReference},
+                    {"maxheight", maxHeight.ToString()},
+                    {"maxwidth", maxWidth.ToString()}
                 };
                 string requestUri = "place/photo?" + BuildUri(parameters);
                 place.PhotoUrl = BaseAddress + requestUri;

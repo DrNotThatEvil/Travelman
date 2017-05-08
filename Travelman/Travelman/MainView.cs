@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using CefSharp;
@@ -13,6 +12,7 @@ namespace Travelman
         private const bool SidebarShown = true;
         private ChromiumWebBrowser _browser;
         private readonly LocationSelection _start, _destination;
+        private readonly IPlacesProvider _placesProvider;
 
         public MainView(Control parent, string start, string destination)
         {
@@ -21,17 +21,24 @@ namespace Travelman
             Disposed += MainView_Disposed;
             parent.KeyDown += HandleKeys;
 
-            _destination = new LocationSelection(scSidebar.Panel1, new Point(0, 48), "", FontAwesome.Sharp.IconChar.FlagCheckered, 5);
-            _destination.Input = destination;
+            _destination = new LocationSelection(scSidebar.Panel1, new Point(0, 48), "",
+                FontAwesome.Sharp.IconChar.FlagCheckered, 5)
+            {
+                Input = destination
+            };
             _destination.AutocompleteOptionSelected += AutocompleteOptionSelected;
             scSidebarHorizontal.Panel1.Controls.Add(_destination);
 
-            _start = new LocationSelection(scSidebar.Panel1, new Point(0, 0), "", FontAwesome.Sharp.IconChar.FlagO, 5);
-            _start.Input = start;
+            _start = new LocationSelection(scSidebar.Panel1, new Point(0, 0), "", FontAwesome.Sharp.IconChar.FlagO, 5)
+            {
+                Input = start
+            };
             _start.AutocompleteOptionSelected += AutocompleteOptionSelected;
             scSidebarHorizontal.Panel1.Controls.Add(_start);
 
             scSidebar.Panel1Collapsed = !SidebarShown;
+
+            _placesProvider = GoogleHttp.Instance();
         }
 
         private static void MainView_Disposed(object sender, EventArgs e)
@@ -72,7 +79,7 @@ namespace Travelman
             _browser = new ChromiumWebBrowser(url);
             scSidebar.Panel2.Controls.Add(_browser);
             _browser.Dock = DockStyle.Fill;
-            
+
             // Allow local files
             _browser.BrowserSettings = new BrowserSettings()
             {
@@ -103,17 +110,19 @@ namespace Travelman
         private async void GetNearbyPlaces()
         {
             // Clear nearby places list
-            Invoke((MethodInvoker)delegate {
+            Invoke((MethodInvoker) delegate
+            {
                 scSidebarHorizontal.Panel2.Controls.Clear(); // Invoke to call method on UI thread
             });
 
-            ICollection<Place> places = await GoogleHttp.Instance().GetNearbyPlaces(_start.Input, 1000);
-            places = GoogleHttp.Instance().GetPhotosOfPlaces(places, 90, 90);
+            ICollection<Place> places = await _placesProvider.GetNearbyPlaces(_start.Input, 1000);
+            places = _placesProvider.GetPhotosOfPlaces(places, 90, 90);
             Point location = new Point();
             foreach (Place place in places)
             {
-                PlaceListItem item = new PlaceListItem(place) { Location = location };
-                Invoke((MethodInvoker)delegate {
+                PlaceListItem item = new PlaceListItem(place) {Location = location};
+                Invoke((MethodInvoker) delegate
+                {
                     scSidebarHorizontal.Panel2.Controls.Add(item); // Add control on UI thread
                 });
                 location.Y += 98;
@@ -124,6 +133,6 @@ namespace Travelman
         {
             _start.HideAutocompletion();
             _destination.HideAutocompletion();
-        }       
+        }
     }
 }
