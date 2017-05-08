@@ -107,7 +107,8 @@ namespace Travelman
                 scSidebarHorizontal.Panel2.Controls.Clear(); // Invoke to call method on UI thread
             });
 
-            ICollection<Place> places = await GoogleHttp.Instance().GetNearbyPlaces(_start.Input);
+            ICollection<Place> places = await GoogleHttp.Instance().GetNearbyPlaces(_start.Input, 1000);
+            places = GoogleHttp.Instance().GetPhotosOfPlaces(places, 90, 90);
             Point location = new Point();
             foreach (Place place in places)
             {

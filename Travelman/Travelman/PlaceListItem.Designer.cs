@@ -32,7 +32,6 @@
             this.pbLocationIcon = new System.Windows.Forms.PictureBox();
             this.lblAddress = new MaterialSkin.Controls.MaterialLabel();
             this.pbLocationPicture = new System.Windows.Forms.PictureBox();
-            this.lblNumOfReviews = new MaterialSkin.Controls.MaterialLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
@@ -52,12 +51,12 @@
             this.lblName.Depth = 0;
             this.lblName.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblName.Location = new System.Drawing.Point(41, 3);
+            this.lblName.Location = new System.Drawing.Point(41, 9);
             this.lblName.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(148, 32);
+            this.lblName.Size = new System.Drawing.Size(145, 19);
             this.lblName.TabIndex = 0;
-            this.lblName.Text = "Location name";
+            this.lblName.Text = "Place name";
             this.lblName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pbLocationIcon
@@ -74,10 +73,10 @@
             this.lblAddress.Depth = 0;
             this.lblAddress.Font = new System.Drawing.Font("Roboto", 11F);
             this.lblAddress.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblAddress.Location = new System.Drawing.Point(3, 38);
+            this.lblAddress.Location = new System.Drawing.Point(3, 42);
             this.lblAddress.MouseState = MaterialSkin.MouseState.HOVER;
             this.lblAddress.Name = "lblAddress";
-            this.lblAddress.Size = new System.Drawing.Size(186, 23);
+            this.lblAddress.Size = new System.Drawing.Size(183, 19);
             this.lblAddress.TabIndex = 2;
             this.lblAddress.Text = "Address";
             this.lblAddress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -89,19 +88,6 @@
             this.pbLocationPicture.Size = new System.Drawing.Size(90, 90);
             this.pbLocationPicture.TabIndex = 3;
             this.pbLocationPicture.TabStop = false;
-            // 
-            // lblNumOfReviews
-            // 
-            this.lblNumOfReviews.Depth = 0;
-            this.lblNumOfReviews.Font = new System.Drawing.Font("Roboto", 11F);
-            this.lblNumOfReviews.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblNumOfReviews.Location = new System.Drawing.Point(133, 69);
-            this.lblNumOfReviews.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblNumOfReviews.Name = "lblNumOfReviews";
-            this.lblNumOfReviews.Size = new System.Drawing.Size(53, 24);
-            this.lblNumOfReviews.TabIndex = 4;
-            this.lblNumOfReviews.Text = "(999+)";
-            this.lblNumOfReviews.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox1
             // 
@@ -153,7 +139,6 @@
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.lblNumOfReviews);
             this.Controls.Add(this.pbLocationPicture);
             this.Controls.Add(this.lblAddress);
             this.Controls.Add(this.pbLocationIcon);
@@ -177,7 +162,6 @@
         private System.Windows.Forms.PictureBox pbLocationIcon;
         private MaterialSkin.Controls.MaterialLabel lblAddress;
         private System.Windows.Forms.PictureBox pbLocationPicture;
-        private MaterialSkin.Controls.MaterialLabel lblNumOfReviews;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox3;

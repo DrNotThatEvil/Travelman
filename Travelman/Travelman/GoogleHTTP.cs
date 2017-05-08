@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System;
+using System.Globalization;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using Newtonsoft.Json;
@@ -14,6 +17,12 @@ namespace Travelman
         private const string Apikey = "AIzaSyBUnZVJgEMRfpppPPPkMAtQ9CyqYbITX_s";
         private const string BaseAddress = "https://maps.googleapis.com/maps/api/";
         private const string Language = "nl";
+
+        /// <summary>
+        /// All photos requested from the Google Places API should be at maximum these dimensions.
+        /// 1600 is the limit defined by the API.
+        /// </summary>
+        private const int PhotoMaxHeight = 1600, PhotoMaxWidth = 1600;
 
         /// <summary>
         /// Include nearby places within x meters of location.
@@ -148,6 +157,7 @@ namespace Travelman
         /// <summary>
         /// Get places nearby the specified address and within the radius. Prominent places outside the radius
         /// may also be shown. Radius may not exceed the MaximumNearbyRadius. The API returns 20 results by default.
+        /// Note that this method is asynchronous.
         /// </summary>
         /// <param name="address"></param>
         /// <param name="radius"></param>
@@ -165,7 +175,7 @@ namespace Travelman
             var parameters = new Dictionary<string, string>
             {
                 { "location", location.ToString() },
-                { "radius", MaximumNearbyRadius.ToString() }
+                { "radius", radius.ToString() }
             };
             string requestUri = "place/nearbysearch/json?" + BuildUri(parameters);
             try
@@ -179,6 +189,38 @@ namespace Travelman
             {
                 return new List<Place>(); // Connectivity issue or API related problem
             }
+        }
+
+        /// <summary>
+        /// Fills every Place with a photo image URL which is actually a valid API-call.
+        /// Be careful: Each time you want to show that photo you actually do the aforementioned API-call.
+        /// You can quickly go over the API quota this way.
+        /// </summary>
+        /// <param name="places"></param>
+        /// <param name="maxHeight"></param>
+        /// <param name="maxWidth"></param>
+        /// <returns></returns>
+        public ICollection<Place> GetPhotosOfPlaces(ICollection<Place> places, int maxHeight, int maxWidth)
+        {
+            if (maxHeight < 0 || maxWidth < 0 || maxHeight > PhotoMaxHeight || maxWidth > PhotoMaxWidth)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            foreach (Place place in places)
+            {
+                if (string.IsNullOrEmpty(place.PhotoReference)) continue;
+                var parameters = new Dictionary<string, string>
+                {
+                    { "photoreference", place.PhotoReference },
+                    { "maxheight", maxHeight.ToString() },
+                    { "maxwidth", maxWidth.ToString() }
+                };
+                string requestUri = "place/photo?" + BuildUri(parameters);
+                place.PhotoUrl = BaseAddress + requestUri;
+            }
+
+            return places;
         }
     }
 }

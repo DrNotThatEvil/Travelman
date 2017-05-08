@@ -8,7 +8,7 @@ namespace Travelman
     {
         /// <summary>
         /// Get a list of autocompletion suggestions from the specified query string.
-        /// Asynchronous method call.
+        /// Asynchronous operation.
         /// </summary>
         /// <param name="query">The query to autocomplete</param>
         /// <returns>A list of autocompletion suggestions</returns>
