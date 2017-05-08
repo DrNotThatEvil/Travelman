@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Travelman
 {
-    internal interface ILocationProvider
+    public interface ILocationProvider
     {
         /// <summary>
         /// Get a list of autocompletion suggestions from the specified query string.

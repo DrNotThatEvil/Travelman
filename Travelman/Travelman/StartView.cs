@@ -10,18 +10,17 @@ namespace Travelman
         private readonly LocationSelection _start, _destination;
         private bool _canPlanTrip;
 
-        public StartView(MainForm parent)
+        public StartView(MainForm parent, ILocationProvider locationProvider)
         {
             _parent = parent;
-            _parent.KeyDown += HandleKeys;
             InitializeComponent();
 
-            _destination = new LocationSelection(LocationPanel, new Point(0, 48), "Kies een bestemming...",
+            _destination = new LocationSelection(LocationPanel, locationProvider, new Point(0, 48), "Kies een bestemming...",
                 FontAwesome.Sharp.IconChar.FlagCheckered, 3);
             _destination.InputChanged += InputsChanged;
             LocationPanel.Controls.Add(_destination);
 
-            _start = new LocationSelection(LocationPanel, new Point(0, 0), "Kies een vertrekpunt...",
+            _start = new LocationSelection(LocationPanel, locationProvider, new Point(0, 0), "Kies een vertrekpunt...",
                 FontAwesome.Sharp.IconChar.FlagO, 3);
             _start.InputChanged += InputsChanged;
             LocationPanel.Controls.Add(_start);
@@ -39,7 +38,7 @@ namespace Travelman
             btnPlanTrip.Enabled = _canPlanTrip = _start.IsFilled() && _destination.IsFilled();
         }
 
-        private void HandleKeys(object sender, KeyEventArgs e)
+        public void HandleKeys(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -69,10 +68,7 @@ namespace Travelman
 
         private void btnPlanTrip_Click(object sender, EventArgs e)
         {
-            if (_canPlanTrip)
-            {
-                PlanTrip();
-            }
+            if (_canPlanTrip) PlanTrip();
         }
 
         private void PlanTrip()

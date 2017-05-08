@@ -10,6 +10,7 @@ namespace Travelman
         private readonly StartView _startView;
         private MainView _mainView;
         private readonly ILocationProvider _locationProvider;
+        private readonly IPlacesProvider _placesProvider;
 
         /// <summary>
         /// The maximum amount of time in milliseconds between API requests, used by the exponential fallback technique.
@@ -20,7 +21,7 @@ namespace Travelman
         public MainForm()
         {
             // Initialize MaterialSkinManager
-            MaterialSkinManager m = MaterialSkinManager.Instance;
+            var m = MaterialSkinManager.Instance;
             m.AddFormToManage(this);
             m.Theme = MaterialSkinManager.Themes.LIGHT;
             m.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500,
@@ -29,9 +30,11 @@ namespace Travelman
             InitializeComponent();
 
             _locationProvider = GoogleHttp.Instance();
+            _placesProvider = GoogleHttp.Instance();
 
             // Show startview
-            _startView = new StartView(this) {Dock = DockStyle.Fill};
+            _startView = new StartView(this, _locationProvider) {Dock = DockStyle.Fill};
+            KeyDown += _startView.HandleKeys;
             formContent.Controls.Add(_startView);
         }
 
@@ -46,7 +49,7 @@ namespace Travelman
                 _startView.Dispose();
 
                 // Show mainview
-                _mainView = new MainView(this, start, destination) {Dock = DockStyle.Fill};
+                _mainView = new MainView(this, _locationProvider, _placesProvider, start, destination) {Dock = DockStyle.Fill};
                 formContent.Controls.Add(_mainView);
                 return true;
             }

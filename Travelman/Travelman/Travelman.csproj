@@ -81,15 +81,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GeoCode.cs" />
-    <Compile Include="GeoCodeConverter.cs" />
-    <Compile Include="GoogleHttp.cs" />
-    <Compile Include="ILocationProvider.cs" />
-    <Compile Include="IPlacesProvider.cs" />
-    <Compile Include="LocationSelection.cs">
+    <Compile Include="Data\GeoCode.cs" />
+    <Compile Include="Data\GeoCodeConverter.cs" />
+    <Compile Include="API\GoogleHttp.cs" />
+    <Compile Include="API\ILocationProvider.cs" />
+    <Compile Include="API\IPlacesProvider.cs" />
+    <Compile Include="Components\LocationSelection.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LocationSelection.Designer.cs">
+    <Compile Include="Components\LocationSelection.Designer.cs">
       <DependentUpon>LocationSelection.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
@@ -104,12 +104,12 @@
     <Compile Include="MainView.Designer.cs">
       <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Place.cs" />
-    <Compile Include="PlaceConverter.cs" />
-    <Compile Include="PlaceListItem.cs">
+    <Compile Include="Data\Place.cs" />
+    <Compile Include="Data\PlaceConverter.cs" />
+    <Compile Include="Components\PlaceListItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PlaceListItem.Designer.cs">
+    <Compile Include="Components\PlaceListItem.Designer.cs">
       <DependentUpon>PlaceListItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -120,7 +120,7 @@
     <Compile Include="StartView.Designer.cs">
       <DependentUpon>StartView.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="LocationSelection.resx">
+    <EmbeddedResource Include="Components\LocationSelection.resx">
       <DependentUpon>LocationSelection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
@@ -129,7 +129,7 @@
     <EmbeddedResource Include="MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PlaceListItem.resx">
+    <EmbeddedResource Include="Components\PlaceListItem.resx">
       <DependentUpon>PlaceListItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

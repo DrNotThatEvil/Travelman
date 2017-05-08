@@ -61,21 +61,17 @@ namespace Travelman
             }
         }
 
-        public LocationSelection(Control parent, Point location, string placeholder, IconChar icon,
+        public LocationSelection(Control parent, ILocationProvider locationProvider, Point location, string placeholder, IconChar icon,
             int maxAutcompleteItemsDisplayed)
         {
-            if (maxAutcompleteItemsDisplayed <= 0)
-            {
-                throw new ArgumentOutOfRangeException();
-            }
+            if (maxAutcompleteItemsDisplayed <= 0) throw new ArgumentOutOfRangeException();
 
             _maxHeight = maxAutcompleteItemsDisplayed * ItemHeight;
+            _locationProvider = locationProvider;
             _placeholder = placeholder;
             Location = location;
 
             InitializeComponent();
-
-            _locationProvider = GoogleHttp.Instance();
 
             // Create list view at parent
             Point listViewLocation = new Point(panelInput.Location.X, panelInput.Location.Y + panelInput.Size.Height);
@@ -97,14 +93,13 @@ namespace Travelman
             parent.Controls.Add(_autocompleteList);
 
             // Avoid horizontal scroll bar
-            ColumnHeader colh = new ColumnHeader
+            _autocompleteList.Columns.Add(new ColumnHeader
             {
                 Width = _autocompleteList.ClientSize.Width - SystemInformation.VerticalScrollBarWidth
-            };
-            _autocompleteList.Columns.Add(colh);
+            });
 
             // Create flag icon
-            panelInput.Controls.Add(new IconPictureBox()
+            panelInput.Controls.Add(new IconPictureBox
             {
                 Location = new Point(8, 8),
                 Size = new Size(32, 32),

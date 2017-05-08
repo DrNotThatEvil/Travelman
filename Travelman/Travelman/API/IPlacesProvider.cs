@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Travelman
 {
-    internal interface IPlacesProvider
+    public interface IPlacesProvider
     {
         /// <summary>
         /// Get a list of interesting places near the specified address. 

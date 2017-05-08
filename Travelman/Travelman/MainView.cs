@@ -14,14 +14,16 @@ namespace Travelman
         private readonly LocationSelection _start, _destination;
         private readonly IPlacesProvider _placesProvider;
 
-        public MainView(Control parent, string start, string destination)
+        public MainView(Control parent, ILocationProvider locationProvider, IPlacesProvider placesProvider, string start, string destination)
         {
+            _placesProvider = placesProvider;
+
             InitializeComponent();
             InitializeBrowser();
             Disposed += MainView_Disposed;
             parent.KeyDown += HandleKeys;
 
-            _destination = new LocationSelection(scSidebar.Panel1, new Point(0, 48), "",
+            _destination = new LocationSelection(scSidebar.Panel1, locationProvider, new Point(0, 48), "",
                 FontAwesome.Sharp.IconChar.FlagCheckered, 5)
             {
                 Input = destination
@@ -29,7 +31,8 @@ namespace Travelman
             _destination.AutocompleteOptionSelected += AutocompleteOptionSelected;
             scSidebarHorizontal.Panel1.Controls.Add(_destination);
 
-            _start = new LocationSelection(scSidebar.Panel1, new Point(0, 0), "", FontAwesome.Sharp.IconChar.FlagO, 5)
+            _start = new LocationSelection(scSidebar.Panel1, locationProvider, new Point(0, 0), "", 
+                FontAwesome.Sharp.IconChar.FlagO, 5)
             {
                 Input = start
             };
@@ -37,8 +40,6 @@ namespace Travelman
             scSidebarHorizontal.Panel1.Controls.Add(_start);
 
             scSidebar.Panel1Collapsed = !SidebarShown;
-
-            _placesProvider = GoogleHttp.Instance();
         }
 
         private static void MainView_Disposed(object sender, EventArgs e)
