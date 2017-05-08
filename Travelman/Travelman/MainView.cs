@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
@@ -22,12 +24,12 @@ namespace Travelman
             _destination = new LocationSelection(scSidebar.Panel1, new Point(0, 48), "", FontAwesome.Sharp.IconChar.FlagCheckered, 5);
             _destination.Input = destination;
             _destination.AutocompleteOptionSelected += AutocompleteOptionSelected;
-            scSidebar.Panel1.Controls.Add(_destination);
+            scSidebarHorizontal.Panel1.Controls.Add(_destination);
 
             _start = new LocationSelection(scSidebar.Panel1, new Point(0, 0), "", FontAwesome.Sharp.IconChar.FlagO, 5);
             _start.Input = start;
             _start.AutocompleteOptionSelected += AutocompleteOptionSelected;
-            scSidebar.Panel1.Controls.Add(_start);
+            scSidebarHorizontal.Panel1.Controls.Add(_start);
 
             scSidebar.Panel1Collapsed = !SidebarShown;
         }
@@ -86,6 +88,7 @@ namespace Travelman
             if (e.Frame.IsMain)
             {
                 ShowRoute();
+                GetNearbyPlaces();
             }
         }
 
@@ -94,6 +97,25 @@ namespace Travelman
             if (_browser.IsBrowserInitialized)
             {
                 _browser.ExecuteScriptAsync("showRoute", _start.Input, _destination.Input);
+            }
+        }
+
+        private async void GetNearbyPlaces()
+        {
+            // Clear nearby places list
+            Invoke((MethodInvoker)delegate {
+                scSidebarHorizontal.Panel2.Controls.Clear(); // Invoke to call method on UI thread
+            });
+
+            ICollection<Place> places = await GoogleHttp.Instance().GetNearbyPlaces(_start.Input);
+            Point location = new Point();
+            foreach (Place place in places)
+            {
+                PlaceListItem item = new PlaceListItem(place) { Location = location };
+                Invoke((MethodInvoker)delegate {
+                    scSidebarHorizontal.Panel2.Controls.Add(item); // Add control on UI thread
+                });
+                location.Y += 98;
             }
         }
 
