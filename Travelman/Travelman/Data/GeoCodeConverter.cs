@@ -28,7 +28,12 @@ namespace Travelman
 
         public override bool CanWrite => false;
 
-        // Serialization of a GeoCode is not implemented nor necessary. We throw a NIE to explicitly inform programmers.
+        /// <summary>
+        /// Serialization of a Place is not implemented nor necessary. We throw a NIE to explicitly inform programmers.
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="value"></param>
+        /// <param name="serializer"></param>
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             throw new NotImplementedException("The serialization of this type is not supported.");

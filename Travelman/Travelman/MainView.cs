@@ -13,6 +13,7 @@ namespace Travelman
         private ChromiumWebBrowser _browser;
         private readonly LocationSelection _start, _destination;
         private readonly IPlacesProvider _placesProvider;
+        private readonly string _baseUrl = $@"{Application.StartupPath}\Html\index.html";
 
         public MainView(Control parent, ILocationProvider locationProvider, IPlacesProvider placesProvider, string start, string destination)
         {
@@ -76,8 +77,7 @@ namespace Travelman
         {
             var cefSettings = new CefSettings();
             Cef.Initialize(cefSettings);
-            string url = $@"{Application.StartupPath}\html\index.html";
-            _browser = new ChromiumWebBrowser(url);
+            _browser = new ChromiumWebBrowser(_baseUrl);
             scSidebar.Panel2.Controls.Add(_browser);
             _browser.Dock = DockStyle.Fill;
 
@@ -116,7 +116,7 @@ namespace Travelman
                 scSidebarHorizontal.Panel2.Controls.Clear(); // Invoke to call method on UI thread
             });
 
-            ICollection<Place> places = await _placesProvider.GetNearbyPlaces(_start.Input, 1000);
+            ICollection<Place> places = await _placesProvider.GetNearbyPlaces(_destination.Input, 1000);
             places = _placesProvider.GetPhotosOfPlaces(places, 90, 90);
             Point location = new Point();
             foreach (Place place in places)

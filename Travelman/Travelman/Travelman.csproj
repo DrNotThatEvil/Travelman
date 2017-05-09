@@ -166,13 +166,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="html\index.html">
+    <Content Include="Html\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="html\script.js">
+    <Content Include="Html\script.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="html\style.css">
+    <Content Include="Html\style.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
