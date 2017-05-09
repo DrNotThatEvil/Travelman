@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -26,10 +28,8 @@ namespace Travelman
             return new GeoCode(latitude, longitude);
         }
 
-        public override bool CanWrite => false;
-
         /// <summary>
-        /// Serialization of a Place is not implemented nor necessary. We throw a NIE to explicitly inform programmers.
+        /// Serialization of a GeoCode is not implemented nor necessary. We throw a NIE to explicitly inform programmers.
         /// </summary>
         /// <param name="writer"></param>
         /// <param name="value"></param>

@@ -4,12 +4,15 @@ using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
 using System.Drawing;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace Travelman
 {
     public partial class MainView : UserControl
     {
         private const bool SidebarShown = true;
+        private const bool RemoteChromiumDebugging = true;
         private ChromiumWebBrowser _browser;
         private readonly LocationSelection _start, _destination;
         private readonly IPlacesProvider _placesProvider;
@@ -53,6 +56,7 @@ namespace Travelman
             if (!_start.IsFilled() || !_destination.IsFilled()) return;
             HideAutocompletion();
             ShowRoute();
+            GetNearbyPlaces();
         }
 
         private void HandleKeys(object sender, KeyEventArgs e)
@@ -68,6 +72,7 @@ namespace Travelman
                     {
                         HideAutocompletion();
                         ShowRoute();
+                        GetNearbyPlaces();
                     }
                     break;
             }
@@ -76,6 +81,7 @@ namespace Travelman
         private void InitializeBrowser()
         {
             var cefSettings = new CefSettings();
+            if (RemoteChromiumDebugging) cefSettings.RemoteDebuggingPort = 8088;
             Cef.Initialize(cefSettings);
             _browser = new ChromiumWebBrowser(_baseUrl);
             scSidebar.Panel2.Controls.Add(_browser);
@@ -116,17 +122,34 @@ namespace Travelman
                 scSidebarHorizontal.Panel2.Controls.Clear(); // Invoke to call method on UI thread
             });
 
-            ICollection<Place> places = await _placesProvider.GetNearbyPlaces(_destination.Input, 1000);
+            ICollection<Place> places = await _placesProvider.GetNearbyPlaces(_destination.Input, 50000);
             places = _placesProvider.GetPhotosOfPlaces(places, 90, 90);
             Point location = new Point();
+            var index = 1;
             foreach (Place place in places)
             {
-                PlaceListItem item = new PlaceListItem(place) {Location = location};
+                PlaceListItem item = new PlaceListItem(place, index, Item_Click) {Location = location};
+                //item.Click += Item_Click;
                 Invoke((MethodInvoker) delegate
                 {
                     scSidebarHorizontal.Panel2.Controls.Add(item); // Add control on UI thread
                 });
                 location.Y += 98;
+
+                if (_browser.IsBrowserInitialized)
+                {
+                    _browser.ExecuteScriptAsync("addMarker", place.GeoCode.Latitude, place.GeoCode.Longitude, index.ToString());
+                }
+                index++;
+            }
+        }
+
+        private void Item_Click(int index)
+        {
+            //Show selected item on the map
+            if (_browser.IsBrowserInitialized)
+            {
+                _browser.ExecuteScriptAsync("selectMarker", index);
             }
         }
 

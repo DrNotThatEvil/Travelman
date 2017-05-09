@@ -1,4 +1,4 @@
-var directionsDisplay, directionsService, map;
+var directionsDisplay, directionsService, map, markers = [];
 
 function initialize() {
     // Due to callback being succesful we do not need to check global variable availability
@@ -15,7 +15,15 @@ function initialize() {
     directionsDisplay.setMap(map);
 }
 
+function clearMarkers() {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
+    markers = [];
+}
+
 function showRoute(start, end) {
+    clearMarkers();
     var request = {
         origin: start,
         destination: end,
@@ -27,4 +35,23 @@ function showRoute(start, end) {
                 directionsDisplay.setDirections(result);
             }
         });
+    console.log(directionsDisplay);
+}
+
+function addMarker(lat, lng, label) {
+    console.log("I think I created marker with label" + label);
+    var marker = new google.maps.Marker({
+        position: { lat: lat, lng: lng },
+        label: label,
+        map: directionsDisplay.map
+    });
+    console.log("Actual: " + marker.label);
+    markers.push(marker);
+}
+
+function selectMarker(index) {
+    // Note that parameter is not zero-indexed, while the array is
+    if (markers[index] !== null) {
+        directionsDisplay.map.setCenter(markers[index - 1].position);
+    }
 }

@@ -77,6 +77,8 @@
             // scSidebarHorizontal
             // 
             this.scSidebarHorizontal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scSidebarHorizontal.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.scSidebarHorizontal.IsSplitterFixed = true;
             this.scSidebarHorizontal.Location = new System.Drawing.Point(0, 0);
             this.scSidebarHorizontal.Name = "scSidebarHorizontal";
             this.scSidebarHorizontal.Orientation = System.Windows.Forms.Orientation.Horizontal;
