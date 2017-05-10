@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Travelman
+namespace Travelman.Data
 {
     [JsonConverter(typeof(PlaceConverter))]
     public class Place

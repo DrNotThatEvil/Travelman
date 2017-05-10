@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Travelman.Data;
 
-namespace Travelman
+namespace Travelman.API
 {
     public interface IPlacesProvider
     {
         /// <summary>
-        /// Get a list of interesting places near the specified address. 
+        /// Get a list of interesting places (asynchronously) near the specified address. 
         /// Search area may be specified with the radius parameter.
         /// </summary>
         /// <param name="address"></param>

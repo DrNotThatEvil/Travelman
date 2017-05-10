@@ -2,8 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 using FontAwesome.Sharp;
+using Travelman.Data;
 
-namespace Travelman
+namespace Travelman.Components
 {
     public partial class PlaceListItem : UserControl
     {

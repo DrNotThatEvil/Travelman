@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.LocationPanel = new System.Windows.Forms.Panel();
-            this.lblInvalidLocation = new MaterialSkin.Controls.MaterialLabel();
+            this.lblError = new MaterialSkin.Controls.MaterialLabel();
             this.btnPlanTrip = new MaterialSkin.Controls.MaterialRaisedButton();
             this.LocationPanel.SuspendLayout();
             this.SuspendLayout();
@@ -38,7 +38,7 @@
             // 
             this.LocationPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.LocationPanel.BackColor = System.Drawing.Color.White;
-            this.LocationPanel.Controls.Add(this.lblInvalidLocation);
+            this.LocationPanel.Controls.Add(this.lblError);
             this.LocationPanel.Controls.Add(this.btnPlanTrip);
             this.LocationPanel.Location = new System.Drawing.Point(28, 117);
             this.LocationPanel.Name = "LocationPanel";
@@ -46,20 +46,20 @@
             this.LocationPanel.TabIndex = 0;
             this.LocationPanel.Click += new System.EventHandler(this.StartView_Click);
             // 
-            // lblInvalidLocation
+            // lblError
             // 
-            this.lblInvalidLocation.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblInvalidLocation.AutoSize = true;
-            this.lblInvalidLocation.Depth = 0;
-            this.lblInvalidLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.lblInvalidLocation.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblInvalidLocation.Location = new System.Drawing.Point(69, 154);
-            this.lblInvalidLocation.MouseState = MaterialSkin.MouseState.HOVER;
-            this.lblInvalidLocation.Name = "lblInvalidLocation";
-            this.lblInvalidLocation.Size = new System.Drawing.Size(152, 18);
-            this.lblInvalidLocation.TabIndex = 2;
-            this.lblInvalidLocation.Text = "Unable to plan a route";
-            this.lblInvalidLocation.Visible = false;
+            this.lblError.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblError.Depth = 0;
+            this.lblError.Font = new System.Drawing.Font("Roboto", 11F);
+            this.lblError.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblError.Location = new System.Drawing.Point(3, 154);
+            this.lblError.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(288, 19);
+            this.lblError.TabIndex = 2;
+            this.lblError.Text = "Error:";
+            this.lblError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblError.Visible = false;
             // 
             // btnPlanTrip
             // 
@@ -96,6 +96,6 @@
 
         private System.Windows.Forms.Panel LocationPanel;
         private MaterialSkin.Controls.MaterialRaisedButton btnPlanTrip;
-        private MaterialSkin.Controls.MaterialLabel lblInvalidLocation;
+        private MaterialSkin.Controls.MaterialLabel lblError;
     }
 }

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Travelman.Data;
 
-namespace Travelman
+namespace Travelman.API
 {
     public interface ILocationProvider
     {

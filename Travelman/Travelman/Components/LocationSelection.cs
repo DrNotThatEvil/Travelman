@@ -1,11 +1,12 @@
-﻿using FontAwesome.Sharp;
-using MaterialSkin.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using FontAwesome.Sharp;
+using MaterialSkin.Controls;
+using Travelman.API;
 
-namespace Travelman
+namespace Travelman.Components
 {
     public partial class LocationSelection : UserControl
     {

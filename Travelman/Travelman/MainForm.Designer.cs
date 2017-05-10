@@ -46,7 +46,7 @@
             // 
             // delayBetweenRequests
             // 
-            this.delayBetweenRequests.Tick += new System.EventHandler(this.delayBetweenRequests_Tick);
+            this.delayBetweenRequests.Tick += new System.EventHandler(this.DelayBetweenRequests_Tick);
             // 
             // MainForm
             // 

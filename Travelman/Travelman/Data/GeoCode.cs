@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Travelman
+namespace Travelman.Data
 {
     [JsonConverter(typeof(GeoCodeConverter))]
     public class GeoCode
@@ -9,9 +9,7 @@ namespace Travelman
         public float Longitude { get; set; }
 
         // It is assumed that (0.0, 0.0) is an invalid GeoCode.
-        public GeoCode() : this(0.0f, 0.0f)
-        {
-        }
+        public GeoCode() : this(0.0f, 0.0f) { }
 
         public GeoCode(float latitude, float longitude)
         {

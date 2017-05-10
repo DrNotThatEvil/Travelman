@@ -1,4 +1,4 @@
-﻿namespace Travelman
+﻿namespace Travelman.Components
 {
     partial class LocationSelection
     {

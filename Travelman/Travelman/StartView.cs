@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Travelman.API;
+using Travelman.Components;
 
 namespace Travelman
 {
     public partial class StartView : UserControl
     {
-        private readonly MainForm _parent;
         private readonly LocationSelection _start, _destination;
+        private readonly Func<string, string, bool> _planTripFunc;
         private bool _canPlanTrip;
-
-        public StartView(MainForm parent, ILocationProvider locationProvider)
+        
+        public StartView(ILocationProvider locationProvider, Func<string, string, bool> planTripFunc)
         {
-            _parent = parent;
+            _planTripFunc = planTripFunc;
             InitializeComponent();
 
-            _destination = new LocationSelection(LocationPanel, locationProvider, new Point(0, 48), "Kies een bestemming...",
+            _destination = new LocationSelection(LocationPanel, locationProvider, new Point(0, 48), "Choose a destination...",
                 FontAwesome.Sharp.IconChar.FlagCheckered, 3);
             _destination.InputChanged += InputsChanged;
             LocationPanel.Controls.Add(_destination);
 
-            _start = new LocationSelection(LocationPanel, locationProvider, new Point(0, 0), "Kies een vertrekpunt...",
+            _start = new LocationSelection(LocationPanel, locationProvider, new Point(0, 0), "Choose a starting point...",
                 FontAwesome.Sharp.IconChar.FlagO, 3);
             _start.InputChanged += InputsChanged;
             LocationPanel.Controls.Add(_start);
@@ -47,10 +49,7 @@ namespace Travelman
                     HideAutocompletion();
                     break;
                 case Keys.Enter:
-                    if (_canPlanTrip)
-                    {
-                        PlanTrip();
-                    }
+                    if (_canPlanTrip) PlanTrip();
                     break;
             }
         }
@@ -60,24 +59,35 @@ namespace Travelman
             HideAutocompletion();
         }
 
+        private void btnPlanTrip_Click(object sender, EventArgs e)
+        {
+            PlanTrip();
+        }
+
         private void HideAutocompletion()
         {
             _start.HideAutocompletion();
             _destination.HideAutocompletion();
         }
 
-        private void btnPlanTrip_Click(object sender, EventArgs e)
-        {
-            if (_canPlanTrip) PlanTrip();
-        }
-
         private void PlanTrip()
         {
-            if (!_parent.PlanTrip(_start.Input, _destination.Input))
+            if (!_canPlanTrip)
             {
-                // Invalid input
-                lblInvalidLocation.Visible = true;
+                ShowError("Error: Please fill in a valid starting point and destination.");
+                return;
             }
+
+            if (!_planTripFunc(_start.Input, _destination.Input))
+            {
+                ShowError("Error: Unable to plan route");
+            }   
+        }
+
+        private void ShowError(string message)
+        {
+            lblError.Text = message;
+            lblError.Visible = true;
         }
     }
 }

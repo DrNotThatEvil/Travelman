@@ -4,15 +4,15 @@ using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
 using System.Drawing;
-using System.Linq;
-using Newtonsoft.Json;
+using Travelman.API;
+using Travelman.Components;
+using Travelman.Data;
 
 namespace Travelman
 {
     public partial class MainView : UserControl
     {
         private const bool SidebarShown = true;
-        private const bool RemoteChromiumDebugging = true;
         private ChromiumWebBrowser _browser;
         private readonly LocationSelection _start, _destination;
         private readonly IPlacesProvider _placesProvider;
@@ -80,8 +80,10 @@ namespace Travelman
 
         private void InitializeBrowser()
         {
-            var cefSettings = new CefSettings();
-            if (RemoteChromiumDebugging) cefSettings.RemoteDebuggingPort = 8088;
+            var cefSettings = new CefSettings
+            {
+                RemoteDebuggingPort = 8088
+            };
             Cef.Initialize(cefSettings);
             _browser = new ChromiumWebBrowser(_baseUrl);
             scSidebar.Panel2.Controls.Add(_browser);
@@ -99,11 +101,9 @@ namespace Travelman
 
         private void BrowserFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
-            if (e.Frame.IsMain)
-            {
-                ShowRoute();
-                GetNearbyPlaces();
-            }
+            if (!e.Frame.IsMain) return;
+            ShowRoute();
+            GetNearbyPlaces();
         }
 
         private void ShowRoute()

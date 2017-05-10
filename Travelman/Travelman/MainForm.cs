@@ -2,6 +2,7 @@
 using MaterialSkin;
 using MaterialSkin.Controls;
 using System.Windows.Forms;
+using Travelman.API;
 
 namespace Travelman
 {
@@ -33,7 +34,7 @@ namespace Travelman
             _placesProvider = GoogleHttp.Instance();
 
             // Show startview
-            _startView = new StartView(this, _locationProvider) {Dock = DockStyle.Fill};
+            _startView = new StartView(_locationProvider, PlanTrip) {Dock = DockStyle.Fill};
             KeyDown += _startView.HandleKeys;
             formContent.Controls.Add(_startView);
         }
@@ -61,7 +62,7 @@ namespace Travelman
             return false;
         }
 
-        private void delayBetweenRequests_Tick(object sender, EventArgs e)
+        private void DelayBetweenRequests_Tick(object sender, EventArgs e)
         {
             delayBetweenRequests.Enabled = false;
         }

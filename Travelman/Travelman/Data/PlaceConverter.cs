@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Travelman
+namespace Travelman.Data
 {
     /// <summary>
     /// Class used in the deserialization of nearby places returned by the Google API.
@@ -13,6 +13,19 @@ namespace Travelman
         public override bool CanConvert(Type objectType)
         {
             return objectType == typeof(Place);
+        }
+
+        public override bool CanWrite => false;
+
+        /// <summary>
+        /// Serialization of a Place is not implemented nor necessary. We throw a NIE to explicitly inform programmers.
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="value"></param>
+        /// <param name="serializer"></param>
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            throw new NotImplementedException("The serialization of this type is not supported.");
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
@@ -29,19 +42,6 @@ namespace Travelman
             GeoCode geoCode = obj.SelectToken("geometry.location").ToObject<GeoCode>();
 
             return new Place(name, type, iconUrl, photoReference, vicinity, rating, geoCode);
-        }
-
-        public override bool CanWrite => false;
-
-        /// <summary>
-        /// Serialization of a Place is not implemented nor necessary. We throw a NIE to explicitly inform programmers.
-        /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="value"></param>
-        /// <param name="serializer"></param>
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            throw new NotImplementedException("The serialization of this type is not supported.");
         }
     }
 }

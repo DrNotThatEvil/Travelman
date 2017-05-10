@@ -4,8 +4,9 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using Travelman.Data;
 
-namespace Travelman
+namespace Travelman.API
 {
     class GoogleHttp : ILocationProvider, IPlacesProvider
     {
