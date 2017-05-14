@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
-using System.Drawing;
 using Travelman.API;
 using Travelman.Components;
 using Travelman.Data;
 
-namespace Travelman
+namespace Travelman.View
 {
     public partial class MainView : UserControl
     {

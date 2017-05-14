@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
-using System.Windows.Forms;
 using Travelman.API;
 
-namespace Travelman
+namespace Travelman.View
 {
     public partial class MainForm : MaterialForm
     {

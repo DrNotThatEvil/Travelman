@@ -92,16 +92,16 @@
     <Compile Include="Components\LocationSelection.Designer.cs">
       <DependentUpon>LocationSelection.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="View\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainView.cs">
+    <Compile Include="View\MainView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainView.Designer.cs">
+    <Compile Include="View\MainView.Designer.cs">
       <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\Place.cs" />
@@ -114,19 +114,19 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StartView.cs">
+    <Compile Include="View\StartView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="StartView.Designer.cs">
+    <Compile Include="View\StartView.Designer.cs">
       <DependentUpon>StartView.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Components\LocationSelection.resx">
       <DependentUpon>LocationSelection.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainView.resx">
+    <EmbeddedResource Include="View\MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\PlaceListItem.resx">
@@ -142,7 +142,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="StartView.resx">
+    <EmbeddedResource Include="View\StartView.resx">
       <DependentUpon>StartView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />

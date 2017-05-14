@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using Travelman.API;
 using Travelman.Components;
 
-namespace Travelman
+namespace Travelman.View
 {
     public partial class StartView : UserControl
     {
@@ -74,7 +74,7 @@ namespace Travelman
         {
             if (!_canPlanTrip)
             {
-                ShowError("Error: Please fill in a valid starting point and destination.");
+                ShowError("Error: Please fill in the form.");
                 return;
             }
 

@@ -72,7 +72,7 @@ namespace Travelman.Components
                     icon = IconChar.StarO;
                 }
 
-                Controls.Add(new IconPictureBox()
+                Controls.Add(new IconPictureBox
                 {
                     Location = new Point(StarPosX + (i * StarSize), StarPosY),
                     Size = new Size(StarSize, StarSize),

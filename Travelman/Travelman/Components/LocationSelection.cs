@@ -77,7 +77,7 @@ namespace Travelman.Components
             // Create list view at parent
             Point listViewLocation = new Point(panelInput.Location.X, panelInput.Location.Y + panelInput.Size.Height);
             listViewLocation.Offset(Location);
-            _autocompleteList = new MaterialListView()
+            _autocompleteList = new MaterialListView
             {
                 Cursor = Cursors.Hand,
                 FullRowSelect = true,
@@ -86,7 +86,7 @@ namespace Travelman.Components
                 OwnerDraw = true,
                 ShowGroups = false,
                 TabStop = false,
-                View = View.Details,
+                View = System.Windows.Forms.View.Details,
                 Location = listViewLocation,
                 Size = new Size(288, 0)
             };

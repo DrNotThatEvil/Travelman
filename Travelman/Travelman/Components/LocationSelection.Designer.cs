@@ -61,6 +61,7 @@
             this.tbInput.SelectionStart = 0;
             this.tbInput.Size = new System.Drawing.Size(224, 23);
             this.tbInput.TabIndex = 1;
+            this.tbInput.TabStop = false;
             this.tbInput.UseSystemPasswordChar = false;
             this.tbInput.Leave += new System.EventHandler(this.tbInput_Leave);
             this.tbInput.TextChanged += new System.EventHandler(this.tbInput_TextChanged);
@@ -78,7 +79,7 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.panelInput);
             this.Name = "LocationSelection";
-            this.Size = new System.Drawing.Size(294, 555);
+            this.Size = new System.Drawing.Size(294, 55);
             this.panelInput.ResumeLayout(false);
             this.ResumeLayout(false);
 

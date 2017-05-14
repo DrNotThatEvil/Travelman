@@ -1,4 +1,4 @@
-﻿namespace Travelman
+﻿namespace Travelman.View
 {
     sealed partial class MainView
     {
