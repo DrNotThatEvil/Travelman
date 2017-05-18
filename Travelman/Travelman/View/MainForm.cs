@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using Travelman.API;
+using Travelman.Data;
+using Travelman.Database;
 
 namespace Travelman.View
 {
@@ -37,6 +41,8 @@ namespace Travelman.View
             _startView = new StartView(_locationProvider, PlanTrip) {Dock = DockStyle.Fill};
             KeyDown += _startView.HandleKeys;
             formContent.Controls.Add(_startView);
+
+            RouteDataAccessLayer stuff = new RouteDataAccessLayer(new LocalDb());
         }
 
 
