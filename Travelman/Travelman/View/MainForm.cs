@@ -43,6 +43,7 @@ namespace Travelman.View
             formContent.Controls.Add(_startView);
 
             RouteDataAccessLayer stuff = new RouteDataAccessLayer(new LocalDb());
+            List<Route> route = stuff.GetEntities().ToList();
         }
 
 

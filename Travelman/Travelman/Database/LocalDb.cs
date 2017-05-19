@@ -9,7 +9,7 @@ namespace Travelman.Database
 {
     class LocalDb : IDatabase
     {
-        private const string ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\marti\\Source\\Repos\\Travelman\\Travelman\\Travelman\\database.mdf;Integrated Security=True";
+        private const string ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\database.mdf;Integrated Security=True";
         private SqlConnection _connection;
         private SqlCommand _command;
 
