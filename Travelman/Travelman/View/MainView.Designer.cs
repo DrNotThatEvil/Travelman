@@ -31,7 +31,11 @@
             this.scMenubar = new System.Windows.Forms.SplitContainer();
             this.scSidebar = new System.Windows.Forms.SplitContainer();
             this.scSidebarHorizontal = new System.Windows.Forms.SplitContainer();
+            this.btnStartOver = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnMyRoutes = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnAbout = new MaterialSkin.Controls.MaterialRaisedButton();
             ((System.ComponentModel.ISupportInitialize)(this.scMenubar)).BeginInit();
+            this.scMenubar.Panel1.SuspendLayout();
             this.scMenubar.Panel2.SuspendLayout();
             this.scMenubar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.scSidebar)).BeginInit();
@@ -49,6 +53,12 @@
             this.scMenubar.Location = new System.Drawing.Point(0, 0);
             this.scMenubar.Name = "scMenubar";
             this.scMenubar.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // scMenubar.Panel1
+            // 
+            this.scMenubar.Panel1.Controls.Add(this.btnAbout);
+            this.scMenubar.Panel1.Controls.Add(this.btnMyRoutes);
+            this.scMenubar.Panel1.Controls.Add(this.btnStartOver);
             this.scMenubar.Panel1MinSize = 64;
             // 
             // scMenubar.Panel2
@@ -91,6 +101,52 @@
             this.scSidebarHorizontal.SplitterDistance = 96;
             this.scSidebarHorizontal.TabIndex = 0;
             // 
+            // btnStartOver
+            // 
+            this.btnStartOver.AutoSize = true;
+            this.btnStartOver.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnStartOver.Depth = 0;
+            this.btnStartOver.Icon = null;
+            this.btnStartOver.Location = new System.Drawing.Point(14, 16);
+            this.btnStartOver.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnStartOver.Name = "btnStartOver";
+            this.btnStartOver.Primary = true;
+            this.btnStartOver.Size = new System.Drawing.Size(102, 36);
+            this.btnStartOver.TabIndex = 0;
+            this.btnStartOver.Text = "Start over";
+            this.btnStartOver.UseVisualStyleBackColor = true;
+            this.btnStartOver.Click += new System.EventHandler(this.StartOver);
+            // 
+            // btnMyRoutes
+            // 
+            this.btnMyRoutes.AutoSize = true;
+            this.btnMyRoutes.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnMyRoutes.Depth = 0;
+            this.btnMyRoutes.Icon = null;
+            this.btnMyRoutes.Location = new System.Drawing.Point(122, 16);
+            this.btnMyRoutes.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnMyRoutes.Name = "btnMyRoutes";
+            this.btnMyRoutes.Primary = true;
+            this.btnMyRoutes.Size = new System.Drawing.Size(96, 36);
+            this.btnMyRoutes.TabIndex = 1;
+            this.btnMyRoutes.Text = "My routes";
+            this.btnMyRoutes.UseVisualStyleBackColor = true;
+            // 
+            // btnAbout
+            // 
+            this.btnAbout.AutoSize = true;
+            this.btnAbout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnAbout.Depth = 0;
+            this.btnAbout.Icon = null;
+            this.btnAbout.Location = new System.Drawing.Point(224, 16);
+            this.btnAbout.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Primary = true;
+            this.btnAbout.Size = new System.Drawing.Size(66, 36);
+            this.btnAbout.TabIndex = 2;
+            this.btnAbout.Text = "About";
+            this.btnAbout.UseVisualStyleBackColor = true;
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -98,6 +154,8 @@
             this.Controls.Add(this.scMenubar);
             this.Name = "MainView";
             this.Size = new System.Drawing.Size(784, 528);
+            this.scMenubar.Panel1.ResumeLayout(false);
+            this.scMenubar.Panel1.PerformLayout();
             this.scMenubar.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scMenubar)).EndInit();
             this.scMenubar.ResumeLayout(false);
@@ -115,5 +173,8 @@
         private System.Windows.Forms.SplitContainer scMenubar;
         private System.Windows.Forms.SplitContainer scSidebar;
         private System.Windows.Forms.SplitContainer scSidebarHorizontal;
+        private MaterialSkin.Controls.MaterialRaisedButton btnMyRoutes;
+        private MaterialSkin.Controls.MaterialRaisedButton btnStartOver;
+        private MaterialSkin.Controls.MaterialRaisedButton btnAbout;
     }
 }

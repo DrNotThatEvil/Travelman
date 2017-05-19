@@ -12,7 +12,7 @@ namespace Travelman.View
 {
     public partial class MainForm : MaterialForm
     {
-        private readonly StartView _startView;
+        private StartView _startView;
         private MainView _mainView;
         private readonly ILocationProvider _locationProvider;
         private readonly IPlacesProvider _placesProvider;
@@ -67,6 +67,16 @@ namespace Travelman.View
 
             delayBetweenRequests.Start();
             return false;
+        }
+
+        public void StartOver()
+        {
+            formContent.Controls.Remove(_mainView);
+            _mainView.Dispose();
+
+            _startView = new StartView(_locationProvider, PlanTrip) { Dock = DockStyle.Fill };
+            KeyDown += _startView.HandleKeys;
+            formContent.Controls.Add(_startView);
         }
 
         private void DelayBetweenRequests_Tick(object sender, EventArgs e)

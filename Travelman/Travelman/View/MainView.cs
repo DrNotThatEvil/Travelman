@@ -15,12 +15,14 @@ namespace Travelman.View
         private const bool SidebarShown = true;
         private ChromiumWebBrowser _browser;
         private readonly LocationSelection _start, _destination;
+        private readonly MainForm _parent;
         private readonly IPlacesProvider _placesProvider;
         private readonly string _baseUrl = $@"{Application.StartupPath}\Html\index.html";
 
-        public MainView(Control parent, ILocationProvider locationProvider, IPlacesProvider placesProvider, string start, string destination)
+        public MainView(MainForm parent, ILocationProvider locationProvider, IPlacesProvider placesProvider, string start, string destination)
         {
             _placesProvider = placesProvider;
+            _parent = parent;
 
             InitializeComponent();
             InitializeBrowser();
@@ -151,6 +153,11 @@ namespace Travelman.View
             {
                 _browser.ExecuteScriptAsync("selectMarker", index);
             }
+        }
+
+        private void StartOver(object sender, EventArgs e)
+        {
+            _parent.StartOver();
         }
 
         private void HideAutocompletion()
