@@ -160,6 +160,15 @@ namespace Travelman.View
             _parent.StartOver();
         }
 
+        private void btnMyRoutes_Click(object sender, EventArgs e)
+        {
+            ModalDialog d = new ModalDialog(256, 128);
+            d.Location = new Point(Width / 2 - d.Width / 2, Height / 2 - d.Height);
+            d.Anchor = AnchorStyles.None;
+            Controls.Add(d);
+            d.BringToFront();
+        }
+
         private void HideAutocompletion()
         {
             _start.HideAutocompletion();

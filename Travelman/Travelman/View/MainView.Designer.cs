@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.scMenubar = new System.Windows.Forms.SplitContainer();
+            this.btnAbout = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnMyRoutes = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnStartOver = new MaterialSkin.Controls.MaterialRaisedButton();
             this.scSidebar = new System.Windows.Forms.SplitContainer();
             this.scSidebarHorizontal = new System.Windows.Forms.SplitContainer();
-            this.btnStartOver = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.btnMyRoutes = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.btnAbout = new MaterialSkin.Controls.MaterialRaisedButton();
             ((System.ComponentModel.ISupportInitialize)(this.scMenubar)).BeginInit();
             this.scMenubar.Panel1.SuspendLayout();
             this.scMenubar.Panel2.SuspendLayout();
@@ -68,6 +68,53 @@
             this.scMenubar.SplitterDistance = 64;
             this.scMenubar.TabIndex = 0;
             // 
+            // btnAbout
+            // 
+            this.btnAbout.AutoSize = true;
+            this.btnAbout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnAbout.Depth = 0;
+            this.btnAbout.Icon = null;
+            this.btnAbout.Location = new System.Drawing.Point(224, 16);
+            this.btnAbout.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Primary = true;
+            this.btnAbout.Size = new System.Drawing.Size(66, 36);
+            this.btnAbout.TabIndex = 2;
+            this.btnAbout.Text = "About";
+            this.btnAbout.UseVisualStyleBackColor = true;
+            // 
+            // btnMyRoutes
+            // 
+            this.btnMyRoutes.AutoSize = true;
+            this.btnMyRoutes.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnMyRoutes.Depth = 0;
+            this.btnMyRoutes.Icon = null;
+            this.btnMyRoutes.Location = new System.Drawing.Point(122, 16);
+            this.btnMyRoutes.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnMyRoutes.Name = "btnMyRoutes";
+            this.btnMyRoutes.Primary = true;
+            this.btnMyRoutes.Size = new System.Drawing.Size(96, 36);
+            this.btnMyRoutes.TabIndex = 1;
+            this.btnMyRoutes.Text = "My routes";
+            this.btnMyRoutes.UseVisualStyleBackColor = true;
+            this.btnMyRoutes.Click += new System.EventHandler(this.btnMyRoutes_Click);
+            // 
+            // btnStartOver
+            // 
+            this.btnStartOver.AutoSize = true;
+            this.btnStartOver.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnStartOver.Depth = 0;
+            this.btnStartOver.Icon = null;
+            this.btnStartOver.Location = new System.Drawing.Point(14, 16);
+            this.btnStartOver.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnStartOver.Name = "btnStartOver";
+            this.btnStartOver.Primary = true;
+            this.btnStartOver.Size = new System.Drawing.Size(102, 36);
+            this.btnStartOver.TabIndex = 0;
+            this.btnStartOver.Text = "Start over";
+            this.btnStartOver.UseVisualStyleBackColor = true;
+            this.btnStartOver.Click += new System.EventHandler(this.StartOver);
+            // 
             // scSidebar
             // 
             this.scSidebar.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -100,52 +147,6 @@
             this.scSidebarHorizontal.Size = new System.Drawing.Size(288, 460);
             this.scSidebarHorizontal.SplitterDistance = 96;
             this.scSidebarHorizontal.TabIndex = 0;
-            // 
-            // btnStartOver
-            // 
-            this.btnStartOver.AutoSize = true;
-            this.btnStartOver.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnStartOver.Depth = 0;
-            this.btnStartOver.Icon = null;
-            this.btnStartOver.Location = new System.Drawing.Point(14, 16);
-            this.btnStartOver.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnStartOver.Name = "btnStartOver";
-            this.btnStartOver.Primary = true;
-            this.btnStartOver.Size = new System.Drawing.Size(102, 36);
-            this.btnStartOver.TabIndex = 0;
-            this.btnStartOver.Text = "Start over";
-            this.btnStartOver.UseVisualStyleBackColor = true;
-            this.btnStartOver.Click += new System.EventHandler(this.StartOver);
-            // 
-            // btnMyRoutes
-            // 
-            this.btnMyRoutes.AutoSize = true;
-            this.btnMyRoutes.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnMyRoutes.Depth = 0;
-            this.btnMyRoutes.Icon = null;
-            this.btnMyRoutes.Location = new System.Drawing.Point(122, 16);
-            this.btnMyRoutes.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnMyRoutes.Name = "btnMyRoutes";
-            this.btnMyRoutes.Primary = true;
-            this.btnMyRoutes.Size = new System.Drawing.Size(96, 36);
-            this.btnMyRoutes.TabIndex = 1;
-            this.btnMyRoutes.Text = "My routes";
-            this.btnMyRoutes.UseVisualStyleBackColor = true;
-            // 
-            // btnAbout
-            // 
-            this.btnAbout.AutoSize = true;
-            this.btnAbout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnAbout.Depth = 0;
-            this.btnAbout.Icon = null;
-            this.btnAbout.Location = new System.Drawing.Point(224, 16);
-            this.btnAbout.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnAbout.Name = "btnAbout";
-            this.btnAbout.Primary = true;
-            this.btnAbout.Size = new System.Drawing.Size(66, 36);
-            this.btnAbout.TabIndex = 2;
-            this.btnAbout.Text = "About";
-            this.btnAbout.UseVisualStyleBackColor = true;
             // 
             // MainView
             // 
