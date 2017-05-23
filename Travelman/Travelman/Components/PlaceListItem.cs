@@ -17,7 +17,7 @@ namespace Travelman.Components
         {
             _index = index;
             InitializeComponent();
-            lblName.Text = _index + ": " + TruncateString(place.Name, MaxPlaceNameLength);
+            lblName.Text = $"{index}: {TruncateString(place.Name, MaxPlaceNameLength)}";
             lblAddress.Text = TruncateString(place.Vicinity, MaxAddressLength);
             pbLocationIcon.ImageLocation = place.IconUrl;
             pbLocationPicture.ImageLocation = place.PhotoUrl;

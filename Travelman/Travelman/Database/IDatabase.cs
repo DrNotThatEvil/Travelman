@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace Travelman.Database
 {
     interface IDatabase
     {
-        IEnumerable<object> Select(string table, string columns, string where = "1=1");
-        bool Update(string table, string values, string where = "1=1");
-        bool Insert(string table, string columns, string values);
-        bool Delete(string table, string where = "1=1");
+        IEnumerable<object> Query(string cmdText, params SqlParameter[] sqlParameters);
+        bool NonQuery(string cmdText, params SqlParameter[] sqlParameters);
     }
 }

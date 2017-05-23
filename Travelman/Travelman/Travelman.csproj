@@ -83,6 +83,10 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -104,8 +108,8 @@
     </Compile>
     <Compile Include="Database\IDataAccessLayer.cs" />
     <Compile Include="Database\IDatabase.cs" />
-    <Compile Include="Database\LocalDb.cs" />
     <Compile Include="Database\RouteDataAccessLayer.cs" />
+    <Compile Include="Database\SqlServerCe.cs" />
     <Compile Include="Data\GeoCode.cs" />
     <Compile Include="Data\GeoCodeConverter.cs" />
     <Compile Include="API\GoogleHttp.cs" />
@@ -204,12 +208,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="database.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="database_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>database.mdf</DependentUpon>
+    <Content Include="SqlServerCe.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Html\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -249,6 +249,13 @@
   <Import Project="..\packages\cef.redist.x86.3.2987.1601\build\cef.redist.x86.targets" Condition="Exists('..\packages\cef.redist.x86.3.2987.1601\build\cef.redist.x86.targets')" />
   <Import Project="..\packages\CefSharp.Common.57.0.0\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.57.0.0\build\CefSharp.Common.targets')" />
   <Import Project="..\packages\CefSharp.WinForms.57.0.0\build\CefSharp.WinForms.targets" Condition="Exists('..\packages\CefSharp.WinForms.57.0.0\build\CefSharp.WinForms.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

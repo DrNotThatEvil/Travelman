@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Travelman.Data;
 
 namespace Travelman.Database
@@ -12,6 +8,7 @@ namespace Travelman.Database
     class RouteDataAccessLayer : IDataAccessLayer<Route>
     {
         private readonly IDatabase _database;
+        private const string TableName = "Route";
         private const string Columns = "Id, Start, Destination";
         private const string ColumnsNoId = "Start, Destination";
 
@@ -22,7 +19,9 @@ namespace Travelman.Database
 
         public ICollection<Route> GetEntities()
         {
-            IEnumerable<dynamic> objects = _database.Select("dbo.Route", Columns);
+            string cmdText = $"SELECT {Columns} FROM {TableName}";
+
+            IEnumerable<dynamic> objects = _database.Query(cmdText);
 
             List<Route> routes = new List<Route>();
             foreach (dynamic d in objects)
@@ -41,21 +40,32 @@ namespace Travelman.Database
 
         public bool SaveEntity(Route t)
         {
-            string values = $"'{t.Start}', '{t.Destination}'"; // Ensure that the order is the same as ColumnsNoId
-            return _database.Insert("dbo.Route", ColumnsNoId, values);
+            string cmdText = $"INSERT INTO {TableName} ({ColumnsNoId}) VALUES (@Start, @Destination)";
+
+            var start = new SqlParameter("@Start", SqlDbType.NVarChar) { Value = t.Start };
+            var destination = new SqlParameter("@Destination", SqlDbType.NVarChar) {Value = t.Destination};
+
+            return _database.NonQuery(cmdText, start, destination);
         }
 
         public bool DeleteEntity(Route t)
         {
-            string where = $"Id = {t.Id}";
-            return _database.Delete("dbo.Route", where);
+            string cmdText = $"DELETE FROM {TableName} WHERE Id = @Id";
+
+            var id = new SqlParameter("@Id", SqlDbType.Int) {Value = t.Id};
+
+            return _database.NonQuery(cmdText, id);
         }
 
         public bool ModifyEntity(Route t)
         {
-            string where = $"Id = {t.Id}";
-            string values = $"Start = '{t.Start}', Destination = '{t.Destination}'";
-            return _database.Update("dbo.Route", values, where);
+            string cmdText = $"UPDATE {TableName} SET Start = @Start, Destination = @Destination WHERE Id = @Id";
+
+            var start = new SqlParameter("@Start", SqlDbType.NVarChar) {Value = t.Start};
+            var destination = new SqlParameter("@Destination", SqlDbType.NVarChar) {Value = t.Destination};
+            var id = new SqlParameter("@Id", SqlDbType.Int) {Value = t.Id};
+            
+            return _database.NonQuery(cmdText, start, destination, id);
         }
     }
 }
