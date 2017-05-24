@@ -1,1 +1,1 @@
-CREATE TABLE Route (Id int IDENTITY(1,1) PRIMARY KEY, Start nvarchar(255), Destination nvarchar(255));
+CREATE TABLE Route (Id int IDENTITY(1,1) PRIMARY KEY, Start nvarchar(255), Destination nvarchar(255), Name nvarchar(255));

@@ -30,5 +30,11 @@ namespace Travelman.API
         /// <param name="address"></param>
         /// <returns>Latitude, longitude</returns>
         GeoCode Geocode(string address);
+
+        /// <summary>
+        /// Fills the route objects with an URL leading to an image previewing the route.
+        /// </summary>
+        /// <returns></returns>
+        List<Route> GetPreviewImageOfRoutes(List<Route> routes, int width, int height);
     }
 }

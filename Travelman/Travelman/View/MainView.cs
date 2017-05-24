@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
 using Travelman.API;
 using Travelman.Components;
 using Travelman.Data;
+using Travelman.Database;
 
 namespace Travelman.View
 {
@@ -16,13 +18,18 @@ namespace Travelman.View
         private ChromiumWebBrowser _browser;
         private readonly LocationSelection _start, _destination;
         private readonly MainForm _parent;
+        private readonly ILocationProvider _locationProvider;
         private readonly IPlacesProvider _placesProvider;
+        private readonly IDataAccessLayer<Route> _routeDAL;
         private readonly string _baseUrl = $@"{Application.StartupPath}\Html\index.html";
+        private RouteList _routeList;
 
-        public MainView(MainForm parent, ILocationProvider locationProvider, IPlacesProvider placesProvider, string start, string destination)
+        public MainView(MainForm parent, ILocationProvider locationProvider, IPlacesProvider placesProvider, IDataAccessLayer<Route> routeDAL, string start, string destination)
         {
-            _placesProvider = placesProvider;
             _parent = parent;
+            _locationProvider = locationProvider;
+            _placesProvider = placesProvider;
+            _routeDAL = routeDAL;
 
             InitializeComponent();
             InitializeBrowser();
@@ -57,7 +64,7 @@ namespace Travelman.View
         {
             if (!_start.IsFilled() || !_destination.IsFilled()) return;
             HideAutocompletion();
-            ShowRoute();
+            ShowRoute(_start.Input, _destination.Input);
             GetNearbyPlaces();
         }
 
@@ -73,7 +80,7 @@ namespace Travelman.View
                     if (_start.IsFilled() && _destination.IsFilled())
                     {
                         HideAutocompletion();
-                        ShowRoute();
+                        ShowRoute(_start.Input, _destination.Input);
                         GetNearbyPlaces();
                     }
                     break;
@@ -104,15 +111,15 @@ namespace Travelman.View
         private void BrowserFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
             if (!e.Frame.IsMain) return;
-            ShowRoute();
+            ShowRoute(_start.Input, _destination.Input);
             GetNearbyPlaces();
         }
 
-        private void ShowRoute()
+        private void ShowRoute(string from, string to)
         {
             if (_browser.IsBrowserInitialized)
             {
-                _browser.ExecuteScriptAsync("showRoute", _start.Input, _destination.Input);
+                _browser.ExecuteScriptAsync("showRoute", from, to);
             }
         }
 
@@ -162,11 +169,86 @@ namespace Travelman.View
 
         private void btnMyRoutes_Click(object sender, EventArgs e)
         {
-            ModalDialog d = new ModalDialog(256, 128);
-            d.Location = new Point(Width / 2 - d.Width / 2, Height / 2 - d.Height);
-            d.Anchor = AnchorStyles.None;
-            Controls.Add(d);
-            d.BringToFront();
+            DisableControls(); // Ensure that user cannot click on anything else
+
+            _routeList = new RouteList();
+            _routeList.Disposed += EnableControls; // Re-enable controls after closing dialog
+
+            // Center control, no anchor keeps it that way even after resizing
+            _routeList.Location = new Point(Width / 2 - _routeList.Width / 2, Height / 2 - _routeList.Height / 2);
+            _routeList.Anchor = AnchorStyles.None;
+
+            UpdateRouteList();
+
+            Controls.Add(_routeList);
+            _routeList.BringToFront();
+        }
+
+        private void DisableControls()
+        {
+            foreach (Control control in Controls)
+            {
+                control.Enabled = false;
+            }
+        }
+
+        private void EnableControls(object sender, EventArgs e)
+        {
+            foreach (Control control in Controls)
+            {
+                control.Enabled = true;
+            }
+        }
+
+        private void btnSaveRoute_Click(object sender, EventArgs e)
+        {
+            DisableControls(); // Ensure that user cannot click on anything else
+
+            SaveRoute sr = new SaveRoute(SaveRouteAction, _start.Input, _destination.Input);
+            sr.Disposed += EnableControls; // Re-enable controls after closing dialog
+
+            // Center control, no anchor keeps it that way even after resizing
+            sr.Location = new Point(Width / 2 - sr.Width / 2, Height / 2 - sr.Height / 2);
+            sr.Anchor = AnchorStyles.None;
+
+            Controls.Add(sr);
+            sr.BringToFront();
+        }
+
+        private void SaveRouteAction(string name)
+        {
+            Route r = new Route
+            {
+                Name = name,
+                Start = _start.Input,
+                Destination = _destination.Input
+            };
+
+            _routeDAL.SaveEntity(r);
+        }
+
+        private void ShowRouteAction(Route route)
+        {
+            EnableControls(null, null);
+            _start.Input = route.Start;
+            _destination.Input = route.Destination;
+            ShowRoute(route.Start, route.Destination);
+            GetNearbyPlaces();
+        }
+
+        private void DeleteRouteAction(Route route)
+        {
+            _routeDAL.DeleteEntity(route);
+            UpdateRouteList();
+        }
+
+        private void UpdateRouteList()
+        {
+            // Get a list of routes from the database
+            List<Route> routes = _routeDAL.GetEntities().ToList();
+            routes = _locationProvider.GetPreviewImageOfRoutes(routes, 256, 144);
+
+            _routeList.UpdateRouteList(routes, ShowRouteAction, DeleteRouteAction);
         }
 
         private void HideAutocompletion()

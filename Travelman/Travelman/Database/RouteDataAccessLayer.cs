@@ -9,8 +9,8 @@ namespace Travelman.Database
     {
         private readonly IDatabase _database;
         private const string TableName = "Route";
-        private const string Columns = "Id, Start, Destination";
-        private const string ColumnsNoId = "Start, Destination";
+        private const string Columns = "Id, Name, Start, Destination";
+        private const string ColumnsNoId = "Name, Start, Destination";
 
         public RouteDataAccessLayer(IDatabase database)
         {
@@ -29,43 +29,46 @@ namespace Travelman.Database
                 // Note that d is dynamic, we assume the object contains everything we need
                 routes.Add(new Route
                 {
-                    Destination = d.Destination,
                     Id = d.Id,
-                    Start = d.Start
+                    Name = d.Name,
+                    Start = d.Start,
+                    Destination = d.Destination
                 });
             }
 
             return routes;
         }
 
-        public bool SaveEntity(Route t)
+        public bool SaveEntity(Route route)
         {
-            string cmdText = $"INSERT INTO {TableName} ({ColumnsNoId}) VALUES (@Start, @Destination)";
+            string cmdText = $"INSERT INTO {TableName} ({ColumnsNoId}) VALUES (@Name, @Start, @Destination)";
 
-            var start = new SqlParameter("@Start", SqlDbType.NVarChar) { Value = t.Start };
-            var destination = new SqlParameter("@Destination", SqlDbType.NVarChar) {Value = t.Destination};
+            var name = new SqlParameter("@Name", SqlDbType.NVarChar) { Value = route.Name };
+            var start = new SqlParameter("@Start", SqlDbType.NVarChar) { Value = route.Start };
+            var destination = new SqlParameter("@Destination", SqlDbType.NVarChar) {Value = route.Destination};
 
-            return _database.NonQuery(cmdText, start, destination);
+            return _database.NonQuery(cmdText, name, start, destination);
         }
 
-        public bool DeleteEntity(Route t)
+        public bool DeleteEntity(Route route)
         {
             string cmdText = $"DELETE FROM {TableName} WHERE Id = @Id";
 
-            var id = new SqlParameter("@Id", SqlDbType.Int) {Value = t.Id};
+            var id = new SqlParameter("@Id", SqlDbType.Int) {Value = route.Id};
 
             return _database.NonQuery(cmdText, id);
         }
 
-        public bool ModifyEntity(Route t)
+        public bool ModifyEntity(Route route)
         {
             string cmdText = $"UPDATE {TableName} SET Start = @Start, Destination = @Destination WHERE Id = @Id";
 
-            var start = new SqlParameter("@Start", SqlDbType.NVarChar) {Value = t.Start};
-            var destination = new SqlParameter("@Destination", SqlDbType.NVarChar) {Value = t.Destination};
-            var id = new SqlParameter("@Id", SqlDbType.Int) {Value = t.Id};
+            var name = new SqlParameter("@Name", SqlDbType.NVarChar) { Value = route.Name };
+            var start = new SqlParameter("@Start", SqlDbType.NVarChar) {Value = route.Start};
+            var destination = new SqlParameter("@Destination", SqlDbType.NVarChar) {Value = route.Destination};
+            var id = new SqlParameter("@Id", SqlDbType.Int) {Value = route.Id};
             
-            return _database.NonQuery(cmdText, start, destination, id);
+            return _database.NonQuery(cmdText, name, start, destination, id);
         }
     }
 }

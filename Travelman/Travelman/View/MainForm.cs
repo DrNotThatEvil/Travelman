@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using Travelman.API;
+using Travelman.Database;
+using Travelman.Data;
 
 namespace Travelman.View
 {
@@ -12,6 +14,7 @@ namespace Travelman.View
         private MainView _mainView;
         private readonly ILocationProvider _locationProvider;
         private readonly IPlacesProvider _placesProvider;
+        private readonly IDataAccessLayer<Route> _dal;
 
         /// <summary>
         /// The maximum amount of time in milliseconds between API requests, used by the exponential fallback technique.
@@ -33,6 +36,9 @@ namespace Travelman.View
             _locationProvider = GoogleHttp.Instance();
             _placesProvider = GoogleHttp.Instance();
 
+            IDatabase database = new SqlServerCe();
+            _dal = new RouteDataAccessLayer(database);
+
             // Show startview
             _startView = new StartView(_locationProvider, PlanTrip) {Dock = DockStyle.Fill};
             KeyDown += _startView.HandleKeys;
@@ -50,7 +56,7 @@ namespace Travelman.View
                 _startView.Dispose();
 
                 // Show mainview
-                _mainView = new MainView(this, _locationProvider, _placesProvider, start, destination) {Dock = DockStyle.Fill};
+                _mainView = new MainView(this, _locationProvider, _placesProvider, _dal, start, destination) {Dock = DockStyle.Fill};
                 formContent.Controls.Add(_mainView);
                 return true;
             }

@@ -20,5 +20,19 @@ namespace Travelman
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }
+
+        /// <summary>
+        /// Truncates (shortens) a string to fit within the specified number of characters.
+        /// If the string is too big, three dots will be added to signify the truncation.
+        /// Example: "Empire State Building" could turn into "Empire State Bui..."
+        /// </summary>
+        /// <param name="str">String to be shortened</param>
+        /// <param name="maxLength">Number of characters excluding ellipsis symbol</param>
+        /// <returns></returns>
+        public static string TruncateString(this string str, int maxLength)
+        {
+            if (str.Length <= maxLength) return str;
+            return str.Substring(0, maxLength) + '\u2026'; // Ellipsis symbol (shorthand ...)
+        }
     }
 }

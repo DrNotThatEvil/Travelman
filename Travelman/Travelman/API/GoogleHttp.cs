@@ -107,6 +107,27 @@ namespace Travelman.API
         }
 
         /// <summary>
+        /// Fills the route objects with an URL leading to an image previewing the route.
+        /// We don't actually do API calls here, but we build URLs which do that.
+        /// </summary>
+        /// <returns></returns>
+        public List<Route> GetPreviewImageOfRoutes(List<Route> routes, int width, int height)
+        {
+            foreach (var route in routes)
+            {
+                var parameters = new Dictionary<string, string>
+                {
+                    {"size", $"{width}x{height}"},
+                    {"maptype", "roadmap"},
+                    {"markers", $"size:mid|color:red|{route.Start}|{route.Destination}"}
+                };
+                string requestUri = "staticmap?" + BuildUri(parameters);
+                route.PreviewImageUrl = BaseAddress + requestUri;
+            }
+            return routes;
+        }
+
+        /// <summary>
         /// Synchronous API call where we check if both locations exist, and if google knows
         /// a route between the two points.
         /// </summary>

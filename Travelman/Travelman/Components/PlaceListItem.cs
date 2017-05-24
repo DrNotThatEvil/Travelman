@@ -17,8 +17,8 @@ namespace Travelman.Components
         {
             _index = index;
             InitializeComponent();
-            lblName.Text = $"{index}: {TruncateString(place.Name, MaxPlaceNameLength)}";
-            lblAddress.Text = TruncateString(place.Vicinity, MaxAddressLength);
+            lblName.Text = index + ": " + place.Name.TruncateString(MaxPlaceNameLength);
+            lblAddress.Text = place.Vicinity.TruncateString(MaxAddressLength);
             pbLocationIcon.ImageLocation = place.IconUrl;
             pbLocationPicture.ImageLocation = place.PhotoUrl;
             Width -= SystemInformation.VerticalScrollBarWidth;
@@ -81,20 +81,6 @@ namespace Travelman.Components
                 });
                 rating--;
             }
-        }
-
-        /// <summary>
-        /// Truncates (shortens) a string to fit within the specified number of characters.
-        /// If the string is too big, three dots will be added to signify the truncation.
-        /// Example: "Empire State Building" could turn into "Empire State Bui..."
-        /// </summary>
-        /// <param name="str"></param>
-        /// <param name="maxLength">Number of characters excluding ellipsis symbol</param>
-        /// <returns></returns>
-        private static string TruncateString(string str, int maxLength)
-        {
-            if (str.Length <= maxLength) return str;
-            return str.Substring(0, maxLength) + '\u2026'; // Ellipsis symbol (shorthand ...)
         }
     }
 }
