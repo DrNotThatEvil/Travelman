@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
@@ -55,9 +56,14 @@ namespace Travelman.View
             scSidebar.Panel1Collapsed = !SidebarShown;
         }
 
-        private static void MainView_Disposed(object sender, EventArgs e)
+        private void MainView_Disposed(object sender, EventArgs e)
         {
-            Cef.Shutdown();
+            //_routeList.Dispose();
+            //_browser.Dispose();
+            foreach (Control c in Controls)
+            {
+                c.Dispose();
+            }
         }
 
         private void AutocompleteOptionSelected(object sender, EventArgs e)
@@ -89,11 +95,6 @@ namespace Travelman.View
 
         private void InitializeBrowser()
         {
-            var cefSettings = new CefSettings
-            {
-                RemoteDebuggingPort = 8088
-            };
-            Cef.Initialize(cefSettings);
             _browser = new ChromiumWebBrowser(_baseUrl);
             scSidebar.Panel2.Controls.Add(_browser);
             _browser.Dock = DockStyle.Fill;
@@ -132,6 +133,7 @@ namespace Travelman.View
             });
 
             ICollection<Place> places = await _placesProvider.GetNearbyPlaces(_destination.Input, 50000);
+            if (IsDisposed) return;
             places = _placesProvider.GetPhotosOfPlaces(places, 90, 90);
             Point location = new Point();
             var index = 1;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using CefSharp;
 using Travelman.View;
 
 namespace Travelman
@@ -13,8 +14,15 @@ namespace Travelman
         static void Main()
         {
             string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string path = (System.IO.Path.GetDirectoryName(executable));
+            string path = System.IO.Path.GetDirectoryName(executable);
             AppDomain.CurrentDomain.SetData("DataDirectory", path); // Used for relative file path of database
+
+            // Prepare browser infrastructure
+            var cefSettings = new CefSettings
+            {
+                RemoteDebuggingPort = 8088
+            };
+            Cef.Initialize(cefSettings);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -24,7 +32,6 @@ namespace Travelman
         /// <summary>
         /// Truncates (shortens) a string to fit within the specified number of characters.
         /// If the string is too big, three dots will be added to signify the truncation.
-        /// Example: "Empire State Building" could turn into "Empire State Bui..."
         /// </summary>
         /// <param name="str">String to be shortened</param>
         /// <param name="maxLength">Number of characters excluding ellipsis symbol</param>

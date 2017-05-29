@@ -39,10 +39,7 @@ namespace Travelman.View
             IDatabase database = new SqlServerCe();
             _dal = new RouteDataAccessLayer(database);
 
-            // Show startview
-            _startView = new StartView(_locationProvider, PlanTrip) {Dock = DockStyle.Fill};
-            KeyDown += _startView.HandleKeys;
-            formContent.Controls.Add(_startView);
+            ShowStartView();
         }
 
 
@@ -53,11 +50,10 @@ namespace Travelman.View
             if (_locationProvider.RouteIsPossible(start, destination))
             {
                 formContent.Controls.Remove(_startView);
+                KeyDown -= _startView.HandleKeys;
                 _startView.Dispose();
 
-                // Show mainview
-                _mainView = new MainView(this, _locationProvider, _placesProvider, _dal, start, destination) {Dock = DockStyle.Fill};
-                formContent.Controls.Add(_mainView);
+                ShowMainView(start, destination);
                 return true;
             }
 
@@ -68,14 +64,25 @@ namespace Travelman.View
             return false;
         }
 
+        private void ShowStartView()
+        {
+            _startView = new StartView(_locationProvider, PlanTrip) { Dock = DockStyle.Fill };
+            KeyDown += _startView.HandleKeys;
+            formContent.Controls.Add(_startView);
+        }
+
+        private void ShowMainView(string start, string destination)
+        {
+            _mainView = new MainView(this, _locationProvider, _placesProvider, _dal, start, destination) { Dock = DockStyle.Fill };
+            formContent.Controls.Add(_mainView);
+        }
+
         public void StartOver()
         {
             formContent.Controls.Remove(_mainView);
             _mainView.Dispose();
 
-            _startView = new StartView(_locationProvider, PlanTrip) { Dock = DockStyle.Fill };
-            KeyDown += _startView.HandleKeys;
-            formContent.Controls.Add(_startView);
+            ShowStartView();
         }
 
         private void DelayBetweenRequests_Tick(object sender, EventArgs e)

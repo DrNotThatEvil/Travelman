@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Windows;
 using System.Windows.Forms;
 using FontAwesome.Sharp;
+using MaterialSkin.Controls;
 using Travelman.Data;
+using Point = System.Drawing.Point;
+using Size = System.Drawing.Size;
 
 namespace Travelman.Components
 {
@@ -28,7 +31,10 @@ namespace Travelman.Components
 
         public void UpdateRouteList(List<Route> routes, Action<Route> showRouteAction, Action<Route> deleteRouteAction)
         {
+            lblNoRoutesToDisplay.Visible = routes.Count == 0;
+
             panelListContainer.Controls.Clear();
+            
             int y = 0;
             foreach (Route route in routes)
             {

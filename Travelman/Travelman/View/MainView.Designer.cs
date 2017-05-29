@@ -29,12 +29,11 @@
         private void InitializeComponent()
         {
             this.scMenubar = new System.Windows.Forms.SplitContainer();
-            this.btnAbout = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnSaveRoute = new MaterialSkin.Controls.MaterialRaisedButton();
             this.btnMyRoutes = new MaterialSkin.Controls.MaterialRaisedButton();
             this.btnStartOver = new MaterialSkin.Controls.MaterialRaisedButton();
             this.scSidebar = new System.Windows.Forms.SplitContainer();
             this.scSidebarHorizontal = new System.Windows.Forms.SplitContainer();
-            this.btnSaveRoute = new MaterialSkin.Controls.MaterialRaisedButton();
             ((System.ComponentModel.ISupportInitialize)(this.scMenubar)).BeginInit();
             this.scMenubar.Panel1.SuspendLayout();
             this.scMenubar.Panel2.SuspendLayout();
@@ -58,7 +57,6 @@
             // scMenubar.Panel1
             // 
             this.scMenubar.Panel1.Controls.Add(this.btnSaveRoute);
-            this.scMenubar.Panel1.Controls.Add(this.btnAbout);
             this.scMenubar.Panel1.Controls.Add(this.btnMyRoutes);
             this.scMenubar.Panel1.Controls.Add(this.btnStartOver);
             this.scMenubar.Panel1MinSize = 64;
@@ -70,20 +68,21 @@
             this.scMenubar.SplitterDistance = 64;
             this.scMenubar.TabIndex = 0;
             // 
-            // btnAbout
+            // btnSaveRoute
             // 
-            this.btnAbout.AutoSize = true;
-            this.btnAbout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnAbout.Depth = 0;
-            this.btnAbout.Icon = null;
-            this.btnAbout.Location = new System.Drawing.Point(332, 16);
-            this.btnAbout.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnAbout.Name = "btnAbout";
-            this.btnAbout.Primary = true;
-            this.btnAbout.Size = new System.Drawing.Size(66, 36);
-            this.btnAbout.TabIndex = 2;
-            this.btnAbout.Text = "About";
-            this.btnAbout.UseVisualStyleBackColor = true;
+            this.btnSaveRoute.AutoSize = true;
+            this.btnSaveRoute.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnSaveRoute.Depth = 0;
+            this.btnSaveRoute.Icon = null;
+            this.btnSaveRoute.Location = new System.Drawing.Point(224, 16);
+            this.btnSaveRoute.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnSaveRoute.Name = "btnSaveRoute";
+            this.btnSaveRoute.Primary = true;
+            this.btnSaveRoute.Size = new System.Drawing.Size(102, 36);
+            this.btnSaveRoute.TabIndex = 3;
+            this.btnSaveRoute.Text = "Save route";
+            this.btnSaveRoute.UseVisualStyleBackColor = true;
+            this.btnSaveRoute.Click += new System.EventHandler(this.btnSaveRoute_Click);
             // 
             // btnMyRoutes
             // 
@@ -150,22 +149,6 @@
             this.scSidebarHorizontal.SplitterDistance = 96;
             this.scSidebarHorizontal.TabIndex = 0;
             // 
-            // btnSaveRoute
-            // 
-            this.btnSaveRoute.AutoSize = true;
-            this.btnSaveRoute.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSaveRoute.Depth = 0;
-            this.btnSaveRoute.Icon = null;
-            this.btnSaveRoute.Location = new System.Drawing.Point(224, 16);
-            this.btnSaveRoute.MouseState = MaterialSkin.MouseState.HOVER;
-            this.btnSaveRoute.Name = "btnSaveRoute";
-            this.btnSaveRoute.Primary = true;
-            this.btnSaveRoute.Size = new System.Drawing.Size(102, 36);
-            this.btnSaveRoute.TabIndex = 3;
-            this.btnSaveRoute.Text = "Save route";
-            this.btnSaveRoute.UseVisualStyleBackColor = true;
-            this.btnSaveRoute.Click += new System.EventHandler(this.btnSaveRoute_Click);
-            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -194,7 +177,6 @@
         private System.Windows.Forms.SplitContainer scSidebarHorizontal;
         private MaterialSkin.Controls.MaterialRaisedButton btnMyRoutes;
         private MaterialSkin.Controls.MaterialRaisedButton btnStartOver;
-        private MaterialSkin.Controls.MaterialRaisedButton btnAbout;
         private MaterialSkin.Controls.MaterialRaisedButton btnSaveRoute;
     }
 }

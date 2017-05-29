@@ -29,28 +29,22 @@
         private void InitializeComponent()
         {
             this.panel = new System.Windows.Forms.Panel();
-            this.panelListContainer = new System.Windows.Forms.Panel();
             this.lblMyRoutes = new MaterialSkin.Controls.MaterialLabel();
+            this.panelListContainer = new System.Windows.Forms.Panel();
+            this.lblNoRoutesToDisplay = new MaterialSkin.Controls.MaterialLabel();
             this.panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel
             // 
             this.panel.BackColor = System.Drawing.Color.White;
+            this.panel.Controls.Add(this.lblNoRoutesToDisplay);
             this.panel.Controls.Add(this.lblMyRoutes);
             this.panel.Controls.Add(this.panelListContainer);
             this.panel.Location = new System.Drawing.Point(1, 1);
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(528, 512);
             this.panel.TabIndex = 0;
-            // 
-            // panelListContainer
-            // 
-            this.panelListContainer.AutoScroll = true;
-            this.panelListContainer.Location = new System.Drawing.Point(1, 40);
-            this.panelListContainer.Name = "panelListContainer";
-            this.panelListContainer.Size = new System.Drawing.Size(528, 469);
-            this.panelListContainer.TabIndex = 0;
             // 
             // lblMyRoutes
             // 
@@ -64,6 +58,27 @@
             this.lblMyRoutes.Size = new System.Drawing.Size(80, 19);
             this.lblMyRoutes.TabIndex = 1;
             this.lblMyRoutes.Text = "My Routes";
+            // 
+            // panelListContainer
+            // 
+            this.panelListContainer.AutoScroll = true;
+            this.panelListContainer.Location = new System.Drawing.Point(1, 40);
+            this.panelListContainer.Name = "panelListContainer";
+            this.panelListContainer.Size = new System.Drawing.Size(528, 469);
+            this.panelListContainer.TabIndex = 0;
+            // 
+            // lblNoRoutesToDisplay
+            // 
+            this.lblNoRoutesToDisplay.AutoSize = true;
+            this.lblNoRoutesToDisplay.Depth = 0;
+            this.lblNoRoutesToDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.lblNoRoutesToDisplay.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblNoRoutesToDisplay.Location = new System.Drawing.Point(141, 14);
+            this.lblNoRoutesToDisplay.MouseState = MaterialSkin.MouseState.HOVER;
+            this.lblNoRoutesToDisplay.Name = "lblNoRoutesToDisplay";
+            this.lblNoRoutesToDisplay.Size = new System.Drawing.Size(247, 18);
+            this.lblNoRoutesToDisplay.TabIndex = 2;
+            this.lblNoRoutesToDisplay.Text = "There are no saved routes to display";
             // 
             // RouteList
             // 
@@ -84,5 +99,6 @@
         private System.Windows.Forms.Panel panel;
         private System.Windows.Forms.Panel panelListContainer;
         private MaterialSkin.Controls.MaterialLabel lblMyRoutes;
+        private MaterialSkin.Controls.MaterialLabel lblNoRoutesToDisplay;
     }
 }
