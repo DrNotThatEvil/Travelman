@@ -75,7 +75,7 @@
             this.btnPlanTrip.TabIndex = 0;
             this.btnPlanTrip.Text = "Plan trip";
             this.btnPlanTrip.UseVisualStyleBackColor = true;
-            this.btnPlanTrip.Click += new System.EventHandler(this.btnPlanTrip_Click);
+            this.btnPlanTrip.Click += new System.EventHandler(this.PlanTrip_Click);
             // 
             // StartView
             // 

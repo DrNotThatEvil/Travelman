@@ -35,17 +35,14 @@ function showRoute(start, end) {
                 directionsDisplay.setDirections(result);
             }
         });
-    console.log(directionsDisplay);
 }
 
 function addMarker(lat, lng, label) {
-    console.log("I think I created marker with label" + label);
     var marker = new google.maps.Marker({
         position: { lat: lat, lng: lng },
         label: label,
         map: directionsDisplay.map
     });
-    console.log("Actual: " + marker.label);
     markers.push(marker);
 }
 

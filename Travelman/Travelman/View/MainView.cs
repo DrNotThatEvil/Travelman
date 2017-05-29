@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
@@ -58,8 +57,6 @@ namespace Travelman.View
 
         private void MainView_Disposed(object sender, EventArgs e)
         {
-            //_routeList.Dispose();
-            //_browser.Dispose();
             foreach (Control c in Controls)
             {
                 c.Dispose();
@@ -100,7 +97,7 @@ namespace Travelman.View
             _browser.Dock = DockStyle.Fill;
 
             // Allow local files
-            _browser.BrowserSettings = new BrowserSettings()
+            _browser.BrowserSettings = new BrowserSettings
             {
                 FileAccessFromFileUrls = CefState.Enabled,
                 UniversalAccessFromFileUrls = CefState.Enabled
@@ -126,21 +123,21 @@ namespace Travelman.View
 
         private async void GetNearbyPlaces()
         {
-            // Clear nearby places list
             Invoke((MethodInvoker) delegate
             {
-                scSidebarHorizontal.Panel2.Controls.Clear(); // Invoke to call method on UI thread
+                scSidebarHorizontal.Panel2.Controls.Clear(); // Call method on UI thread
             });
 
             ICollection<Place> places = await _placesProvider.GetNearbyPlaces(_destination.Input, 50000);
-            if (IsDisposed) return;
             places = _placesProvider.GetPhotosOfPlaces(places, 90, 90);
+
+            if (IsDisposed) return;
+            
             Point location = new Point();
             var index = 1;
             foreach (Place place in places)
             {
                 PlaceListItem item = new PlaceListItem(place, index, Item_Click) {Location = location};
-                //item.Click += Item_Click;
                 Invoke((MethodInvoker) delegate
                 {
                     scSidebarHorizontal.Panel2.Controls.Add(item); // Add control on UI thread
@@ -169,14 +166,13 @@ namespace Travelman.View
             _parent.StartOver();
         }
 
-        private void btnMyRoutes_Click(object sender, EventArgs e)
+        private void MyRoutes_Click(object sender, EventArgs e)
         {
-            DisableControls(); // Ensure that user cannot click on anything else
+            SetControlsEnabled(false); // Ensure that user cannot click on anything else
 
             _routeList = new RouteList();
-            _routeList.Disposed += EnableControls; // Re-enable controls after closing dialog
+            _routeList.Disposed += delegate { SetControlsEnabled(true); };
 
-            // Center control, no anchor keeps it that way even after resizing
             _routeList.Location = new Point(Width / 2 - _routeList.Width / 2, Height / 2 - _routeList.Height / 2);
             _routeList.Anchor = AnchorStyles.None;
 
@@ -186,30 +182,21 @@ namespace Travelman.View
             _routeList.BringToFront();
         }
 
-        private void DisableControls()
+        private void SetControlsEnabled(bool value)
         {
             foreach (Control control in Controls)
             {
-                control.Enabled = false;
+                control.Enabled = value;
             }
         }
 
-        private void EnableControls(object sender, EventArgs e)
+        private void SaveRoute_Click(object sender, EventArgs e)
         {
-            foreach (Control control in Controls)
-            {
-                control.Enabled = true;
-            }
-        }
-
-        private void btnSaveRoute_Click(object sender, EventArgs e)
-        {
-            DisableControls(); // Ensure that user cannot click on anything else
+            SetControlsEnabled(false); // Ensure that user cannot click on anything else
 
             SaveRoute sr = new SaveRoute(SaveRouteAction, _start.Input, _destination.Input);
-            sr.Disposed += EnableControls; // Re-enable controls after closing dialog
+            sr.Disposed += delegate{ SetControlsEnabled(true); };
 
-            // Center control, no anchor keeps it that way even after resizing
             sr.Location = new Point(Width / 2 - sr.Width / 2, Height / 2 - sr.Height / 2);
             sr.Anchor = AnchorStyles.None;
 
@@ -231,7 +218,7 @@ namespace Travelman.View
 
         private void ShowRouteAction(Route route)
         {
-            EnableControls(null, null);
+            SetControlsEnabled(true);
             _start.Input = route.Start;
             _destination.Input = route.Destination;
             ShowRoute(route.Start, route.Destination);
@@ -246,7 +233,6 @@ namespace Travelman.View
 
         private void UpdateRouteList()
         {
-            // Get a list of routes from the database
             List<Route> routes = _routeDAL.GetEntities().ToList();
             routes = _locationProvider.GetPreviewImageOfRoutes(routes, 256, 144);
 

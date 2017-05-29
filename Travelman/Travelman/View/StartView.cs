@@ -59,7 +59,7 @@ namespace Travelman.View
             HideAutocompletion();
         }
 
-        private void btnPlanTrip_Click(object sender, EventArgs e)
+        private void PlanTrip_Click(object sender, EventArgs e)
         {
             PlanTrip();
         }

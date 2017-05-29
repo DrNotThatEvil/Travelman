@@ -18,13 +18,17 @@ namespace Travelman.View
 
         /// <summary>
         /// The maximum amount of time in milliseconds between API requests, used by the exponential fallback technique.
-        /// 3600000 ms = 1 hour
         /// </summary>
         private const int MaxDelay = 3600000;
 
         public MainForm()
         {
-            // Initialize MaterialSkinManager
+            _locationProvider = GoogleHttp.Instance();
+            _placesProvider = GoogleHttp.Instance();
+
+            IDatabase database = new SqlServerCe();
+            _dal = new RouteDataAccessLayer(database);
+
             var m = MaterialSkinManager.Instance;
             m.AddFormToManage(this);
             m.Theme = MaterialSkinManager.Themes.LIGHT;
@@ -32,13 +36,6 @@ namespace Travelman.View
                 Accent.LightBlue200, TextShade.WHITE);
 
             InitializeComponent();
-
-            _locationProvider = GoogleHttp.Instance();
-            _placesProvider = GoogleHttp.Instance();
-
-            IDatabase database = new SqlServerCe();
-            _dal = new RouteDataAccessLayer(database);
-
             ShowStartView();
         }
 

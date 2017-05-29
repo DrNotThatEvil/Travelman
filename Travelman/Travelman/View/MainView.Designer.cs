@@ -82,7 +82,7 @@
             this.btnSaveRoute.TabIndex = 3;
             this.btnSaveRoute.Text = "Save route";
             this.btnSaveRoute.UseVisualStyleBackColor = true;
-            this.btnSaveRoute.Click += new System.EventHandler(this.btnSaveRoute_Click);
+            this.btnSaveRoute.Click += new System.EventHandler(this.SaveRoute_Click);
             // 
             // btnMyRoutes
             // 
@@ -98,7 +98,7 @@
             this.btnMyRoutes.TabIndex = 1;
             this.btnMyRoutes.Text = "My routes";
             this.btnMyRoutes.UseVisualStyleBackColor = true;
-            this.btnMyRoutes.Click += new System.EventHandler(this.btnMyRoutes_Click);
+            this.btnMyRoutes.Click += new System.EventHandler(this.MyRoutes_Click);
             // 
             // btnStartOver
             // 
