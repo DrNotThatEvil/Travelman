@@ -116,7 +116,7 @@ namespace Travelman.Database
         /// </summary>
         /// <param name="sqlParameter"></param>
         /// <returns></returns>
-        public static SqlCeParameter ConvertParamToCe(SqlParameter sqlParameter)
+        private static SqlCeParameter ConvertParamToCe(SqlParameter sqlParameter)
         {
             return new SqlCeParameter
             { 

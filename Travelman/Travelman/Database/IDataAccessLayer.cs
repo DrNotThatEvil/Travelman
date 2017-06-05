@@ -5,8 +5,8 @@ namespace Travelman.Database
     public interface IDataAccessLayer<T>
     {
         ICollection<T> GetEntities();
-        bool SaveEntity(T route);
-        bool DeleteEntity(T route);
-        bool ModifyEntity(T route);
+        bool SaveEntity(T entity);
+        bool DeleteEntity(T entity);
+        bool ModifyEntity(T entity);
     }
 }
