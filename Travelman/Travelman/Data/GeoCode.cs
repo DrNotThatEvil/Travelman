@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Globalization;
+using Newtonsoft.Json;
 
 namespace Travelman.Data
 {
@@ -19,7 +20,8 @@ namespace Travelman.Data
 
         public override string ToString()
         {
-            return Latitude + "," + Longitude;
+            CultureInfo cultureInfo = CultureInfo.GetCultureInfo("en-GB"); // Enforce use of '.' as decimal separator
+            return Latitude.ToString(cultureInfo) + "," + Longitude.ToString(cultureInfo);
         }
 
         protected bool Equals(GeoCode other)
