@@ -53,6 +53,7 @@ namespace Travelman.View
             scSidebarHorizontal.Panel1.Controls.Add(_start);
 
             scSidebar.Panel1Collapsed = !SidebarShown;
+            btnMyRoutes.Click += delegate { ShowMyRoutes(); };
         }
 
         private void MainView_Disposed(object sender, EventArgs e)
@@ -109,7 +110,8 @@ namespace Travelman.View
 
         private void BrowserFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
-            if (!e.Frame.IsMain) return;
+            if (!e.Frame.IsMain || String.IsNullOrEmpty(_start.Input) || String.IsNullOrEmpty(_destination.Input)) return;
+            btnSaveRoute.Enabled = true;
             ShowRoute(_start.Input, _destination.Input);
             GetNearbyPlaces();
         }
@@ -167,7 +169,7 @@ namespace Travelman.View
             _parent.StartOver();
         }
 
-        private void MyRoutes_Click(object sender, EventArgs e)
+        public void ShowMyRoutes()
         {
             SetControlsEnabled(false); // Ensure that user cannot click on anything else
 

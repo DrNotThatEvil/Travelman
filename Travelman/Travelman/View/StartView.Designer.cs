@@ -31,6 +31,7 @@
             this.LocationPanel = new System.Windows.Forms.Panel();
             this.lblError = new MaterialSkin.Controls.MaterialLabel();
             this.btnPlanTrip = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.btnMyRoutes = new MaterialSkin.Controls.MaterialRaisedButton();
             this.LocationPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -38,6 +39,7 @@
             // 
             this.LocationPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.LocationPanel.BackColor = System.Drawing.Color.White;
+            this.LocationPanel.Controls.Add(this.btnMyRoutes);
             this.LocationPanel.Controls.Add(this.lblError);
             this.LocationPanel.Controls.Add(this.btnPlanTrip);
             this.LocationPanel.Location = new System.Drawing.Point(28, 117);
@@ -67,7 +69,7 @@
             this.btnPlanTrip.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnPlanTrip.Depth = 0;
             this.btnPlanTrip.Icon = null;
-            this.btnPlanTrip.Location = new System.Drawing.Point(103, 106);
+            this.btnPlanTrip.Location = new System.Drawing.Point(53, 106);
             this.btnPlanTrip.MouseState = MaterialSkin.MouseState.HOVER;
             this.btnPlanTrip.Name = "btnPlanTrip";
             this.btnPlanTrip.Primary = true;
@@ -76,6 +78,23 @@
             this.btnPlanTrip.Text = "Plan trip";
             this.btnPlanTrip.UseVisualStyleBackColor = true;
             this.btnPlanTrip.Click += new System.EventHandler(this.PlanTrip_Click);
+            // 
+            // btnMyRoutes
+            // 
+            this.btnMyRoutes.AutoSize = true;
+            this.btnMyRoutes.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnMyRoutes.Depth = 0;
+            this.btnMyRoutes.Icon = null;
+            this.btnMyRoutes.Location = new System.Drawing.Point(145, 106);
+            this.btnMyRoutes.MouseState = MaterialSkin.MouseState.HOVER;
+            this.btnMyRoutes.Name = "btnMyRoutes";
+            this.btnMyRoutes.Primary = true;
+            this.btnMyRoutes.Size = new System.Drawing.Size(96, 36);
+            this.btnMyRoutes.TabIndex = 3;
+            this.btnMyRoutes.TabStop = false;
+            this.btnMyRoutes.Text = "My routes";
+            this.btnMyRoutes.UseVisualStyleBackColor = true;
+            this.btnMyRoutes.Click += new System.EventHandler(this.MyRoutes_Click);
             // 
             // StartView
             // 
@@ -97,5 +116,6 @@
         private System.Windows.Forms.Panel LocationPanel;
         private MaterialSkin.Controls.MaterialRaisedButton btnPlanTrip;
         private MaterialSkin.Controls.MaterialLabel lblError;
+        private MaterialSkin.Controls.MaterialRaisedButton btnMyRoutes;
     }
 }

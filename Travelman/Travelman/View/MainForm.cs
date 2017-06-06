@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Forms;
+using CefSharp;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using Travelman.API;
@@ -23,6 +25,7 @@ namespace Travelman.View
 
         public MainForm()
         {
+            Closing += delegate { Cef.Shutdown(); };
             _locationProvider = GoogleHttp.Instance();
             _placesProvider = GoogleHttp.Instance();
 
@@ -63,9 +66,19 @@ namespace Travelman.View
             return false;
         }
 
+        public void ShowMyRoutes()
+        {
+            formContent.Controls.Remove(_startView);
+            KeyDown -= _startView.HandleKeys;
+            _startView.Dispose();
+
+            ShowMainView("", "");
+            _mainView.ShowMyRoutes();
+        }
+
         private void ShowStartView()
         {
-            _startView = new StartView(_locationProvider, PlanTrip) { Dock = DockStyle.Fill };
+            _startView = new StartView(_locationProvider, PlanTrip, ShowMyRoutes) { Dock = DockStyle.Fill };
             KeyDown += _startView.HandleKeys;
             formContent.Controls.Add(_startView);
         }

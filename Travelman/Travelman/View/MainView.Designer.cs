@@ -73,6 +73,7 @@
             this.btnSaveRoute.AutoSize = true;
             this.btnSaveRoute.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnSaveRoute.Depth = 0;
+            this.btnSaveRoute.Enabled = false;
             this.btnSaveRoute.Icon = null;
             this.btnSaveRoute.Location = new System.Drawing.Point(224, 16);
             this.btnSaveRoute.MouseState = MaterialSkin.MouseState.HOVER;
@@ -98,7 +99,6 @@
             this.btnMyRoutes.TabIndex = 1;
             this.btnMyRoutes.Text = "My routes";
             this.btnMyRoutes.UseVisualStyleBackColor = true;
-            this.btnMyRoutes.Click += new System.EventHandler(this.MyRoutes_Click);
             // 
             // btnStartOver
             // 
