@@ -100,7 +100,8 @@ namespace Travelman.View
             _browser.BrowserSettings = new BrowserSettings
             {
                 FileAccessFromFileUrls = CefState.Enabled,
-                UniversalAccessFromFileUrls = CefState.Enabled
+                UniversalAccessFromFileUrls = CefState.Enabled,
+                
             };
             _browser.FrameLoadEnd += BrowserFrameLoadEnd;
             _browser.SendToBack();

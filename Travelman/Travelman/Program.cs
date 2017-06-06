@@ -22,6 +22,9 @@ namespace Travelman
             {
                 RemoteDebuggingPort = 8088
             };
+            //cefSettings.CefCommandLineArgs.Add("high-dpi-support", "1");
+            //cefSettings.CefCommandLineArgs.Add("force-device-scale-factor", "1");
+            Cef.EnableHighDPISupport();
             Cef.Initialize(cefSettings);
 
             Application.EnableVisualStyles();

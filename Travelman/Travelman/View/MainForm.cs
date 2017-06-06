@@ -35,6 +35,8 @@ namespace Travelman.View
             m.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500,
                 Accent.LightBlue200, TextShade.WHITE);
 
+            AutoScaleMode = AutoScaleMode.None;
+
             InitializeComponent();
             ShowStartView();
         }
