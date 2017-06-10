@@ -12,10 +12,11 @@ namespace Travelman.View
         private readonly Func<string, string, bool> _planTripFunc;
         private bool _canPlanTrip;
         
-        public StartView(ILocationProvider locationProvider, Func<string, string, bool> planTripFunc)
+        public StartView(ILocationProvider locationProvider, Func<string, string, bool> planTripFunc, Action showRouteAction)
         {
             _planTripFunc = planTripFunc;
             InitializeComponent();
+            btnMyRoutes.Click += delegate { showRouteAction(); };
 
             _destination = new LocationSelection(LocationPanel, locationProvider, new Point(0, 48), "Choose a destination...",
                 FontAwesome.Sharp.IconChar.FlagCheckered, 3);
@@ -62,6 +63,11 @@ namespace Travelman.View
         private void PlanTrip_Click(object sender, EventArgs e)
         {
             PlanTrip();
+        }
+
+        private void MyRoutes_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void HideAutocompletion()
