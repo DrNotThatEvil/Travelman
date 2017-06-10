@@ -111,7 +111,10 @@ namespace Travelman.View
         private void BrowserFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
             if (!e.Frame.IsMain || String.IsNullOrEmpty(_start.Input) || String.IsNullOrEmpty(_destination.Input)) return;
-            btnSaveRoute.Enabled = true;
+            Invoke((MethodInvoker)delegate
+            {
+                btnSaveRoute.Enabled = true; // Access via UI thread
+            });
             ShowRoute(_start.Input, _destination.Input);
             GetNearbyPlaces();
         }
