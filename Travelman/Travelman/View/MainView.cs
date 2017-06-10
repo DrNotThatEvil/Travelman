@@ -111,10 +111,7 @@ namespace Travelman.View
         private void BrowserFrameLoadEnd(object sender, FrameLoadEndEventArgs e)
         {
             if (!e.Frame.IsMain || String.IsNullOrEmpty(_start.Input) || String.IsNullOrEmpty(_destination.Input)) return;
-            Invoke((MethodInvoker)delegate
-            {
-                btnSaveRoute.Enabled = true; // Access via UI thread
-            });
+            
             ShowRoute(_start.Input, _destination.Input);
             GetNearbyPlaces();
         }
@@ -125,6 +122,10 @@ namespace Travelman.View
             {
                 _browser.ExecuteScriptAsync("showRoute", from, to);
             }
+            Invoke((MethodInvoker)delegate
+            {
+                btnSaveRoute.Enabled = true; // Access via UI thread
+            });
         }
 
         private async void GetNearbyPlaces()
